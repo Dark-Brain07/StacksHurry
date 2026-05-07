@@ -1,9 +1,9 @@
 /**
- * Stacks Hurry - Main Application Entry
- * Orchestrates wallet connection, game state, and contract interactions
+ * Stacks Hurry - Main Application Entry (v8 API)
+ * Uses @stacks/connect 8.x connect() + request() API
  */
 
-import { showConnect } from '@stacks/connect';
+import { connect, getLocalStorage, disconnect, isConnected } from '@stacks/connect';
 import {
   mintOpenNFT,
   submitGameScore,
@@ -39,7 +39,23 @@ let lastGameData = null;
 document.addEventListener('DOMContentLoaded', () => {
   initUI();
   bindEvents();
+  checkExistingConnection();
 });
+
+// ─── Check if wallet was previously connected ───
+function checkExistingConnection() {
+  try {
+    if (isConnected()) {
+      const stored = getLocalStorage();
+      if (stored?.addresses?.stx?.length > 0) {
+        userAddress = stored.addresses.stx[0].address;
+        showWalletConnected(userAddress);
+      }
+    }
+  } catch (e) {
+    // No previous connection
+  }
+}
 
 // ─── Event Binding ───
 function bindEvents() {
@@ -70,24 +86,26 @@ function bindEvents() {
   document.querySelector('.modal-backdrop')?.addEventListener('click', () => hideMintModal());
 }
 
-// ─── Wallet Connection ───
-function connectWallet() {
+// ─── Wallet Connection (v8 API) ───
+async function connectWallet() {
   initAudio();
 
-  showConnect({
-    appDetails: {
-      name: 'Stacks Hurry',
-      icon: window.location.origin + '/favicon.svg',
-    },
-    onFinish: (payload) => {
-      userAddress = payload.userSession.loadUserData().profile.stxAddress.mainnet;
+  try {
+    const response = await connect();
+
+    // Get the cached address from local storage
+    const stored = getLocalStorage();
+    if (stored?.addresses?.stx?.length > 0) {
+      userAddress = stored.addresses.stx[0].address;
       showWalletConnected(userAddress);
       showToast('Wallet connected successfully!', 'success');
-    },
-    onCancel: () => {
-      showToast('Wallet connection cancelled', 'info');
-    },
-  });
+    } else {
+      showToast('Could not retrieve wallet address', 'error');
+    }
+  } catch (err) {
+    console.error('Wallet connection failed:', err);
+    showToast('Wallet connection cancelled or failed', 'info');
+  }
 }
 
 // ─── Start Game ───
@@ -117,8 +135,8 @@ function handleGameOver(data) {
   }, 600);
 }
 
-// ─── Score Submission (Rocket Shooter - free) ───
-function handleSubmitScore() {
+// ─── Score Submission (Rocket Shooter - free, async) ───
+async function handleSubmitScore() {
   if (!userAddress) {
     showToast('Connect your wallet first!', 'error');
     return;
@@ -131,19 +149,17 @@ function handleSubmitScore() {
 
   showToast('Submitting score to Stacks blockchain...', 'info');
 
-  submitGameScore(
-    lastGameData.score,
-    (data) => {
-      showToast(`Score submitted! TX: ${data.txId.slice(0, 12)}...`, 'success');
-    },
-    () => {
-      showToast('Score submission cancelled', 'info');
-    }
-  );
+  try {
+    const result = await submitGameScore(lastGameData.score);
+    showToast(`Score submitted! TX: ${result.txid?.slice(0, 12) || 'pending'}...`, 'success');
+  } catch (err) {
+    console.error('Score submission error:', err);
+    showToast('Score submission cancelled or failed', 'info');
+  }
 }
 
-// ─── High Score Submission (Score contract - costs 5000 uSTX) ───
-function handleSubmitHighScore() {
+// ─── High Score Submission (Score contract - costs 5000 uSTX, async) ───
+async function handleSubmitHighScore() {
   if (!userAddress) {
     showToast('Connect your wallet first!', 'error');
     return;
@@ -156,19 +172,17 @@ function handleSubmitHighScore() {
 
   showToast('Submitting to Hall of Fame (5000 uSTX fee)...', 'info');
 
-  submitHighScore(
-    lastGameData.score,
-    (data) => {
-      showToast(`Hall of Fame entry submitted! TX: ${data.txId.slice(0, 12)}...`, 'success');
-    },
-    () => {
-      showToast('Submission cancelled', 'info');
-    }
-  );
+  try {
+    const result = await submitHighScore(lastGameData.score);
+    showToast(`Hall of Fame entry submitted! TX: ${result.txid?.slice(0, 12) || 'pending'}...`, 'success');
+  } catch (err) {
+    console.error('High score submission error:', err);
+    showToast('Submission cancelled or failed', 'info');
+  }
 }
 
-// ─── Mint NFT ───
-function handleMintNFT() {
+// ─── Mint NFT (async) ───
+async function handleMintNFT() {
   if (!userAddress) {
     showToast('Connect your wallet first!', 'error');
     return;
@@ -177,15 +191,13 @@ function handleMintNFT() {
   showToast('Minting your Stacks Hurry NFT...', 'info');
   hideMintModal();
 
-  mintOpenNFT(
-    userAddress,
-    (data) => {
-      showToast(`NFT Minted! TX: ${data.txId.slice(0, 12)}...`, 'success');
-    },
-    () => {
-      showToast('Minting cancelled', 'info');
-    }
-  );
+  try {
+    const result = await mintOpenNFT(userAddress);
+    showToast(`NFT Minted! TX: ${result.txid?.slice(0, 12) || 'pending'}...`, 'success');
+  } catch (err) {
+    console.error('Minting error:', err);
+    showToast('Minting cancelled or failed', 'info');
+  }
 }
 
 // ─── Leaderboard ───
@@ -195,8 +207,6 @@ async function openLeaderboard() {
 
   try {
     const count = await getPlayerCount();
-    // Since we can't enumerate all players from the contract directly,
-    // we show a message with total player count and the connected user's score.
     const entries = [];
 
     if (userAddress) {
@@ -209,7 +219,6 @@ async function openLeaderboard() {
       }
     }
 
-    // Add total player count info
     const countEl = document.getElementById('lb-player-count');
     countEl.textContent = `${count} Total Players on Chain`;
 

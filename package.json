@@ -37,9 +37,9 @@
     "README.md"
   ],
   "dependencies": {
-    "@stacks/connect": "^7.9.0",
-    "@stacks/network": "^6.17.0",
-    "@stacks/transactions": "^6.17.0"
+    "@stacks/connect": "^8.2.6",
+    "@stacks/network": "^7.3.1",
+    "@stacks/transactions": "^7.4.0"
   },
   "devDependencies": {
     "vite": "^5.4.0"

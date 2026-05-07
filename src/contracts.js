@@ -1,64 +1,57 @@
 /**
- * Stacks Hurry - Contract Interaction Layer
- * Wraps all 4 deployed Clarity contracts on Stacks mainnet
+ * Stacks Hurry - Contract Interaction Layer (v8 API)
+ * Uses @stacks/connect 8.x request() API with JSON-RPC
  */
 
-import { openContractCall, openSTXTransfer } from '@stacks/connect';
+import { request } from '@stacks/connect';
 import {
-  uintCV,
-  principalCV,
-  callReadOnlyFunction,
+  Cl,
+  fetchCallReadOnlyFunction,
   cvToValue,
 } from '@stacks/transactions';
-import { StacksMainnet } from '@stacks/network';
 
 // ─── Contract Addresses ───
 const DEPLOYER = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF';
+const NETWORK = 'mainnet';
 
 export const CONTRACTS = {
-  OPEN_MINT_NFT: { address: DEPLOYER, name: 'open-mint-nft' },
-  CHARACTER_NFT: { address: DEPLOYER, name: 'character-nft' },
-  SCORE:         { address: DEPLOYER, name: 'score' },
-  ROCKET_SHOOTER:{ address: DEPLOYER, name: 'rocket-shooter' },
+  OPEN_MINT_NFT:  `${DEPLOYER}.open-mint-nft`,
+  CHARACTER_NFT:  `${DEPLOYER}.character-nft`,
+  SCORE:          `${DEPLOYER}.score`,
+  ROCKET_SHOOTER: `${DEPLOYER}.rocket-shooter`,
 };
 
-const network = new StacksMainnet();
-
 // ─── Helper: Read-only contract call ───
-async function readOnly(contract, functionName, args = []) {
+async function readOnly(contractId, functionName, args = []) {
   try {
-    const result = await callReadOnlyFunction({
-      network,
-      contractAddress: contract.address,
-      contractName: contract.name,
+    const [contractAddress, contractName] = contractId.split('.');
+    const result = await fetchCallReadOnlyFunction({
+      contractAddress,
+      contractName,
       functionName,
       functionArgs: args,
-      senderAddress: contract.address,
+      senderAddress: contractAddress,
     });
     return cvToValue(result);
   } catch (err) {
-    console.error(`Read-only call failed: ${contract.name}.${functionName}`, err);
+    console.error(`Read-only call failed: ${contractId}.${functionName}`, err);
     return null;
   }
 }
 
-// ─── Helper: Write contract call ───
-function writeContract(contract, functionName, args, onFinish, onCancel) {
-  openContractCall({
-    network,
-    contractAddress: contract.address,
-    contractName: contract.name,
+// ─── Helper: Write contract call via request() ───
+async function writeContract(contractId, functionName, functionArgs) {
+  const hexArgs = functionArgs.map(arg => Cl.serialize(arg));
+
+  const result = await request('stx_callContract', {
+    contract: contractId,
     functionName,
-    functionArgs: args,
-    onFinish: (data) => {
-      console.log(`TX submitted: ${data.txId}`);
-      if (onFinish) onFinish(data);
-    },
-    onCancel: () => {
-      console.log('TX cancelled');
-      if (onCancel) onCancel();
-    },
+    functionArgs: hexArgs,
+    network: NETWORK,
   });
+
+  console.log(`TX submitted:`, result);
+  return result;
 }
 
 // ══════════════════════════════════════════
@@ -66,13 +59,11 @@ function writeContract(contract, functionName, args, onFinish, onCancel) {
 // ══════════════════════════════════════════
 
 /** Mint an open-edition NFT to the given recipient */
-export function mintOpenNFT(recipientAddress, onFinish, onCancel) {
-  writeContract(
+export async function mintOpenNFT(recipientAddress) {
+  return writeContract(
     CONTRACTS.OPEN_MINT_NFT,
     'mint',
-    [principalCV(recipientAddress)],
-    onFinish,
-    onCancel
+    [Cl.principal(recipientAddress)]
   );
 }
 
@@ -97,13 +88,11 @@ export async function getCharacterCount() {
 // ══════════════════════════════════════════
 
 /** Submit high score (requires 5000 uSTX fee) */
-export function submitHighScore(score, onFinish, onCancel) {
-  writeContract(
+export async function submitHighScore(score) {
+  return writeContract(
     CONTRACTS.SCORE,
     'submit-score',
-    [uintCV(score)],
-    onFinish,
-    onCancel
+    [Cl.uint(score)]
   );
 }
 
@@ -112,7 +101,7 @@ export async function getHallOfFameScore(playerAddress) {
   const result = await readOnly(
     CONTRACTS.SCORE,
     'get-high-score',
-    [principalCV(playerAddress)]
+    [Cl.principal(playerAddress)]
   );
   return typeof result === 'number' ? result : (result || 0);
 }
@@ -122,13 +111,11 @@ export async function getHallOfFameScore(playerAddress) {
 // ══════════════════════════════════════════
 
 /** Submit game score (free, just gas) */
-export function submitGameScore(score, onFinish, onCancel) {
-  writeContract(
+export async function submitGameScore(score) {
+  return writeContract(
     CONTRACTS.ROCKET_SHOOTER,
     'submit-score',
-    [uintCV(score)],
-    onFinish,
-    onCancel
+    [Cl.uint(score)]
   );
 }
 
@@ -137,7 +124,7 @@ export async function getPlayerScore(playerAddress) {
   const result = await readOnly(
     CONTRACTS.ROCKET_SHOOTER,
     'get-score',
-    [principalCV(playerAddress)]
+    [Cl.principal(playerAddress)]
   );
   if (result) {
     return {
@@ -154,7 +141,7 @@ export async function getPlayerHighScore(playerAddress) {
   const result = await readOnly(
     CONTRACTS.ROCKET_SHOOTER,
     'get-high-score',
-    [principalCV(playerAddress)]
+    [Cl.principal(playerAddress)]
   );
   return typeof result === 'number' ? result : (result || 0);
 }
@@ -170,7 +157,7 @@ export async function getGamesPlayed(playerAddress) {
   const result = await readOnly(
     CONTRACTS.ROCKET_SHOOTER,
     'get-games-played',
-    [principalCV(playerAddress)]
+    [Cl.principal(playerAddress)]
   );
   return typeof result === 'number' ? result : (result || 0);
 }
