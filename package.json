@@ -1,0 +1,47 @@
+{
+  "name": "stacks-hurry",
+  "version": "1.0.0",
+  "description": "Stacks Hurry - A blockchain-powered rocket shooter game on Stacks chain with on-chain scoring, NFT minting, and leaderboard",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "stacks",
+    "blockchain",
+    "game",
+    "nft",
+    "web3",
+    "rocket-shooter",
+    "clarity",
+    "stacks-connect",
+    "canvas-game",
+    "stacks-hurry"
+  ],
+  "author": "Dark-Brain07",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dark-Brain07/StacksHurry.git"
+  },
+  "homepage": "https://stackshurry.vercel.app",
+  "files": [
+    "src/",
+    "public/",
+    "index.html",
+    "style.css",
+    "vite.config.js",
+    "README.md"
+  ],
+  "dependencies": {
+    "@stacks/connect": "^7.9.0",
+    "@stacks/network": "^6.17.0",
+    "@stacks/transactions": "^6.17.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

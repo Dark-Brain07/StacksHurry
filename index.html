@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stacks Hurry - Blockchain Rocket Shooter Game</title>
+    <meta name="description" content="Stacks Hurry is a fast-paced rocket shooter game built on Stacks blockchain. Shoot asteroids, earn on-chain scores, mint NFTs, and climb the leaderboard." />
+    <meta name="keywords" content="Stacks, blockchain game, NFT, rocket shooter, Web3 gaming" />
+    <meta property="og:title" content="Stacks Hurry - Blockchain Rocket Shooter" />
+    <meta property="og:description" content="Play, score, and mint NFTs on the Stacks blockchain." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <!-- Stars background -->
+    <div id="stars-bg"></div>
+
+    <!-- Main Menu Screen -->
+    <div id="screen-menu" class="screen active">
+        <div class="menu-container">
+            <div class="logo-section">
+                <div class="logo-icon">🚀</div>
+                <h1 class="game-title">STACKS<span class="title-accent">HURRY</span></h1>
+                <p class="game-subtitle">Blockchain Rocket Shooter on Stacks</p>
+            </div>
+
+            <div class="wallet-section" id="wallet-section">
+                <button id="btn-connect-wallet" class="btn btn-primary btn-glow">
+                    <span class="btn-icon">⚡</span> Connect Wallet
+                </button>
+                <div id="wallet-info" class="wallet-info hidden">
+                    <div class="wallet-address" id="wallet-address"></div>
+                    <div class="wallet-balance" id="wallet-balance"></div>
+                </div>
+            </div>
+
+            <div class="menu-buttons">
+                <button id="btn-play" class="btn btn-large btn-play" disabled>
+                    <span class="btn-icon">🎮</span> START GAME
+                </button>
+                <button id="btn-mint-nft" class="btn btn-secondary" disabled>
+                    <span class="btn-icon">🎨</span> Mint NFT
+                </button>
+                <button id="btn-leaderboard" class="btn btn-secondary">
+                    <span class="btn-icon">🏆</span> Leaderboard
+                </button>
+                <button id="btn-my-stats" class="btn btn-secondary" disabled>
+                    <span class="btn-icon">📊</span> My Stats
+                </button>
+            </div>
+
+            <div class="contracts-badge">
+                <span class="badge-dot"></span>
+                <span>4 Smart Contracts Live on Stacks Mainnet</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="screen-game" class="screen">
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="hud-item">
+                    <span class="hud-label">SCORE</span>
+                    <span class="hud-value" id="hud-score">0</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <span class="hud-game-title">STACKS HURRY</span>
+            </div>
+            <div class="hud-right">
+                <div class="hud-item">
+                    <span class="hud-label">LIVES</span>
+                    <span class="hud-value" id="hud-lives">❤️❤️❤️</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">LEVEL</span>
+                    <span class="hud-value" id="hud-level">1</span>
+                </div>
+            </div>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <div id="game-start-overlay" class="game-overlay">
+            <div class="overlay-content">
+                <h2>🚀 GET READY!</h2>
+                <p>Move: Mouse / Touch</p>
+                <p>Shoot: Click / Tap</p>
+                <p class="countdown" id="countdown">3</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="screen-gameover" class="screen">
+        <div class="gameover-container">
+            <div class="gameover-header">
+                <h2 class="gameover-title">GAME OVER</h2>
+                <div class="gameover-score">
+                    <span class="score-label">Final Score</span>
+                    <span class="score-value" id="final-score">0</span>
+                </div>
+                <div class="gameover-stats">
+                    <div class="stat">
+                        <span class="stat-label">Level</span>
+                        <span class="stat-value" id="final-level">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Asteroids</span>
+                        <span class="stat-value" id="final-asteroids">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gameover-actions">
+                <button id="btn-submit-score" class="btn btn-primary btn-glow">
+                    <span class="btn-icon">⛓️</span> Submit Score On-Chain
+                </button>
+                <button id="btn-submit-highscore" class="btn btn-secondary">
+                    <span class="btn-icon">🏅</span> Submit to Hall of Fame (5000 uSTX)
+                </button>
+                <button id="btn-play-again" class="btn btn-large btn-play">
+                    <span class="btn-icon">🔄</span> PLAY AGAIN
+                </button>
+                <button id="btn-back-menu" class="btn btn-ghost">
+                    ← Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="screen-leaderboard" class="screen">
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <button id="btn-lb-back" class="btn btn-ghost btn-sm">← Back</button>
+                <h2 class="leaderboard-title">🏆 LEADERBOARD</h2>
+                <div class="leaderboard-stats">
+                    <span id="lb-player-count">0 Players</span>
+                </div>
+            </div>
+            <div class="leaderboard-content">
+                <div id="leaderboard-list" class="leaderboard-list">
+                    <div class="leaderboard-loading">
+                        <div class="spinner"></div>
+                        <p>Loading scores from Stacks blockchain...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Screen -->
+    <div id="screen-stats" class="screen">
+        <div class="stats-container">
+            <div class="stats-header">
+                <button id="btn-stats-back" class="btn btn-ghost btn-sm">← Back</button>
+                <h2 class="stats-title">📊 MY STATS</h2>
+            </div>
+            <div class="stats-content">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🏅</div>
+                        <div class="stats-card-value" id="stat-highscore">0</div>
+                        <div class="stats-card-label">High Score</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🎮</div>
+                        <div class="stats-card-value" id="stat-games">0</div>
+                        <div class="stats-card-label">Games Played</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">📅</div>
+                        <div class="stats-card-value" id="stat-lastplayed">N/A</div>
+                        <div class="stats-card-label">Last Played</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🏆</div>
+                        <div class="stats-card-value" id="stat-halloffame">0</div>
+                        <div class="stats-card-label">Hall of Fame Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mint NFT Modal -->
+    <div id="modal-mint" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="btn-close-mint" class="modal-close">✕</button>
+            <h3 class="modal-title">🎨 Mint Your NFT</h3>
+            <p class="modal-desc">Mint a Stacks Hurry collectible NFT on the blockchain. This is an open mint — anyone can mint!</p>
+            <div class="nft-preview">
+                <div class="nft-card">
+                    <div class="nft-art">🚀</div>
+                    <div class="nft-name">Stacks Hurry Runner</div>
+                    <div class="nft-collection">Open Edition</div>
+                </div>
+            </div>
+            <button id="btn-do-mint" class="btn btn-primary btn-glow btn-full">
+                <span class="btn-icon">⚡</span> Mint Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
