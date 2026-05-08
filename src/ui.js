@@ -159,6 +159,24 @@ export function hideMintModal() {
   document.getElementById('modal-mint').classList.add('hidden');
 }
 
+// ─── Pause & Settings Modals ───
+
+export function showPauseModal() {
+  document.getElementById('modal-pause').classList.remove('hidden');
+}
+
+export function hidePauseModal() {
+  document.getElementById('modal-pause').classList.add('hidden');
+}
+
+export function showSettingsModal() {
+  document.getElementById('modal-settings').classList.remove('hidden');
+}
+
+export function hideSettingsModal() {
+  document.getElementById('modal-settings').classList.add('hidden');
+}
+
 // ─── Toast Notifications ───
 
 export function showToast(message, type = 'info', duration = 4000) {

@@ -12,7 +12,7 @@ import {
   getHallOfFameScore,
   getPlayerCount,
 } from './contracts.js';
-import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed } from './game.js';
+import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause } from './game.js';
 import {
   initUI,
   showScreen,
@@ -28,8 +28,12 @@ import {
   showMintModal,
   hideMintModal,
   showToast,
+  showPauseModal,
+  hidePauseModal,
+  showSettingsModal,
+  hideSettingsModal,
 } from './ui.js';
-import { initAudio } from './audio.js';
+import { initAudio, toggleSound } from './audio.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -67,6 +71,10 @@ function bindEvents() {
   document.getElementById('btn-mint-nft').addEventListener('click', () => showMintModal());
   document.getElementById('btn-leaderboard').addEventListener('click', openLeaderboard);
   document.getElementById('btn-my-stats').addEventListener('click', openStats);
+  document.getElementById('btn-settings').addEventListener('click', () => showSettingsModal());
+
+  // HUD
+  document.getElementById('btn-pause-game').addEventListener('click', togglePause);
 
   // Game Over
   document.getElementById('btn-submit-score').addEventListener('click', handleSubmitScore);
@@ -83,7 +91,24 @@ function bindEvents() {
   // Mint Modal
   document.getElementById('btn-close-mint').addEventListener('click', () => hideMintModal());
   document.getElementById('btn-do-mint').addEventListener('click', handleMintNFT);
-  document.querySelector('.modal-backdrop')?.addEventListener('click', () => hideMintModal());
+  document.querySelector('#modal-mint .modal-backdrop')?.addEventListener('click', () => hideMintModal());
+
+  // Settings Modal
+  document.getElementById('btn-close-settings').addEventListener('click', () => hideSettingsModal());
+  document.querySelector('#modal-settings .modal-backdrop')?.addEventListener('click', () => hideSettingsModal());
+  document.getElementById('toggle-sound').addEventListener('change', (e) => {
+    toggleSound(e.target.checked);
+  });
+
+  // Pause Modal
+  document.getElementById('btn-resume').addEventListener('click', togglePause);
+  document.getElementById('btn-quit').addEventListener('click', () => {
+    togglePause(); // Unpause internally
+    stopGame();
+    hidePauseModal();
+    showScreen('menu');
+  });
+  document.getElementById('btn-pause-settings').addEventListener('click', () => showSettingsModal());
 }
 
 // ─── Wallet Connection (v8 API) ───
@@ -119,11 +144,21 @@ function startNewGame() {
     onLivesUpdate: updateHUDLives,
     onLevelUpdate: updateHUDLevel,
     onGameOver: handleGameOver,
+    onPauseToggle: handlePauseToggle,
   });
 
   runCountdown(() => {
     startGame();
   });
+}
+
+// ─── Pause Handler ───
+function handlePauseToggle(isPaused) {
+  if (isPaused) {
+    showPauseModal();
+  } else {
+    hidePauseModal();
+  }
 }
 
 // ─── Game Over Handler ───

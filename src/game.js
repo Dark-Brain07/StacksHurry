@@ -10,6 +10,7 @@ let canvas, ctx;
 let animFrameId = null;
 let gameRunning = false;
 let gamePaused = false;
+let onPauseToggle = null;
 
 // Player
 let player = {};
@@ -69,9 +70,14 @@ export function initGame(canvasEl, callbacks) {
   onLivesUpdate = callbacks.onLivesUpdate;
   onLevelUpdate = callbacks.onLevelUpdate;
   onGameOver = callbacks.onGameOver;
+  onPauseToggle = callbacks.onPauseToggle;
 
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
+  
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && gameRunning) togglePause();
+  });
 
   // Input
   canvas.addEventListener('mousemove', handleMouseMove);
@@ -191,13 +197,21 @@ export function getScore() { return score; }
 export function getLevel() { return level; }
 export function getAsteroidsDestroyed() { return asteroidsDestroyed; }
 
+export function togglePause() {
+  if (!gameRunning) return;
+  gamePaused = !gamePaused;
+  if (onPauseToggle) onPauseToggle(gamePaused);
+}
+
 // ─── Main Loop ───
 
 function gameLoop() {
   if (!gameRunning) return;
 
-  update();
-  render();
+  if (!gamePaused) {
+    update();
+    render();
+  }
 
   animFrameId = requestAnimationFrame(gameLoop);
 }

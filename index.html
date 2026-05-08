@@ -52,6 +52,9 @@
                 <button id="btn-my-stats" class="btn btn-secondary" disabled>
                     <span class="btn-icon">📊</span> My Stats
                 </button>
+                <button id="btn-settings" class="btn btn-secondary">
+                    <span class="btn-icon">⚙️</span> Settings
+                </button>
             </div>
 
             <div class="contracts-badge">
@@ -81,6 +84,9 @@
                 <div class="hud-item">
                     <span class="hud-label">LEVEL</span>
                     <span class="hud-value" id="hud-level">1</span>
+                </div>
+                <div class="hud-item">
+                    <button id="btn-pause-game" class="btn btn-ghost btn-sm" style="font-size: 20px; padding: 4px;">⏸️</button>
                 </div>
             </div>
         </div>
@@ -184,6 +190,42 @@
                         <div class="stats-card-label">Hall of Fame Score</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Menu Overlay -->
+    <div id="modal-pause" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content" style="text-align: center;">
+            <h3 class="modal-title">⏸️ GAME PAUSED</h3>
+            <p class="modal-desc">Take a breath, pilot.</p>
+            <div class="gameover-actions" style="margin-top: 24px;">
+                <button id="btn-resume" class="btn btn-primary btn-glow btn-full">
+                    <span class="btn-icon">▶️</span> RESUME
+                </button>
+                <button id="btn-pause-settings" class="btn btn-secondary btn-full">
+                    <span class="btn-icon">⚙️</span> SETTINGS
+                </button>
+                <button id="btn-quit" class="btn btn-ghost btn-full">
+                    Quit to Main Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Overlay -->
+    <div id="modal-settings" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="btn-close-settings" class="modal-close">✕</button>
+            <h3 class="modal-title">⚙️ SETTINGS</h3>
+            <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                <span style="font-weight: 500;">Sound Effects</span>
+                <label class="switch">
+                    <input type="checkbox" id="toggle-sound" checked>
+                    <span class="slider round"></span>
+                </label>
             </div>
         </div>
     </div>

@@ -4,6 +4,11 @@
  */
 
 let audioCtx = null;
+let soundEnabled = true;
+
+export function toggleSound(enabled) {
+  soundEnabled = enabled;
+}
 
 function getCtx() {
   if (!audioCtx) {
@@ -20,6 +25,7 @@ export function initAudio() {
 
 /** Laser shoot sound */
 export function playShoot() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const osc = ctx.createOscillator();
@@ -38,6 +44,7 @@ export function playShoot() {
 
 /** Explosion sound */
 export function playExplosion() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const bufferSize = ctx.sampleRate * 0.3;
@@ -64,6 +71,7 @@ export function playExplosion() {
 
 /** Hit / damage sound */
 export function playHit() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const osc = ctx.createOscillator();
@@ -82,6 +90,7 @@ export function playHit() {
 
 /** Game over sound */
 export function playGameOver() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const notes = [400, 350, 300, 200];
@@ -103,6 +112,7 @@ export function playGameOver() {
 
 /** Level up sound */
 export function playLevelUp() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const notes = [400, 600, 800, 1000];
@@ -124,6 +134,7 @@ export function playLevelUp() {
 
 /** Collect / powerup sound */
 export function playCollect() {
+  if (!soundEnabled) return;
   try {
     const ctx = getCtx();
     const osc = ctx.createOscillator();
