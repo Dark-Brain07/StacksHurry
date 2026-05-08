@@ -25,7 +25,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dark-Brain07/StacksHurry.git"
+    "url": "git+https://github.com/Dark-Brain07/StacksHurry.git"
   },
   "homepage": "https://stackshurry.vercel.app",
   "files": [
