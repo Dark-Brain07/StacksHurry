@@ -15,6 +15,7 @@ A fast-paced blockchain-powered rocket shooter game built on the **Stacks** netw
 - **Progressive Difficulty** — Game gets harder as you level up
 - **Wallet Integration** — Connect via Stacks Connect (Hiro Wallet, etc.)
 
+
 ## 📜 Smart Contracts
 
 | Contract | Address | Purpose |
@@ -62,3 +63,4 @@ npm install stacks-hurry
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
+**Stacks Hurry Link - https://stackshurry.vercel.app/
