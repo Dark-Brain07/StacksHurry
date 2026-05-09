@@ -3,7 +3,7 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, initAudio } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, initAudio } from './audio.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -170,6 +170,7 @@ export function startGame() {
     width: PLAYER_SIZE,
     height: PLAYER_SIZE * 1.4,
     invincible: 0,
+    shieldActive: false,
   };
 
   mouseX = player.x;
@@ -284,6 +285,9 @@ function update() {
           playLevelUp();
         }
 
+        // Random powerup drop (8% chance)
+        if (Math.random() < 0.08) spawnPowerup(a.x, a.y);
+
         return false;
       }
     }
@@ -292,22 +296,49 @@ function update() {
     if (player.invincible <= 0) {
       const pDist = Math.hypot(player.x - a.x, player.y - a.y);
       if (pDist < a.radius + PLAYER_SIZE * 0.6) {
-        lives--;
-        player.invincible = 90; // 1.5 sec invincibility
-        spawnExplosion(a.x, a.y, a.radius);
-        playHit();
+        if (player.shieldActive) {
+          player.shieldActive = false;
+          player.invincible = 30; // Short invincibility after shield break
+          spawnExplosion(a.x, a.y, a.radius);
+          playHit();
+        } else {
+          lives--;
+          player.invincible = 90; // 1.5 sec invincibility
+          spawnExplosion(a.x, a.y, a.radius);
+          playHit();
 
-        if (onLivesUpdate) onLivesUpdate(lives);
+          if (onLivesUpdate) onLivesUpdate(lives);
 
-        if (lives <= 0) {
-          gameRunning = false;
-          playGameOver();
-          if (onGameOver) {
-            onGameOver({ score, level, asteroidsDestroyed });
+          if (lives <= 0) {
+            gameRunning = false;
+            playGameOver();
+            if (onGameOver) {
+              onGameOver({ score, level, asteroidsDestroyed });
+            }
           }
         }
         return false;
       }
+    }
+
+    return true;
+  });
+
+  // Update powerups
+  powerups = powerups.filter(p => {
+    p.y += p.speed;
+    p.rotation += 0.05;
+
+    if (p.y > canvas.height + 30) return false;
+
+    // Player collects powerup
+    const pDist = Math.hypot(player.x - p.x, player.y - p.y);
+    if (pDist < 20 + PLAYER_SIZE * 0.6) {
+      player.shieldActive = true;
+      playCollect();
+      score += 50; // Bonus score for collecting shield
+      if (onScoreUpdate) onScoreUpdate(score);
+      return false;
     }
 
     return true;
@@ -390,6 +421,16 @@ function spawnExplosion(x, y, radius) {
   }
 }
 
+function spawnPowerup(x, y) {
+  powerups.push({
+    x,
+    y,
+    speed: 1.5,
+    rotation: 0,
+    type: 'shield',
+  });
+}
+
 // ─── Render ───
 
 function render() {
@@ -456,6 +497,34 @@ function render() {
     ctx.fill();
     ctx.strokeStyle = COLORS.asteroidStroke;
     ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.restore();
+  });
+
+  // Powerups
+  powerups.forEach(p => {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+
+    // Shield Icon (Diamond)
+    ctx.beginPath();
+    ctx.moveTo(0, -12);
+    ctx.lineTo(10, 0);
+    ctx.lineTo(0, 12);
+    ctx.lineTo(-10, 0);
+    ctx.closePath();
+
+    ctx.fillStyle = 'rgba(168, 85, 247, 0.8)'; // Purple for shield
+    ctx.fill();
+    ctx.strokeStyle = '#d8b4fe';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Inner glow
+    ctx.shadowColor = '#d8b4fe';
+    ctx.shadowBlur = 10;
     ctx.stroke();
 
     ctx.restore();
@@ -530,6 +599,22 @@ function drawPlayer() {
   // Ship glow
   ctx.shadowColor = 'rgba(0,240,255,0.4)';
   ctx.shadowBlur = 20;
+
+  // Draw Shield Bubble if active
+  if (player.shieldActive) {
+    ctx.beginPath();
+    ctx.arc(0, 0, PLAYER_SIZE * 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(168, 85, 247, 0.2)'; // Transparent purple
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(216, 180, 254, 0.8)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Pulse effect
+    ctx.shadowColor = '#d8b4fe';
+    ctx.shadowBlur = 15 + Math.sin(frameCount * 0.1) * 10;
+    ctx.stroke();
+  }
 
   ctx.restore();
 }
