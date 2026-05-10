@@ -12,7 +12,7 @@ import {
   getHallOfFameScore,
   getPlayerCount,
 } from './contracts.js';
-import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause } from './game.js';
+import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setLowGraphics } from './game.js';
 import {
   initUI,
   showScreen,
@@ -98,6 +98,9 @@ function bindEvents() {
   document.querySelector('#modal-settings .modal-backdrop')?.addEventListener('click', () => hideSettingsModal());
   document.getElementById('toggle-sound').addEventListener('change', (e) => {
     toggleSound(e.target.checked);
+  });
+  document.getElementById('toggle-graphics').addEventListener('change', (e) => {
+    setLowGraphics(e.target.checked);
   });
 
   // Pause Modal

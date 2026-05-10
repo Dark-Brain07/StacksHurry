@@ -44,6 +44,7 @@ let mouseY = 0;
 let shooting = false;
 let shootCooldown = 0;
 let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
+let lowGraphics = false;
 
 // Callbacks
 let onScoreUpdate = null;
@@ -171,6 +172,10 @@ function handleTouchEnd(e) {
 }
 
 // ─── Game Lifecycle ───
+
+export function setLowGraphics(enabled) {
+  lowGraphics = enabled;
+}
 
 export function startGame() {
   // Reset state
@@ -590,7 +595,8 @@ function generateAsteroidShape(radius) {
 }
 
 function spawnExplosion(x, y, radius) {
-  const count = Math.floor(radius * 1.5) + 8;
+  const baseCount = Math.floor(radius * 1.5) + 8;
+  const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
     const speed = Math.random() * 4 + 1;
