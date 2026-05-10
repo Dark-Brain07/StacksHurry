@@ -350,6 +350,11 @@ function update() {
         player.multiShotActive = 600; // 10 seconds at 60fps
       } else if (p.type === 'speed') {
         player.speedActive = 600;
+      } else if (p.type === 'health') {
+        if (lives < 5) {
+          lives++;
+          if (onLivesUpdate) onLivesUpdate(lives);
+        }
       }
       playCollect();
       score += 50; // Bonus score for collecting powerup
@@ -443,7 +448,12 @@ function spawnExplosion(x, y, radius) {
 
 function spawnPowerup(x, y) {
   const rand = Math.random();
-  const type = rand < 0.33 ? 'shield' : rand < 0.66 ? 'multishot' : 'speed';
+  let type = 'shield';
+  if (rand < 0.25) type = 'shield';
+  else if (rand < 0.5) type = 'multishot';
+  else if (rand < 0.75) type = 'speed';
+  else type = 'health';
+
   powerups.push({
     x,
     y,
@@ -583,6 +593,20 @@ function render() {
       ctx.stroke();
 
       ctx.shadowColor = '#86efac';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+    } else if (p.type === 'health') {
+      // Health Icon (Cross)
+      ctx.beginPath();
+      ctx.rect(-4, -12, 8, 24);
+      ctx.rect(-12, -4, 24, 8);
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.8)'; // Red for health
+      ctx.fill();
+      ctx.strokeStyle = '#fca5a5';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.shadowColor = '#fca5a5';
       ctx.shadowBlur = 10;
       ctx.stroke();
     }
