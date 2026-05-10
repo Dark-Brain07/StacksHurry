@@ -21,6 +21,7 @@ let stars = [];
 let powerups = [];
 let enemies = [];
 let enemyBullets = [];
+let floatingTexts = [];
 
 // Stats
 let score = 0;
@@ -168,6 +169,7 @@ export function startGame() {
   powerups = [];
   enemies = [];
   enemyBullets = [];
+  floatingTexts = [];
   shootCooldown = 0;
 
   resizeCanvas();
@@ -305,6 +307,7 @@ function update() {
         const mult = multiplierTimer > 0 ? 2 : 1;
         const points = Math.ceil(a.radius * 2) * mult;
         score += points;
+        spawnFloatingText(a.x, a.y, `+${points}`);
         asteroidsDestroyed++;
         if (onScoreUpdate) onScoreUpdate(score);
 
@@ -385,7 +388,9 @@ function update() {
         comboCount++;
         if (comboCount >= 5) multiplierTimer = 300;
         const mult = multiplierTimer > 0 ? 2 : 1;
-        score += 200 * mult;
+        const points = 200 * mult;
+        score += points;
+        spawnFloatingText(e.x, e.y, `+${points}`);
         if (onScoreUpdate) onScoreUpdate(score);
 
         return false;
@@ -494,6 +499,13 @@ function update() {
     return p.life > 0;
   });
 
+  // Update floating texts
+  floatingTexts = floatingTexts.filter(ft => {
+    ft.y -= 1;
+    ft.life--;
+    return ft.life > 0;
+  });
+
   // Update stars
   stars.forEach(s => {
     s.y += s.speed;
@@ -590,6 +602,15 @@ function spawnEnemy() {
     vx: isLeft ? 2 : -2,
     vy: 0.5,
     radius: 20,
+  });
+}
+
+function spawnFloatingText(x, y, text) {
+  floatingTexts.push({
+    x,
+    y,
+    text,
+    life: 30,
   });
 }
 
@@ -713,6 +734,18 @@ function render() {
     ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
     ctx.lineWidth = 2;
     ctx.stroke();
+  });
+
+  // Floating texts
+  floatingTexts.forEach(ft => {
+    ctx.save();
+    ctx.fillStyle = `rgba(255, 255, 255, ${ft.life / 30})`;
+    ctx.font = 'bold 16px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0, 240, 255, 0.5)';
+    ctx.shadowBlur = 5;
+    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.restore();
   });
 
   // Powerups
