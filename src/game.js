@@ -20,6 +20,7 @@ let particles = [];
 let stars = [];
 let powerups = [];
 let enemies = [];
+let enemyBullets = [];
 
 // Stats
 let score = 0;
@@ -166,6 +167,7 @@ export function startGame() {
   particles = [];
   powerups = [];
   enemies = [];
+  enemyBullets = [];
   shootCooldown = 0;
 
   resizeCanvas();
@@ -362,6 +364,11 @@ function update() {
     // Bounce off edges
     if (e.x < 30 || e.x > canvas.width - 30) e.vx *= -1;
 
+    // Alien shooting
+    if (Math.random() < 0.015) {
+      enemyBullets.push({ x: e.x, y: e.y + 10, vy: BULLET_SPEED * 0.8 });
+    }
+
     // Off screen bottom
     if (e.y > canvas.height + 50) return false;
 
@@ -442,6 +449,38 @@ function update() {
       return false;
     }
 
+    return true;
+  });
+
+  // Update enemy bullets
+  enemyBullets = enemyBullets.filter(b => {
+    b.y += b.vy;
+    if (b.y > canvas.height + 10) return false;
+
+    // Player collision
+    if (player.invincible <= 0) {
+      const pDist = Math.hypot(player.x - b.x, player.y - b.y);
+      if (pDist < BULLET_RADIUS + PLAYER_SIZE * 0.6) {
+        if (player.shieldActive) {
+          player.shieldActive = false;
+          player.invincible = 30;
+          spawnExplosion(b.x, b.y, 10);
+          playHit();
+        } else {
+          lives--;
+          player.invincible = 90;
+          spawnExplosion(b.x, b.y, 10);
+          playHit();
+          if (onLivesUpdate) onLivesUpdate(lives);
+          if (lives <= 0) {
+            gameRunning = false;
+            playGameOver();
+            if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
+          }
+        }
+        return false;
+      }
+    }
     return true;
   });
 
@@ -659,6 +698,21 @@ function render() {
     ctx.fill();
 
     ctx.restore();
+  });
+
+  // Enemy Bullets
+  enemyBullets.forEach(b => {
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, BULLET_RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = '#ef4444'; // Red bullet
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x, b.y - 12);
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
   });
 
   // Powerups
