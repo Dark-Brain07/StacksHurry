@@ -41,6 +41,7 @@ let mouseX = 0;
 let mouseY = 0;
 let shooting = false;
 let shootCooldown = 0;
+let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
 
 // Callbacks
 let onScoreUpdate = null;
@@ -132,22 +133,53 @@ function handleMouseUp() {
 
 function handleTouchMove(e) {
   e.preventDefault();
-  const touch = e.touches[0];
-  mouseX = touch.clientX;
-  mouseY = touch.clientY;
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    if (joystick.active && touch.identifier === joystick.pointerId) {
+      joystick.dx = touch.clientX - joystick.startX;
+      joystick.dy = touch.clientY - joystick.startY;
+      const maxDist = 40;
+      const dist = Math.hypot(joystick.dx, joystick.dy);
+      if (dist > maxDist) {
+        joystick.dx = (joystick.dx / dist) * maxDist;
+        joystick.dy = (joystick.dy / dist) * maxDist;
+      }
+    } else if (!joystick.active) {
+      mouseX = touch.clientX;
+      mouseY = touch.clientY;
+    }
+  }
 }
 
 function handleTouchStart(e) {
   e.preventDefault();
   initAudio();
-  shooting = true;
-  const touch = e.touches[0];
-  mouseX = touch.clientX;
-  mouseY = touch.clientY;
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    if (touch.clientX < window.innerWidth / 2) {
+      joystick.active = true;
+      joystick.startX = touch.clientX;
+      joystick.startY = touch.clientY;
+      joystick.dx = 0;
+      joystick.dy = 0;
+      joystick.pointerId = touch.identifier;
+    } else {
+      shooting = true;
+    }
+  }
 }
 
-function handleTouchEnd() {
-  shooting = false;
+function handleTouchEnd(e) {
+  e.preventDefault();
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    if (joystick.active && touch.identifier === joystick.pointerId) {
+      joystick.active = false;
+      joystick.pointerId = null;
+    } else {
+      shooting = false;
+    }
+  }
 }
 
 // ─── Game Lifecycle ───
@@ -236,10 +268,17 @@ function update() {
 
   // Smooth player follow
   const speedMult = player.speedActive > 0 ? 0.22 : 0.12;
-  const dx = mouseX - player.x;
-  const dy = mouseY - player.y;
-  player.x += dx * speedMult;
-  player.y += dy * speedMult;
+  if (joystick.active) {
+    player.x += joystick.dx * 0.15;
+    player.y += joystick.dy * 0.15;
+    mouseX = player.x; // Sync mouse
+    mouseY = player.y;
+  } else {
+    const dx = mouseX - player.x;
+    const dy = mouseY - player.y;
+    player.x += dx * speedMult;
+    player.y += dy * speedMult;
+  }
 
   // Clamp to canvas
   player.x = Math.max(PLAYER_SIZE, Math.min(canvas.width - PLAYER_SIZE, player.x));
@@ -831,6 +870,24 @@ function render() {
 
   // Player
   drawPlayer();
+
+  // Virtual Joystick
+  if (joystick.active) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(joystick.startX, joystick.startY, 40, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(joystick.startX + joystick.dx, joystick.startY + joystick.dy, 20, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.fill();
+    ctx.restore();
+  }
 
   // Multiplier UI
   if (multiplierTimer > 0) {
