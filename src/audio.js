@@ -5,9 +5,18 @@
 
 let audioCtx = null;
 let soundEnabled = true;
+let bgmOsc = null;
+let bgmGain = null;
 
 export function toggleSound(enabled) {
   soundEnabled = enabled;
+  if (bgmGain && audioCtx) {
+    if (soundEnabled) {
+      bgmGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 0.1);
+    } else {
+      bgmGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+    }
+  }
 }
 
 function getCtx() {
@@ -21,6 +30,22 @@ function getCtx() {
 export function initAudio() {
   const ctx = getCtx();
   if (ctx.state === 'suspended') ctx.resume();
+
+  // Start background drone if not already playing
+  if (!bgmOsc && soundEnabled) {
+    try {
+      bgmOsc = ctx.createOscillator();
+      bgmGain = ctx.createGain();
+      bgmOsc.type = 'sine';
+      bgmOsc.frequency.setValueAtTime(55, ctx.currentTime);
+      bgmGain.gain.setValueAtTime(0.05, ctx.currentTime);
+      bgmOsc.connect(bgmGain);
+      bgmGain.connect(ctx.destination);
+      bgmOsc.start();
+    } catch (e) {
+      console.log('Failed to start BGM');
+    }
+  }
 }
 
 /** Laser shoot sound */
