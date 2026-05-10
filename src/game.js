@@ -4,6 +4,7 @@
  */
 
 import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, initAudio } from './audio.js';
+import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -50,21 +51,7 @@ let onLevelUpdate = null;
 let onGameOver = null;
 
 // ─── Constants ───
-const PLAYER_SIZE = 28;
-const BULLET_SPEED = 10;
-const BULLET_RADIUS = 3;
-const SHOOT_COOLDOWN = 10;
-const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
-
-// Colors
-const COLORS = {
-  player: '#00f0ff',
-  playerGlow: 'rgba(0,240,255,0.3)',
-  bullet: '#00f0ff',
-  bulletGlow: 'rgba(0,240,255,0.5)',
-  asteroid: '#94a3b8',
-  asteroidStroke: '#64748b',
-};
+import { PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, LEVEL_THRESHOLD, COLORS } from './constants.js';
 
 // ─── Initialization ───
 
