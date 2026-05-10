@@ -19,6 +19,7 @@ let asteroids = [];
 let particles = [];
 let stars = [];
 let powerups = [];
+let enemies = [];
 
 // Stats
 let score = 0;
@@ -164,6 +165,7 @@ export function startGame() {
   asteroids = [];
   particles = [];
   powerups = [];
+  enemies = [];
   shootCooldown = 0;
 
   resizeCanvas();
@@ -273,6 +275,11 @@ function update() {
     spawnAsteroid();
   }
 
+  // Spawn enemies
+  if (frameCount > 0 && frameCount % 400 === 0) {
+    spawnEnemy();
+  }
+
   // Update asteroids
   asteroids = asteroids.filter(a => {
     a.y += a.speed;
@@ -341,6 +348,66 @@ function update() {
           }
         }
         return false;
+      }
+    }
+
+    return true;
+  });
+
+  // Update enemies
+  enemies = enemies.filter(e => {
+    e.x += e.vx;
+    e.y += e.vy;
+
+    // Bounce off edges
+    if (e.x < 30 || e.x > canvas.width - 30) e.vx *= -1;
+
+    // Off screen bottom
+    if (e.y > canvas.height + 50) return false;
+
+    // Bullet collision
+    for (let i = bullets.length - 1; i >= 0; i--) {
+      const b = bullets[i];
+      const dist = Math.hypot(b.x - e.x, b.y - e.y);
+      if (dist < e.radius + BULLET_RADIUS) {
+        bullets.splice(i, 1);
+        spawnExplosion(e.x, e.y, e.radius);
+        playExplosion();
+
+        // Score & Combo
+        comboCount++;
+        if (comboCount >= 5) multiplierTimer = 300;
+        const mult = multiplierTimer > 0 ? 2 : 1;
+        score += 200 * mult;
+        if (onScoreUpdate) onScoreUpdate(score);
+
+        return false;
+      }
+    }
+
+    // Player collision
+    if (player.invincible <= 0) {
+      const pDist = Math.hypot(player.x - e.x, player.y - e.y);
+      if (pDist < e.radius + PLAYER_SIZE * 0.6) {
+        if (player.shieldActive) {
+          player.shieldActive = false;
+          player.invincible = 30;
+          spawnExplosion(e.x, e.y, e.radius);
+          playHit();
+          return false;
+        } else {
+          lives--;
+          player.invincible = 90;
+          spawnExplosion(e.x, e.y, e.radius);
+          playHit();
+          if (onLivesUpdate) onLivesUpdate(lives);
+          if (lives <= 0) {
+            gameRunning = false;
+            playGameOver();
+            if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
+          }
+          return false;
+        }
       }
     }
 
@@ -476,6 +543,17 @@ function spawnPowerup(x, y) {
   });
 }
 
+function spawnEnemy() {
+  const isLeft = Math.random() > 0.5;
+  enemies.push({
+    x: isLeft ? -30 : canvas.width + 30,
+    y: Math.random() * 100 + 50,
+    vx: isLeft ? 2 : -2,
+    vy: 0.5,
+    radius: 20,
+  });
+}
+
 // ─── Render ───
 
 function render() {
@@ -543,6 +621,42 @@ function render() {
     ctx.strokeStyle = COLORS.asteroidStroke;
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    ctx.restore();
+  });
+
+  // Enemies
+  enemies.forEach(e => {
+    ctx.save();
+    ctx.translate(e.x, e.y);
+
+    // UFO Base
+    ctx.beginPath();
+    ctx.ellipse(0, 5, 24, 8, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#64748b'; // Grey metal
+    ctx.fill();
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // UFO Dome
+    ctx.beginPath();
+    ctx.ellipse(0, -2, 12, 10, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(239, 68, 68, 0.9)'; // Red glass dome
+    ctx.fill();
+    ctx.strokeStyle = '#fca5a5';
+    ctx.stroke();
+
+    // Dome glow
+    ctx.shadowColor = '#ef4444';
+    ctx.shadowBlur = 15;
+    ctx.stroke();
+
+    // Alien eye (pulsing)
+    ctx.beginPath();
+    ctx.arc(0, -2, 3, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.5 + Math.sin(frameCount * 0.1) * 0.5})`;
+    ctx.fill();
 
     ctx.restore();
   });
