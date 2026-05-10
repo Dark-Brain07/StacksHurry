@@ -26,6 +26,8 @@ let lives = 3;
 let level = 1;
 let asteroidsDestroyed = 0;
 let frameCount = 0;
+let comboCount = 0;
+let multiplierTimer = 0;
 
 // Difficulty
 let asteroidSpawnRate = 90; // frames between spawns
@@ -154,6 +156,8 @@ export function startGame() {
   level = 1;
   asteroidsDestroyed = 0;
   frameCount = 0;
+  comboCount = 0;
+  multiplierTimer = 0;
   asteroidSpawnRate = 90;
   asteroidSpeed = 2;
   bullets = [];
@@ -244,6 +248,12 @@ function update() {
   // Speed timer
   if (player.speedActive > 0) player.speedActive--;
 
+  // Multiplier timer
+  if (multiplierTimer > 0) {
+    multiplierTimer--;
+    if (multiplierTimer <= 0) comboCount = 0;
+  }
+
   // Shooting
   if (shootCooldown > 0) shootCooldown--;
   if (shooting && shootCooldown <= 0) {
@@ -280,8 +290,11 @@ function update() {
         spawnExplosion(a.x, a.y, a.radius);
         playExplosion();
 
-        // Score
-        const points = Math.ceil(a.radius * 2);
+        // Score & Combo
+        comboCount++;
+        if (comboCount >= 5) multiplierTimer = 300; // 5 sec of 2x
+        const mult = multiplierTimer > 0 ? 2 : 1;
+        const points = Math.ceil(a.radius * 2) * mult;
         score += points;
         asteroidsDestroyed++;
         if (onScoreUpdate) onScoreUpdate(score);
@@ -616,6 +629,18 @@ function render() {
 
   // Player
   drawPlayer();
+
+  // Multiplier UI
+  if (multiplierTimer > 0) {
+    ctx.save();
+    ctx.fillStyle = `rgba(251, 191, 36, ${Math.min(1, multiplierTimer / 30)})`; // Fades out at end
+    ctx.font = 'bold 32px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = '#f59e0b';
+    ctx.shadowBlur = 15;
+    ctx.fillText('2X MULTIPLIER', canvas.width / 2, 80);
+    ctx.restore();
+  }
 }
 
 function drawPlayer() {
