@@ -32,6 +32,7 @@ let asteroidsDestroyed = 0;
 let frameCount = 0;
 let comboCount = 0;
 let multiplierTimer = 0;
+let shakeTime = 0;
 
 // Difficulty
 let asteroidSpawnRate = 90; // frames between spawns
@@ -365,6 +366,7 @@ function update() {
         } else {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
+          shakeTime = 15;
           spawnExplosion(a.x, a.y, a.radius);
           playHit();
 
@@ -436,6 +438,7 @@ function update() {
         } else {
           lives--;
           player.invincible = 90;
+          shakeTime = 15;
           spawnExplosion(e.x, e.y, e.radius);
           playHit();
           if (onLivesUpdate) onLivesUpdate(lives);
@@ -500,6 +503,7 @@ function update() {
         } else {
           lives--;
           player.invincible = 90;
+          shakeTime = 15;
           spawnExplosion(b.x, b.y, 10);
           playHit();
           if (onLivesUpdate) onLivesUpdate(lives);
@@ -647,6 +651,14 @@ function render() {
   // Clear
   ctx.fillStyle = '#0a0e1a';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.save();
+  if (shakeTime > 0) {
+    const dx = (Math.random() - 0.5) * 15;
+    const dy = (Math.random() - 0.5) * 15;
+    ctx.translate(dx, dy);
+    shakeTime--;
+  }
 
   // Stars
   stars.forEach(s => {
@@ -887,6 +899,8 @@ function render() {
     ctx.fillText('2X MULTIPLIER', canvas.width / 2, 80);
     ctx.restore();
   }
+
+  ctx.restore(); // Restore shake transform
 }
 
 function drawPlayer() {
