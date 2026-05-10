@@ -507,8 +507,9 @@ function update() {
   });
 
   // Update stars
+  const starSpeedMult = 1 + (level * 0.2);
   stars.forEach(s => {
-    s.y += s.speed;
+    s.y += s.speed * starSpeedMult;
     if (s.y > canvas.height) {
       s.y = 0;
       s.x = Math.random() * canvas.width;
