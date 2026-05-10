@@ -172,6 +172,7 @@ export function startGame() {
     invincible: 0,
     shieldActive: false,
     multiShotActive: 0,
+    speedActive: 0,
   };
 
   mouseX = player.x;
@@ -224,10 +225,11 @@ function update() {
   frameCount++;
 
   // Smooth player follow
+  const speedMult = player.speedActive > 0 ? 0.22 : 0.12;
   const dx = mouseX - player.x;
   const dy = mouseY - player.y;
-  player.x += dx * 0.12;
-  player.y += dy * 0.12;
+  player.x += dx * speedMult;
+  player.y += dy * speedMult;
 
   // Clamp to canvas
   player.x = Math.max(PLAYER_SIZE, Math.min(canvas.width - PLAYER_SIZE, player.x));
@@ -238,6 +240,9 @@ function update() {
 
   // Multi-shot timer
   if (player.multiShotActive > 0) player.multiShotActive--;
+
+  // Speed timer
+  if (player.speedActive > 0) player.speedActive--;
 
   // Shooting
   if (shootCooldown > 0) shootCooldown--;
@@ -343,6 +348,8 @@ function update() {
         player.shieldActive = true;
       } else if (p.type === 'multishot') {
         player.multiShotActive = 600; // 10 seconds at 60fps
+      } else if (p.type === 'speed') {
+        player.speedActive = 600;
       }
       playCollect();
       score += 50; // Bonus score for collecting powerup
@@ -376,15 +383,17 @@ function update() {
 // ─── Spawn Functions ───
 
 function fireBullet() {
+  const bSpeed = player.speedActive > 0 ? BULLET_SPEED * 1.5 : BULLET_SPEED;
+
   if (player.multiShotActive > 0) {
     // 3 bullets
-    bullets.push({ x: player.x, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
-    bullets.push({ x: player.x - 12, y: player.y - PLAYER_SIZE + 5, vx: -BULLET_SPEED * 0.2, vy: -BULLET_SPEED * 0.98 });
-    bullets.push({ x: player.x + 12, y: player.y - PLAYER_SIZE + 5, vx: BULLET_SPEED * 0.2, vy: -BULLET_SPEED * 0.98 });
+    bullets.push({ x: player.x, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
+    bullets.push({ x: player.x - 12, y: player.y - PLAYER_SIZE + 5, vx: -bSpeed * 0.2, vy: -bSpeed * 0.98 });
+    bullets.push({ x: player.x + 12, y: player.y - PLAYER_SIZE + 5, vx: bSpeed * 0.2, vy: -bSpeed * 0.98 });
   } else {
     // Standard 2 bullets
-    bullets.push({ x: player.x - 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
-    bullets.push({ x: player.x + 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
+    bullets.push({ x: player.x - 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
+    bullets.push({ x: player.x + 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
   }
   playShoot();
 }
@@ -433,13 +442,14 @@ function spawnExplosion(x, y, radius) {
 }
 
 function spawnPowerup(x, y) {
-  const isShield = Math.random() > 0.5;
+  const rand = Math.random();
+  const type = rand < 0.33 ? 'shield' : rand < 0.66 ? 'multishot' : 'speed';
   powerups.push({
     x,
     y,
     speed: 1.5,
     rotation: 0,
-    type: isShield ? 'shield' : 'multishot',
+    type,
   });
 }
 
@@ -553,6 +563,26 @@ function render() {
       ctx.stroke();
 
       ctx.shadowColor = '#fdba74';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+    } else if (p.type === 'speed') {
+      // Speed Icon (Chevron)
+      ctx.beginPath();
+      ctx.moveTo(-8, -10);
+      ctx.lineTo(0, -10);
+      ctx.lineTo(8, 0);
+      ctx.lineTo(0, 10);
+      ctx.lineTo(-8, 10);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.8)'; // Green for speed
+      ctx.fill();
+      ctx.strokeStyle = '#86efac';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.shadowColor = '#86efac';
       ctx.shadowBlur = 10;
       ctx.stroke();
     }
