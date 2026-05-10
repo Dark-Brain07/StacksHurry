@@ -171,6 +171,7 @@ export function startGame() {
     height: PLAYER_SIZE * 1.4,
     invincible: 0,
     shieldActive: false,
+    multiShotActive: 0,
   };
 
   mouseX = player.x;
@@ -235,6 +236,9 @@ function update() {
   // Invincibility timer
   if (player.invincible > 0) player.invincible--;
 
+  // Multi-shot timer
+  if (player.multiShotActive > 0) player.multiShotActive--;
+
   // Shooting
   if (shootCooldown > 0) shootCooldown--;
   if (shooting && shootCooldown <= 0) {
@@ -244,8 +248,9 @@ function update() {
 
   // Update bullets
   bullets = bullets.filter(b => {
-    b.y -= BULLET_SPEED;
-    return b.y > -10;
+    b.x += b.vx;
+    b.y += b.vy;
+    return b.y > -10 && b.x > -10 && b.x < canvas.width + 10;
   });
 
   // Spawn asteroids
@@ -334,9 +339,13 @@ function update() {
     // Player collects powerup
     const pDist = Math.hypot(player.x - p.x, player.y - p.y);
     if (pDist < 20 + PLAYER_SIZE * 0.6) {
-      player.shieldActive = true;
+      if (p.type === 'shield') {
+        player.shieldActive = true;
+      } else if (p.type === 'multishot') {
+        player.multiShotActive = 600; // 10 seconds at 60fps
+      }
       playCollect();
-      score += 50; // Bonus score for collecting shield
+      score += 50; // Bonus score for collecting powerup
       if (onScoreUpdate) onScoreUpdate(score);
       return false;
     }
@@ -367,14 +376,16 @@ function update() {
 // ─── Spawn Functions ───
 
 function fireBullet() {
-  bullets.push({
-    x: player.x - 8,
-    y: player.y - PLAYER_SIZE,
-  });
-  bullets.push({
-    x: player.x + 8,
-    y: player.y - PLAYER_SIZE,
-  });
+  if (player.multiShotActive > 0) {
+    // 3 bullets
+    bullets.push({ x: player.x, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
+    bullets.push({ x: player.x - 12, y: player.y - PLAYER_SIZE + 5, vx: -BULLET_SPEED * 0.2, vy: -BULLET_SPEED * 0.98 });
+    bullets.push({ x: player.x + 12, y: player.y - PLAYER_SIZE + 5, vx: BULLET_SPEED * 0.2, vy: -BULLET_SPEED * 0.98 });
+  } else {
+    // Standard 2 bullets
+    bullets.push({ x: player.x - 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
+    bullets.push({ x: player.x + 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -BULLET_SPEED });
+  }
   playShoot();
 }
 
@@ -422,12 +433,13 @@ function spawnExplosion(x, y, radius) {
 }
 
 function spawnPowerup(x, y) {
+  const isShield = Math.random() > 0.5;
   powerups.push({
     x,
     y,
     speed: 1.5,
     rotation: 0,
-    type: 'shield',
+    type: isShield ? 'shield' : 'multishot',
   });
 }
 
@@ -508,24 +520,42 @@ function render() {
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
 
-    // Shield Icon (Diamond)
-    ctx.beginPath();
-    ctx.moveTo(0, -12);
-    ctx.lineTo(10, 0);
-    ctx.lineTo(0, 12);
-    ctx.lineTo(-10, 0);
-    ctx.closePath();
+    if (p.type === 'shield') {
+      // Shield Icon (Diamond)
+      ctx.beginPath();
+      ctx.moveTo(0, -12);
+      ctx.lineTo(10, 0);
+      ctx.lineTo(0, 12);
+      ctx.lineTo(-10, 0);
+      ctx.closePath();
 
-    ctx.fillStyle = 'rgba(168, 85, 247, 0.8)'; // Purple for shield
-    ctx.fill();
-    ctx.strokeStyle = '#d8b4fe';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+      ctx.fillStyle = 'rgba(168, 85, 247, 0.8)'; // Purple for shield
+      ctx.fill();
+      ctx.strokeStyle = '#d8b4fe';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-    // Inner glow
-    ctx.shadowColor = '#d8b4fe';
-    ctx.shadowBlur = 10;
-    ctx.stroke();
+      ctx.shadowColor = '#d8b4fe';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+    } else if (p.type === 'multishot') {
+      // Multi-shot Icon (Triangle)
+      ctx.beginPath();
+      ctx.moveTo(0, -12);
+      ctx.lineTo(12, 10);
+      ctx.lineTo(-12, 10);
+      ctx.closePath();
+
+      ctx.fillStyle = 'rgba(251, 146, 60, 0.8)'; // Orange for multi-shot
+      ctx.fill();
+      ctx.strokeStyle = '#fdba74';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.shadowColor = '#fdba74';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+    }
 
     ctx.restore();
   });
