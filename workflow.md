@@ -13,7 +13,7 @@ This document tracks today's 15 high-quality commits to ensure organic, professi
 7.  **[x] Commit 7: Audio** - Add "Level Up" jingle and "Power-up Expire" warning sound.
 8.  **[x] Commit 8: Gameplay** - Add "Secondary Fire" (Double-tap/Right-click) with a cooldown.
 9.  **[x] Commit 9: Web3 UI** - Add "Hall of Fame" mini-preview on the main menu.
-10. **[ ] Commit 10: Visuals** - Add "Warp Drive" effect when leveling up (star burst).
+10. **[x] Commit 10: Visuals** - Add "Warp Drive" effect when leveling up (star burst).
 11. **[ ] Commit 11: Refactoring** - Move entity collision logic into a specialized `physics.js`.
 12. **[ ] Commit 12: UI Upgrade** - Add an "Achievements" toast system for milestones.
 13. **[ ] Commit 13: Gameplay** - Add "Asteroid Splitting" (Large asteroids break into 2 smaller ones).

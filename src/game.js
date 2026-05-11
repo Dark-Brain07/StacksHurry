@@ -47,6 +47,7 @@ let lowGraphics = false;
 let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
 let lastTouchTime = 0;
+let warpTime = 0;
 
 // Callbacks
 let onScoreUpdate = null;
@@ -211,6 +212,7 @@ export function startGame() {
   shootCooldown = 0;
   secondaryCooldown = 0;
   shockwave.active = false;
+  warpTime = 0;
   resetParticles();
   resetEnemies();
   onScoreUpdate(score);
@@ -419,6 +421,7 @@ function update() {
           asteroidSpeed = 2 + level * 0.4;
           if (onLevelUpdate) onLevelUpdate(level);
           playLevelUp();
+          warpTime = 60;
         }
 
         // Random powerup drop (8% chance)
@@ -534,7 +537,8 @@ function update() {
   });
 
   // Update stars
-  const starSpeedMult = 1 + (level * 0.2);
+  if (warpTime > 0) warpTime--;
+  const starSpeedMult = (1 + (level * 0.2)) * (warpTime > 0 ? 15 : 1);
   stars.forEach(s => {
     s.y += s.speed * starSpeedMult;
     if (s.y > canvas.height) {
@@ -633,10 +637,19 @@ function render() {
 
   // Stars
   stars.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${s.brightness})`;
-    ctx.fill();
+    if (warpTime > 0) {
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.x, s.y + s.radius * 20);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${s.brightness * (warpTime / 60)})`;
+      ctx.lineWidth = s.radius;
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.brightness})`;
+      ctx.fill();
+    }
   });
 
   // Shockwave
