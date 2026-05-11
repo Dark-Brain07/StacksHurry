@@ -3,10 +3,10 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, initAudio } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio } from './audio.js';
 import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
-import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies } from './enemies.js';
+import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -44,6 +44,9 @@ let shooting = false;
 let shootCooldown = 0;
 let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
 let lowGraphics = false;
+let secondaryCooldown = 0;
+let shockwave = { active: false, x: 0, y: 0, radius: 0 };
+let lastTouchTime = 0;
 
 // Callbacks
 let onScoreUpdate = null;
@@ -82,6 +85,10 @@ export function initGame(canvasEl, callbacks) {
   canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
   canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
   canvas.addEventListener('touchend', handleTouchEnd);
+  canvas.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    triggerSecondary();
+  });
 
   // Generate background stars
   generateStars();
@@ -144,6 +151,14 @@ function handleTouchMove(e) {
 function handleTouchStart(e) {
   e.preventDefault();
   initAudio();
+  
+  // Double tap detection
+  const now = Date.now();
+  if (now - lastTouchTime < 300) {
+    triggerSecondary();
+  }
+  lastTouchTime = now;
+
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
     if (touch.clientX < window.innerWidth / 2) {
@@ -194,6 +209,8 @@ export function startGame() {
   powerups = [];
   floatingTexts = [];
   shootCooldown = 0;
+  secondaryCooldown = 0;
+  shockwave.active = false;
   resetParticles();
   resetEnemies();
   onScoreUpdate(score);
@@ -243,6 +260,18 @@ export function togglePause() {
   if (!gameRunning) return;
   gamePaused = !gamePaused;
   if (onPauseToggle) onPauseToggle(gamePaused);
+}
+
+function triggerSecondary() {
+  if (secondaryCooldown <= 0 && gameRunning && !gamePaused) {
+    shockwave.active = true;
+    shockwave.x = player.x;
+    shockwave.y = player.y;
+    shockwave.radius = 0;
+    secondaryCooldown = 300;
+    playShockwave();
+    shakeTime = 10;
+  }
 }
 
 // ─── Main Loop ───
@@ -304,6 +333,28 @@ function update() {
   if (multiplierTimer > 0) {
     multiplierTimer--;
     if (multiplierTimer <= 0) comboCount = 0;
+  }
+
+  // Secondary cooldown
+  if (secondaryCooldown > 0) secondaryCooldown--;
+
+  // Shockwave logic
+  if (shockwave.active) {
+    shockwave.radius += 10;
+    if (shockwave.radius > 250) shockwave.active = false;
+
+    // Push asteroids
+    asteroids.forEach(a => {
+      const dist = Math.hypot(a.x - shockwave.x, a.y - shockwave.y);
+      if (dist < shockwave.radius && dist > shockwave.radius - 40) {
+        const angle = Math.atan2(a.y - shockwave.y, a.x - shockwave.x);
+        a.x += Math.cos(angle) * 8;
+        a.y += Math.sin(angle) * 8;
+      }
+    });
+
+    // Clear projectiles
+    clearEnemyProjectiles(shockwave.x, shockwave.y, shockwave.radius);
   }
 
   // Shooting
@@ -587,6 +638,22 @@ function render() {
     ctx.fillStyle = `rgba(255,255,255,${s.brightness})`;
     ctx.fill();
   });
+
+  // Shockwave
+  if (shockwave.active) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(shockwave.x, shockwave.y, shockwave.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(0, 240, 255, ${1 - shockwave.radius / 250})`;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+    
+    // Inner glow
+    ctx.shadowColor = '#00f0ff';
+    ctx.shadowBlur = 20;
+    ctx.stroke();
+    ctx.restore();
+  }
 
   // Particles
   renderParticles(ctx);

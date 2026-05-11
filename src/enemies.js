@@ -179,3 +179,14 @@ export function resetEnemies() {
   enemies = [];
   enemyBullets = [];
 }
+
+export function clearEnemyProjectiles(x, y, radius) {
+  enemyBullets = enemyBullets.filter(b => {
+    const dist = Math.hypot(b.x - x, b.y - y);
+    if (dist < radius) {
+      spawnExplosion(b.x, b.y, 5, true);
+      return false;
+    }
+    return true;
+  });
+}
