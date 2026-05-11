@@ -8,7 +8,7 @@ This document tracks today's 15 high-quality commits to ensure organic, professi
 2.  **[x] Commit 2: UI Upgrade** - Add visual "Power-up Countdown" timers/bars below the player.
 3.  **[x] Commit 3: Refactoring** - Extract `particles.js` logic to its own module for better maintainability.
 4.  **[x] Commit 4: Refactoring** - Extract `enemies.js` logic to its own module.
-5.  **[ ] Commit 5: Gameplay** - Add "Kamikaze" enemy type with distinct red trail and rush behavior.
+5.  **[x] Commit 5: Gameplay** - Add "Kamikaze" enemy type with distinct red trail and rush behavior.
 6.  **[ ] Commit 6: Visuals** - Implement canvas filters for a subtle CRT/Scanline overlay.
 7.  **[ ] Commit 7: Audio** - Add "Level Up" jingle and "Power-up Expire" warning sound.
 8.  **[ ] Commit 8: Gameplay** - Add "Secondary Fire" (Double-tap/Right-click) with a cooldown.

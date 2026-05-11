@@ -432,7 +432,7 @@ function update() {
   });
 
   // Update enemies & collisions
-  updateEnemies(canvas, frameCount);
+  updateEnemies(canvas, frameCount, player);
   const enemyCollision = checkEnemyCollisions(player, bullets, (x, y, points) => {
     const mult = multiplierTimer > 0 ? 2 : 1;
     const finalPoints = points * mult;

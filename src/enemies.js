@@ -10,26 +10,42 @@ import { BULLET_RADIUS, PLAYER_SIZE } from './constants.js';
 let enemies = [];
 let enemyBullets = [];
 
-export function updateEnemies(canvas, frameCount) {
+export function updateEnemies(canvas, frameCount, player) {
   // Update enemies
   enemies = enemies.filter(e => {
     e.x += e.vx;
     e.y += e.vy;
 
-    // Boundary bounce
-    if (e.x < 20 || e.x > canvas.width - 20) e.vx *= -1;
+    if (e.type === 'kamikaze') {
+      // Seek player X
+      const dx = player.x - e.x;
+      e.vx += dx * 0.005;
+      e.vx = Math.max(-4, Math.min(4, e.vx));
+      
+      // Trail
+      if (frameCount % 2 === 0) {
+        e.trail.push({ x: e.x, y: e.y, life: 15 });
+      }
+      e.trail = e.trail.filter(t => {
+        t.life--;
+        return t.life > 0;
+      });
+    } else {
+      // Boundary bounce for UFOs
+      if (e.x < 20 || e.x > canvas.width - 20) e.vx *= -1;
+
+      // Shooting for UFOs
+      if (frameCount % 120 === 0) {
+        enemyBullets.push({
+          x: e.x,
+          y: e.y + 10,
+          vy: 4,
+        });
+      }
+    }
 
     // Off screen
     if (e.y > canvas.height + 50) return false;
-
-    // Shooting
-    if (frameCount % 120 === 0) {
-      enemyBullets.push({
-        x: e.x,
-        y: e.y + 10,
-        vy: 4,
-      });
-    }
 
     return true;
   });
@@ -45,27 +61,50 @@ export function renderEnemies(ctx) {
   // Enemies
   enemies.forEach(e => {
     ctx.save();
-    ctx.translate(e.x, e.y);
     
-    // Draw UFO
-    ctx.beginPath();
-    ctx.ellipse(0, 5, 24, 8, 0, 0, Math.PI * 2);
-    ctx.fillStyle = '#64748b';
-    ctx.fill();
-    
-    ctx.beginPath();
-    ctx.arc(0, 0, 12, Math.PI, 0);
-    ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
-    ctx.fill();
-    
-    // Lights
-    const lightColor = (Math.floor(Date.now() / 200) % 2 === 0) ? '#00f0ff' : '#f87171';
-    ctx.fillStyle = lightColor;
-    ctx.beginPath();
-    ctx.arc(-12, 6, 2, 0, Math.PI * 2);
-    ctx.arc(0, 7, 2, 0, Math.PI * 2);
-    ctx.arc(12, 6, 2, 0, Math.PI * 2);
-    ctx.fill();
+    if (e.type === 'kamikaze') {
+      // Draw Trail
+      e.trail.forEach(t => {
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, e.radius * 0.4 * (t.life / 15), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(248, 113, 113, ${t.life / 30})`;
+        ctx.fill();
+      });
+
+      ctx.translate(e.x, e.y);
+      // Draw Kamikaze (Triangle ship)
+      ctx.beginPath();
+      ctx.moveTo(0, 15);
+      ctx.lineTo(-12, -10);
+      ctx.lineTo(12, -10);
+      ctx.closePath();
+      ctx.fillStyle = '#ef4444';
+      ctx.fill();
+      ctx.strokeStyle = '#f87171';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    } else {
+      ctx.translate(e.x, e.y);
+      // Draw UFO
+      ctx.beginPath();
+      ctx.ellipse(0, 5, 24, 8, 0, 0, Math.PI * 2);
+      ctx.fillStyle = '#64748b';
+      ctx.fill();
+      
+      ctx.beginPath();
+      ctx.arc(0, 0, 12, Math.PI, 0);
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+      ctx.fill();
+      
+      // Lights
+      const lightColor = (Math.floor(Date.now() / 200) % 2 === 0) ? '#00f0ff' : '#f87171';
+      ctx.fillStyle = lightColor;
+      ctx.beginPath();
+      ctx.arc(-12, 6, 2, 0, Math.PI * 2);
+      ctx.arc(0, 7, 2, 0, Math.PI * 2);
+      ctx.arc(12, 6, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
     
     ctx.restore();
   });
@@ -80,13 +119,17 @@ export function renderEnemies(ctx) {
 }
 
 export function spawnEnemy(canvas) {
+  const isKamikaze = Math.random() < 0.3;
   const isLeft = Math.random() > 0.5;
+  
   enemies.push({
     x: isLeft ? -30 : canvas.width + 30,
-    y: Math.random() * 100 + 50,
-    vx: isLeft ? 2 : -2,
-    vy: 0.5,
-    radius: 20,
+    y: Math.random() * 150 + 50,
+    vx: isLeft ? (isKamikaze ? 3 : 2) : (isKamikaze ? -3 : -2),
+    vy: isKamikaze ? 1.2 : 0.5,
+    radius: isKamikaze ? 15 : 20,
+    type: isKamikaze ? 'kamikaze' : 'ufo',
+    trail: []
   });
 }
 
