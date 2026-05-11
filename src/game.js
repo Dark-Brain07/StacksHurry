@@ -441,6 +441,12 @@ function update() {
           warpTime = 60;
         }
 
+        // Split large asteroids
+        if (a.radius > 26) {
+          spawnSmallAsteroid(a.x - 10, a.y, a.radius * 0.6);
+          spawnSmallAsteroid(a.x + 10, a.y, a.radius * 0.6);
+        }
+
         // Random powerup drop (8% chance)
         if (Math.random() < 0.08) spawnPowerup(a.x, a.y);
 
@@ -582,7 +588,7 @@ function fireBullet() {
 }
 
 function spawnAsteroid() {
-  const radius = Math.random() * 20 + 14;
+  const radius = Math.random() * 26 + 14; // 14 to 40
   asteroids.push({
     x: Math.random() * (canvas.width - 60) + 30,
     y: -50,
@@ -590,6 +596,18 @@ function spawnAsteroid() {
     speed: asteroidSpeed + Math.random() * 1.5,
     rotation: 0,
     rotationSpeed: (Math.random() - 0.5) * 0.06,
+    vertices: generateAsteroidShape(radius),
+  });
+}
+
+function spawnSmallAsteroid(x, y, radius) {
+  asteroids.push({
+    x,
+    y,
+    radius,
+    speed: asteroidSpeed * 1.3,
+    rotation: Math.random() * Math.PI,
+    rotationSpeed: (Math.random() - 0.5) * 0.15,
     vertices: generateAsteroidShape(radius),
   });
 }
