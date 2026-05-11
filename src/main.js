@@ -28,6 +28,7 @@ import {
   renderStats,
   showMintModal,
   hideMintModal,
+  showAchievement,
   showToast,
   showPauseModal,
   hidePauseModal,
@@ -148,6 +149,7 @@ function startNewGame() {
     onLivesUpdate: updateHUDLives,
     onLevelUpdate: updateHUDLevel,
     onLevelProgress: updateHUDLevelProgress,
+    onAchievement: showAchievement,
     onGameOver: handleGameOver,
     onPauseToggle: handlePauseToggle,
   });

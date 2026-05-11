@@ -49,12 +49,14 @@ let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
 let lastTouchTime = 0;
 let warpTime = 0;
+let achievements = { score1k: false, level5: false, asteroids50: false };
 
 // Callbacks
 let onScoreUpdate = null;
 let onLivesUpdate = null;
 let onLevelUpdate = null;
 let onLevelProgress = null;
+let onAchievement = null;
 let onGameOver = null;
 
 // ─── Constants ───
@@ -70,6 +72,7 @@ export function initGame(canvasEl, callbacks) {
   onLivesUpdate = callbacks.onLivesUpdate;
   onLevelUpdate = callbacks.onLevelUpdate;
   onLevelProgress = callbacks.onLevelProgress;
+  onAchievement = callbacks.onAchievement;
   onGameOver = callbacks.onGameOver;
   onPauseToggle = callbacks.onPauseToggle;
 
@@ -206,6 +209,7 @@ export function startGame() {
   multiplierTimer = 0;
   asteroidSpawnRate = 90;
   asteroidSpeed = 2;
+  achievements = { score1k: false, level5: false, asteroids50: false };
   bullets = [];
   asteroids = [];
   powerups = [];
@@ -336,6 +340,20 @@ function update() {
   if (multiplierTimer > 0) {
     multiplierTimer--;
     if (multiplierTimer <= 0) comboCount = 0;
+  }
+
+  // Achievements
+  if (!achievements.score1k && score >= 1000) {
+    achievements.score1k = true;
+    if (onAchievement) onAchievement('SCORE MASTER', 'Reached 1,000 points!', '💎');
+  }
+  if (!achievements.level5 && level >= 5) {
+    achievements.level5 = true;
+    if (onAchievement) onAchievement('ELITE PILOT', 'Reached Level 5!', '🚀');
+  }
+  if (!achievements.asteroids50 && asteroidsDestroyed >= 50) {
+    achievements.asteroids50 = true;
+    if (onAchievement) onAchievement('DESTROYER', 'Smashed 50 asteroids!', '💥');
   }
 
   // Secondary cooldown
