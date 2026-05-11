@@ -1002,4 +1002,24 @@ function drawPlayer() {
   }
 
   ctx.restore();
+
+  // Power-up indicators (drawn relative to ship position)
+  let indicatorY = y + 45;
+  if (player.multiShotActive > 0) {
+    drawIndicator(x, indicatorY, player.multiShotActive / 600, '#fb923c');
+    indicatorY += 8;
+  }
+  if (player.speedActive > 0) {
+    drawIndicator(x, indicatorY, player.speedActive / 600, '#22c55e');
+    indicatorY += 8;
+  }
+}
+
+function drawIndicator(x, y, percent, color) {
+  ctx.save();
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.fillRect(x - 20, y, 40, 4);
+  ctx.fillStyle = color;
+  ctx.fillRect(x - 20, y, 40 * percent, 4);
+  ctx.restore();
 }
