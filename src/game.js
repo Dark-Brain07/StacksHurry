@@ -7,6 +7,7 @@ import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playColle
 import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
+import { checkCircleCollision, calculateShockwavePush } from './physics.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -347,11 +348,10 @@ function update() {
 
     // Push asteroids
     asteroids.forEach(a => {
-      const dist = Math.hypot(a.x - shockwave.x, a.y - shockwave.y);
-      if (dist < shockwave.radius && dist > shockwave.radius - 40) {
-        const angle = Math.atan2(a.y - shockwave.y, a.x - shockwave.x);
-        a.x += Math.cos(angle) * 8;
-        a.y += Math.sin(angle) * 8;
+      const push = calculateShockwavePush(a, shockwave);
+      if (push) {
+        a.x += push.x;
+        a.y += push.y;
       }
     });
 
@@ -394,8 +394,7 @@ function update() {
     // Bullet collision
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
-      const dist = Math.hypot(b.x - a.x, b.y - a.y);
-      if (dist < a.radius + BULLET_RADIUS) {
+      if (checkCircleCollision(b.x, b.y, BULLET_RADIUS, a.x, a.y, a.radius)) {
         bullets.splice(i, 1);
         spawnExplosion(a.x, a.y, a.radius, lowGraphics);
         playExplosion();
@@ -433,8 +432,7 @@ function update() {
 
     // Player collision
     if (player.invincible <= 0) {
-      const pDist = Math.hypot(player.x - a.x, player.y - a.y);
-      if (pDist < a.radius + PLAYER_SIZE * 0.6) {
+      if (checkCircleCollision(player.x, player.y, PLAYER_SIZE * 0.6, a.x, a.y, a.radius)) {
         if (player.shieldActive) {
           player.shieldActive = false;
           player.invincible = 30; // Short invincibility after shield break
@@ -472,8 +470,7 @@ function update() {
     if (p.y > canvas.height + 30) return false;
 
     // Player collects powerup
-    const pDist = Math.hypot(player.x - p.x, player.y - p.y);
-    if (pDist < 20 + PLAYER_SIZE * 0.6) {
+    if (checkCircleCollision(player.x, player.y, PLAYER_SIZE * 0.6, p.x, p.y, 20)) {
       if (p.type === 'shield') {
         player.shieldActive = true;
       } else if (p.type === 'multishot') {

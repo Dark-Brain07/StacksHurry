@@ -1,0 +1,31 @@
+/**
+ * Stacks Hurry - Physics Engine
+ * Handles collision detection and mathematical utilities
+ */
+
+/**
+ * Basic circle collision detection
+ */
+export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
+  const dx = x1 - x2;
+  const dy = y1 - y2;
+  return Math.hypot(dx, dy) < r1 + r2;
+}
+
+/**
+ * Calculate push force from a shockwave
+ */
+export function calculateShockwavePush(entity, shockwave, power = 8) {
+  const dx = entity.x - shockwave.x;
+  const dy = entity.y - shockwave.y;
+  const dist = Math.hypot(dx, dy);
+  
+  if (dist < shockwave.radius && dist > shockwave.radius - 40) {
+    const angle = Math.atan2(dy, dx);
+    return {
+      x: Math.cos(angle) * power,
+      y: Math.sin(angle) * power
+    };
+  }
+  return null;
+}
