@@ -20,6 +20,7 @@ import {
   updateHUDScore,
   updateHUDLives,
   updateHUDLevel,
+  updateHUDLevelProgress,
   showGameOver,
   runCountdown,
   renderLeaderboard,
@@ -146,6 +147,7 @@ function startNewGame() {
     onScoreUpdate: updateHUDScore,
     onLivesUpdate: updateHUDLives,
     onLevelUpdate: updateHUDLevel,
+    onLevelProgress: updateHUDLevelProgress,
     onGameOver: handleGameOver,
     onPauseToggle: handlePauseToggle,
   });

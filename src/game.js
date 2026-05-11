@@ -50,6 +50,7 @@ let lowGraphics = false;
 let onScoreUpdate = null;
 let onLivesUpdate = null;
 let onLevelUpdate = null;
+let onLevelProgress = null;
 let onGameOver = null;
 
 // ─── Constants ───
@@ -64,6 +65,7 @@ export function initGame(canvasEl, callbacks) {
   onScoreUpdate = callbacks.onScoreUpdate;
   onLivesUpdate = callbacks.onLivesUpdate;
   onLevelUpdate = callbacks.onLevelUpdate;
+  onLevelProgress = callbacks.onLevelProgress;
   onGameOver = callbacks.onGameOver;
   onPauseToggle = callbacks.onPauseToggle;
 
@@ -196,6 +198,10 @@ export function startGame() {
   enemyBullets = [];
   floatingTexts = [];
   shootCooldown = 0;
+  onScoreUpdate(score);
+  onLivesUpdate(lives);
+  onLevelUpdate(level);
+  if (onLevelProgress) onLevelProgress(0);
 
   resizeCanvas();
 
@@ -342,6 +348,10 @@ function update() {
         spawnFloatingText(a.x, a.y, `+${points}`);
         asteroidsDestroyed++;
         if (onScoreUpdate) onScoreUpdate(score);
+        if (onLevelProgress) {
+          const progress = (asteroidsDestroyed % LEVEL_THRESHOLD) / LEVEL_THRESHOLD * 100;
+          onLevelProgress(progress);
+        }
 
         // Level up
         if (asteroidsDestroyed % LEVEL_THRESHOLD === 0) {

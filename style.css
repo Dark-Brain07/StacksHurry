@@ -393,6 +393,23 @@ html, body {
   color: var(--text-muted);
 }
 
+.level-progress-container {
+  width: 120px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.level-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(to right, var(--cyan), var(--primary));
+  box-shadow: 0 0 10px var(--cyan);
+  transition: width 0.3s ease-out;
+}
+
 /* ---------- Game Canvas ---------- */
 #game-canvas {
   position: absolute;
