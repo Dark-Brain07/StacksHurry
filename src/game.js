@@ -6,6 +6,7 @@
 import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, initAudio } from './audio.js';
 import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
+import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies } from './enemies.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -20,8 +21,6 @@ let bullets = [];
 let asteroids = [];
 let stars = [];
 let powerups = [];
-let enemies = [];
-let enemyBullets = [];
 let floatingTexts = [];
 
 // Stats
@@ -193,11 +192,10 @@ export function startGame() {
   bullets = [];
   asteroids = [];
   powerups = [];
-  enemies = [];
-  enemyBullets = [];
   floatingTexts = [];
   shootCooldown = 0;
   resetParticles();
+  resetEnemies();
   onScoreUpdate(score);
   onLivesUpdate(lives);
   onLevelUpdate(level);
@@ -319,7 +317,7 @@ function update() {
 
   // Spawn enemies
   if (frameCount > 0 && frameCount % 400 === 0) {
-    spawnEnemy();
+    spawnEnemy(canvas);
   }
 
   // Update asteroids
@@ -402,74 +400,6 @@ function update() {
     return true;
   });
 
-  // Update enemies
-  enemies = enemies.filter(e => {
-    e.x += e.vx;
-    e.y += e.vy;
-
-    // Bounce off edges
-    if (e.x < 30 || e.x > canvas.width - 30) e.vx *= -1;
-
-    // Alien shooting
-    if (Math.random() < 0.015) {
-      enemyBullets.push({ x: e.x, y: e.y + 10, vy: BULLET_SPEED * 0.8 });
-    }
-
-    // Off screen bottom
-    if (e.y > canvas.height + 50) return false;
-
-    // Bullet collision
-    for (let i = bullets.length - 1; i >= 0; i--) {
-      const b = bullets[i];
-      const dist = Math.hypot(b.x - e.x, b.y - e.y);
-      if (dist < e.radius + BULLET_RADIUS) {
-        bullets.splice(i, 1);
-        spawnExplosion(e.x, e.y, e.radius);
-        playExplosion();
-
-        // Score & Combo
-        comboCount++;
-        if (comboCount >= 5) multiplierTimer = 300;
-        const mult = multiplierTimer > 0 ? 2 : 1;
-        const points = 200 * mult;
-        score += points;
-        spawnFloatingText(e.x, e.y, `+${points}`);
-        if (onScoreUpdate) onScoreUpdate(score);
-
-        return false;
-      }
-    }
-
-    // Player collision
-    if (player.invincible <= 0) {
-      const pDist = Math.hypot(player.x - e.x, player.y - e.y);
-      if (pDist < e.radius + PLAYER_SIZE * 0.6) {
-        if (player.shieldActive) {
-          player.shieldActive = false;
-          player.invincible = 30;
-          spawnExplosion(e.x, e.y, e.radius, lowGraphics);
-          playHit();
-          return false;
-        } else {
-          lives--;
-          player.invincible = 90;
-          shakeTime = 15;
-          spawnExplosion(e.x, e.y, e.radius, lowGraphics);
-          playHit();
-          if (onLivesUpdate) onLivesUpdate(lives);
-          if (lives <= 0) {
-            gameRunning = false;
-            playGameOver();
-            if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
-          }
-          return false;
-        }
-      }
-    }
-
-    return true;
-  });
-
   // Update powerups
   powerups = powerups.filter(p => {
     p.y += p.speed;
@@ -483,7 +413,7 @@ function update() {
       if (p.type === 'shield') {
         player.shieldActive = true;
       } else if (p.type === 'multishot') {
-        player.multiShotActive = 600; // 10 seconds at 60fps
+        player.multiShotActive = 600;
       } else if (p.type === 'speed') {
         player.speedActive = 600;
       } else if (p.type === 'health') {
@@ -493,7 +423,7 @@ function update() {
         }
       }
       playCollect();
-      score += 50; // Bonus score for collecting powerup
+      score += 50;
       if (onScoreUpdate) onScoreUpdate(score);
       return false;
     }
@@ -501,38 +431,36 @@ function update() {
     return true;
   });
 
-  // Update enemy bullets
-  enemyBullets = enemyBullets.filter(b => {
-    b.y += b.vy;
-    if (b.y > canvas.height + 10) return false;
+  // Update enemies & collisions
+  updateEnemies(canvas, frameCount);
+  const enemyCollision = checkEnemyCollisions(player, bullets, (x, y, points) => {
+    const mult = multiplierTimer > 0 ? 2 : 1;
+    const finalPoints = points * mult;
+    score += finalPoints;
+    spawnFloatingText(x, y, `+${finalPoints}`);
+    if (onScoreUpdate) onScoreUpdate(score);
+    comboCount++;
+    if (comboCount >= 5) multiplierTimer = 300;
+  }, lowGraphics);
 
-    // Player collision
-    if (player.invincible <= 0) {
-      const pDist = Math.hypot(player.x - b.x, player.y - b.y);
-      if (pDist < BULLET_RADIUS + PLAYER_SIZE * 0.6) {
-        if (player.shieldActive) {
-          player.shieldActive = false;
-          player.invincible = 30;
-          spawnExplosion(b.x, b.y, 10, lowGraphics);
-          playHit();
-        } else {
-          lives--;
-          player.invincible = 90;
-          shakeTime = 15;
-          spawnExplosion(b.x, b.y, 10, lowGraphics);
-          playHit();
-          if (onLivesUpdate) onLivesUpdate(lives);
-          if (lives <= 0) {
-            gameRunning = false;
-            playGameOver();
-            if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
-          }
-        }
-        return false;
+  if (enemyCollision) {
+    if (player.shieldActive) {
+      player.shieldActive = false;
+      player.invincible = 30;
+      playHit();
+    } else {
+      lives--;
+      player.invincible = 90;
+      shakeTime = 15;
+      playHit();
+      if (onLivesUpdate) onLivesUpdate(lives);
+      if (lives <= 0) {
+        gameRunning = false;
+        playGameOver();
+        if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
       }
     }
-    return true;
-  });
+  }
 
   // Update particles
   updateParticles();
@@ -616,16 +544,7 @@ function spawnPowerup(x, y) {
   });
 }
 
-function spawnEnemy() {
-  const isLeft = Math.random() > 0.5;
-  enemies.push({
-    x: isLeft ? -30 : canvas.width + 30,
-    y: Math.random() * 100 + 50,
-    vx: isLeft ? 2 : -2,
-    vy: 0.5,
-    radius: 20,
-  });
-}
+
 
 function spawnFloatingText(x, y, text) {
   floatingTexts.push({
@@ -708,55 +627,8 @@ function render() {
   });
 
   // Enemies
-  enemies.forEach(e => {
-    ctx.save();
-    ctx.translate(e.x, e.y);
-
-    // UFO Base
-    ctx.beginPath();
-    ctx.ellipse(0, 5, 24, 8, 0, 0, Math.PI * 2);
-    ctx.fillStyle = '#64748b'; // Grey metal
-    ctx.fill();
-    ctx.strokeStyle = '#94a3b8';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // UFO Dome
-    ctx.beginPath();
-    ctx.ellipse(0, -2, 12, 10, 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(239, 68, 68, 0.9)'; // Red glass dome
-    ctx.fill();
-    ctx.strokeStyle = '#fca5a5';
-    ctx.stroke();
-
-    // Dome glow
-    ctx.shadowColor = '#ef4444';
-    ctx.shadowBlur = 15;
-    ctx.stroke();
-
-    // Alien eye (pulsing)
-    ctx.beginPath();
-    ctx.arc(0, -2, 3, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${0.5 + Math.sin(frameCount * 0.1) * 0.5})`;
-    ctx.fill();
-
-    ctx.restore();
-  });
-
-  // Enemy Bullets
-  enemyBullets.forEach(b => {
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, BULLET_RADIUS, 0, Math.PI * 2);
-    ctx.fillStyle = '#ef4444'; // Red bullet
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(b.x, b.y);
-    ctx.lineTo(b.x, b.y - 12);
-    ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  });
+  // Enemies
+  renderEnemies(ctx);
 
   // Floating texts
   floatingTexts.forEach(ft => {
