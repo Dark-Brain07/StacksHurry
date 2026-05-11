@@ -954,6 +954,68 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* ---------- Hall of Fame ---------- */
+.menu-footer {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.hall-of-fame {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  backdrop-filter: blur(5px);
+}
+
+.hof-title {
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: #64748b;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.hof-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.hof-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.hof-item:last-child {
+  border-bottom: none;
+}
+
+.hof-rank {
+  color: #fbbf24;
+  font-weight: 900;
+  width: 15px;
+  font-size: 0.8rem;
+}
+
+.hof-name {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-family: 'Space Mono', monospace;
+  text-align: left;
+}
+
+.hof-score {
+  color: #00f0ff;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 600px) {
   .game-title { font-size: 28px; }

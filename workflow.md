@@ -12,7 +12,7 @@ This document tracks today's 15 high-quality commits to ensure organic, professi
 6.  **[x] Commit 6: Visuals** - Implement canvas filters for a subtle CRT/Scanline overlay.
 7.  **[x] Commit 7: Audio** - Add "Level Up" jingle and "Power-up Expire" warning sound.
 8.  **[x] Commit 8: Gameplay** - Add "Secondary Fire" (Double-tap/Right-click) with a cooldown.
-9.  **[ ] Commit 9: Web3 UI** - Add "Hall of Fame" mini-preview on the main menu.
+9.  **[x] Commit 9: Web3 UI** - Add "Hall of Fame" mini-preview on the main menu.
 10. **[ ] Commit 10: Visuals** - Add "Warp Drive" effect when leveling up (star burst).
 11. **[ ] Commit 11: Refactoring** - Move entity collision logic into a specialized `physics.js`.
 12. **[ ] Commit 12: UI Upgrade** - Add an "Achievements" toast system for milestones.
