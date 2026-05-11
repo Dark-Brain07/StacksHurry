@@ -3,6 +3,16 @@ export const BULLET_SPEED = 10;
 export const BULLET_RADIUS = 3;
 export const SHOOT_COOLDOWN = 10;
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
+export const COMBO_TIMEOUT = 300; // 5 seconds in frames
+export const POWERUP_DURATION = 600; // 10 seconds in frames
+export const POWERUP_CHANCE = 0.08;
+
+// Initial Balancing
+export const INITIAL_SPAWN_RATE = 90;
+export const MIN_SPAWN_RATE = 20;
+export const INITIAL_ASTEROID_SPEED = 2;
+export const SHOCKWAVE_COOLDOWN = 300;
+export const SHOCKWAVE_RADIUS = 250;
 
 export const COLORS = {
   player: '#00f0ff',

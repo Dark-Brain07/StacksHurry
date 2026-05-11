@@ -4,7 +4,12 @@
  */
 
 import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio } from './audio.js';
-import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
+import { 
+  COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
+  LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
+  INITIAL_SPAWN_RATE, MIN_SPAWN_RATE, INITIAL_ASTEROID_SPEED,
+  SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS
+} from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 import { checkCircleCollision, calculateShockwavePush } from './physics.js';
@@ -209,8 +214,8 @@ export function startGame() {
   frameCount = 0;
   comboCount = 0;
   multiplierTimer = 0;
-  asteroidSpawnRate = 90;
-  asteroidSpeed = 2;
+  asteroidSpawnRate = INITIAL_SPAWN_RATE;
+  asteroidSpeed = INITIAL_ASTEROID_SPEED;
   achievements = { score1k: false, level5: false, asteroids50: false };
   bullets = [];
   asteroids = [];
@@ -277,7 +282,7 @@ function triggerSecondary() {
     shockwave.x = player.x;
     shockwave.y = player.y;
     shockwave.radius = 0;
-    secondaryCooldown = 300;
+    secondaryCooldown = SHOCKWAVE_COOLDOWN;
     playShockwave();
     shakeTime = 10;
   }
@@ -364,7 +369,7 @@ function update() {
   // Shockwave logic
   if (shockwave.active) {
     shockwave.radius += 10;
-    if (shockwave.radius > 250) shockwave.active = false;
+    if (shockwave.radius > SHOCKWAVE_RADIUS) shockwave.active = false;
 
     // Push asteroids
     asteroids.forEach(a => {
@@ -421,7 +426,7 @@ function update() {
 
         // Score & Combo
         comboCount++;
-        if (comboCount >= 5) multiplierTimer = 300; // 5 sec of 2x
+        if (comboCount >= 5) multiplierTimer = COMBO_TIMEOUT; 
         const mult = multiplierTimer > 0 ? 2 : 1;
         const points = Math.ceil(a.radius * 2) * mult;
         score += points;
@@ -436,8 +441,8 @@ function update() {
         // Level up
         if (asteroidsDestroyed % LEVEL_THRESHOLD === 0) {
           level++;
-          asteroidSpawnRate = Math.max(20, 90 - level * 8);
-          asteroidSpeed = 2 + level * 0.4;
+          asteroidSpawnRate = Math.max(MIN_SPAWN_RATE, INITIAL_SPAWN_RATE - level * 8);
+          asteroidSpeed = INITIAL_ASTEROID_SPEED + level * 0.4;
           if (onLevelUpdate) onLevelUpdate(level);
           playLevelUp();
           warpTime = 60;
@@ -450,8 +455,8 @@ function update() {
           spawnSmallAsteroid(a.x + 10, a.y, a.radius * 0.6);
         }
 
-        // Random powerup drop (8% chance)
-        if (Math.random() < 0.08) spawnPowerup(a.x, a.y);
+        // Random powerup drop
+        if (Math.random() < POWERUP_CHANCE) spawnPowerup(a.x, a.y);
 
         return false;
       }
@@ -696,7 +701,7 @@ function render() {
     ctx.save();
     ctx.beginPath();
     ctx.arc(shockwave.x, shockwave.y, shockwave.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(0, 240, 255, ${1 - shockwave.radius / 250})`;
+    ctx.strokeStyle = `rgba(0, 240, 255, ${1 - shockwave.radius / SHOCKWAVE_RADIUS})`;
     ctx.lineWidth = 4;
     ctx.stroke();
     
