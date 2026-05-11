@@ -5,6 +5,7 @@
 
 import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, initAudio } from './audio.js';
 import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
+import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -17,7 +18,6 @@ let onPauseToggle = null;
 let player = {};
 let bullets = [];
 let asteroids = [];
-let particles = [];
 let stars = [];
 let powerups = [];
 let enemies = [];
@@ -192,12 +192,12 @@ export function startGame() {
   asteroidSpeed = 2;
   bullets = [];
   asteroids = [];
-  particles = [];
   powerups = [];
   enemies = [];
   enemyBullets = [];
   floatingTexts = [];
   shootCooldown = 0;
+  resetParticles();
   onScoreUpdate(score);
   onLivesUpdate(lives);
   onLevelUpdate(level);
@@ -336,7 +336,7 @@ function update() {
       const dist = Math.hypot(b.x - a.x, b.y - a.y);
       if (dist < a.radius + BULLET_RADIUS) {
         bullets.splice(i, 1);
-        spawnExplosion(a.x, a.y, a.radius);
+        spawnExplosion(a.x, a.y, a.radius, lowGraphics);
         playExplosion();
 
         // Score & Combo
@@ -376,13 +376,13 @@ function update() {
         if (player.shieldActive) {
           player.shieldActive = false;
           player.invincible = 30; // Short invincibility after shield break
-          spawnExplosion(a.x, a.y, a.radius);
+          spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
         } else {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
           shakeTime = 15;
-          spawnExplosion(a.x, a.y, a.radius);
+          spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
 
           if (onLivesUpdate) onLivesUpdate(lives);
@@ -447,14 +447,14 @@ function update() {
         if (player.shieldActive) {
           player.shieldActive = false;
           player.invincible = 30;
-          spawnExplosion(e.x, e.y, e.radius);
+          spawnExplosion(e.x, e.y, e.radius, lowGraphics);
           playHit();
           return false;
         } else {
           lives--;
           player.invincible = 90;
           shakeTime = 15;
-          spawnExplosion(e.x, e.y, e.radius);
+          spawnExplosion(e.x, e.y, e.radius, lowGraphics);
           playHit();
           if (onLivesUpdate) onLivesUpdate(lives);
           if (lives <= 0) {
@@ -513,13 +513,13 @@ function update() {
         if (player.shieldActive) {
           player.shieldActive = false;
           player.invincible = 30;
-          spawnExplosion(b.x, b.y, 10);
+          spawnExplosion(b.x, b.y, 10, lowGraphics);
           playHit();
         } else {
           lives--;
           player.invincible = 90;
           shakeTime = 15;
-          spawnExplosion(b.x, b.y, 10);
+          spawnExplosion(b.x, b.y, 10, lowGraphics);
           playHit();
           if (onLivesUpdate) onLivesUpdate(lives);
           if (lives <= 0) {
@@ -535,14 +535,7 @@ function update() {
   });
 
   // Update particles
-  particles = particles.filter(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.life--;
-    p.vx *= 0.98;
-    p.vy *= 0.98;
-    return p.life > 0;
-  });
+  updateParticles();
 
   // Update floating texts
   floatingTexts = floatingTexts.filter(ft => {
@@ -604,24 +597,6 @@ function generateAsteroidShape(radius) {
   return vertices;
 }
 
-function spawnExplosion(x, y, radius) {
-  const baseCount = Math.floor(radius * 1.5) + 8;
-  const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
-  for (let i = 0; i < count; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 4 + 1;
-    const colors = ['#00f0ff', '#a855f7', '#fb923c', '#f87171', '#fbbf24', '#f0f4ff'];
-    particles.push({
-      x,
-      y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      life: Math.floor(Math.random() * 30) + 15,
-      maxLife: 45,
-      radius: Math.random() * 3 + 1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-    });
-  }
 }
 
 function spawnPowerup(x, y) {
@@ -685,15 +660,7 @@ function render() {
   });
 
   // Particles
-  particles.forEach(p => {
-    const alpha = p.life / p.maxLife;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius * alpha, 0, Math.PI * 2);
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = alpha;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  });
+  renderParticles(ctx);
 
   // Bullets
   bullets.forEach(b => {
