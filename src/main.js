@@ -34,6 +34,7 @@ import {
   hidePauseModal,
   showSettingsModal,
   hideSettingsModal,
+  vibrate,
 } from './ui.js';
 import { initAudio, toggleSound } from './audio.js';
 
@@ -150,6 +151,7 @@ function startNewGame() {
     onLevelUpdate: updateHUDLevel,
     onLevelProgress: updateHUDLevelProgress,
     onAchievement: showAchievement,
+    onVibrate: vibrate,
     onGameOver: handleGameOver,
     onPauseToggle: handlePauseToggle,
   });

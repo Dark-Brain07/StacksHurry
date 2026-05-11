@@ -57,6 +57,7 @@ let onLivesUpdate = null;
 let onLevelUpdate = null;
 let onLevelProgress = null;
 let onAchievement = null;
+let onVibrate = null;
 let onGameOver = null;
 
 // ─── Constants ───
@@ -73,6 +74,7 @@ export function initGame(canvasEl, callbacks) {
   onLevelUpdate = callbacks.onLevelUpdate;
   onLevelProgress = callbacks.onLevelProgress;
   onAchievement = callbacks.onAchievement;
+  onVibrate = callbacks.onVibrate;
   onGameOver = callbacks.onGameOver;
   onPauseToggle = callbacks.onPauseToggle;
 
@@ -439,6 +441,7 @@ function update() {
           if (onLevelUpdate) onLevelUpdate(level);
           playLevelUp();
           warpTime = 60;
+          if (onVibrate) onVibrate([100, 50, 100]);
         }
 
         // Split large asteroids
@@ -462,12 +465,14 @@ function update() {
           player.invincible = 30; // Short invincibility after shield break
           spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
+          if (onVibrate) onVibrate(40);
         } else {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
           shakeTime = 15;
           spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
+          if (onVibrate) onVibrate([150, 100, 150]);
 
           if (onLivesUpdate) onLivesUpdate(lives);
 
@@ -508,6 +513,7 @@ function update() {
         }
       }
       playCollect();
+      if (onVibrate) onVibrate(30);
       score += 50;
       if (onScoreUpdate) onScoreUpdate(score);
       return false;
