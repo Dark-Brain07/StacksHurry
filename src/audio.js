@@ -175,3 +175,22 @@ export function playCollect() {
     osc.stop(ctx.currentTime + 0.15);
   } catch (e) { /* silent fail */ }
 }
+
+/** Warning sound for expiring power-ups */
+export function playWarning() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(330, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.1);
+  } catch (e) { /* silent fail */ }
+}

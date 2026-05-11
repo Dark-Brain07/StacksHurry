@@ -3,7 +3,7 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, initAudio } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, initAudio } from './audio.js';
 import { COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies } from './enemies.js';
@@ -285,10 +285,20 @@ function update() {
   if (player.invincible > 0) player.invincible--;
 
   // Multi-shot timer
-  if (player.multiShotActive > 0) player.multiShotActive--;
+  if (player.multiShotActive > 0) {
+    player.multiShotActive--;
+    if (player.multiShotActive === 120 || player.multiShotActive === 60 || player.multiShotActive === 30) {
+      playWarning();
+    }
+  }
 
   // Speed timer
-  if (player.speedActive > 0) player.speedActive--;
+  if (player.speedActive > 0) {
+    player.speedActive--;
+    if (player.speedActive === 120 || player.speedActive === 60 || player.speedActive === 30) {
+      playWarning();
+    }
+  }
 
   // Multiplier timer
   if (multiplierTimer > 0) {
