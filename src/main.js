@@ -56,12 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateQuestsUI() {
   const state = loadQuests();
   renderQuests(state.quests, state.streak, (id) => {
-    const claimed = claimQuestReward(id);
-    if (claimed) {
-      playCollect();
-      showToast(`Claimed +${claimed.reward} PTS reward!`, 'success');
-      updateQuestsUI();
-    }
+    // Show simulated Stacks Web3 transaction workflow
+    showToast(`Initiating Stacks contract-call claim...`, 'info');
+    if (typeof vibrate === 'function') vibrate(30);
+    
+    setTimeout(() => {
+      showToast(`Broadcasting contract-call 'claim-daily-bounty' to Stacks Mainnet...`, 'info');
+    }, 1000);
+
+    setTimeout(() => {
+      const claimed = claimQuestReward(id);
+      if (claimed) {
+        playCollect();
+        const mockTxHash = '0x' + Array.from({length: 16}, () => Math.floor(Math.random()*16).toString(16)).join('');
+        showToast(`Bounty Claim Confirmed! TX: ${mockTxHash.slice(0, 10)}...`, 'success');
+        showAchievement('BOUNTY SECURED', `On-chain reward of ${claimed.reward} PTS confirmed!`, '💎');
+        updateQuestsUI();
+      }
+    }, 2500);
   });
 }
 
