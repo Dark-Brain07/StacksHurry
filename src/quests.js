@@ -12,36 +12,70 @@ export const QUEST_TYPES = {
 };
 
 // Default daily quest definitions
-const DEFAULT_QUESTS = [
+// Master pool of daily quests (6 quests)
+const MASTER_QUEST_POOL = [
   {
-    id: 'quest_smash_50',
+    id: 'quest_smash_30',
     type: QUEST_TYPES.SMASH_ASTEROIDS,
-    target: 50,
-    title: 'Asteroid Sweeper',
-    description: 'Smashed 50 asteroids in total.',
-    reward: 500, // Points or mock STX
-    progress: 0,
-    completed: false,
-    claimed: false
-  },
-  {
-    id: 'quest_play_3',
-    type: QUEST_TYPES.PLAY_GAMES,
-    target: 3,
-    title: 'Veteran Pilot',
-    description: 'Play 3 complete games.',
+    target: 30,
+    title: 'Debris Disposal',
+    description: 'Smashed 30 asteroids in total today.',
     reward: 300,
     progress: 0,
     completed: false,
     claimed: false
   },
   {
-    id: 'quest_score_5k',
+    id: 'quest_smash_60',
+    type: QUEST_TYPES.SMASH_ASTEROIDS,
+    target: 60,
+    title: 'Belt Sweeper',
+    description: 'Smashed 60 asteroids in total today.',
+    reward: 600,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_play_2',
+    type: QUEST_TYPES.PLAY_GAMES,
+    target: 2,
+    title: 'Recruit Training',
+    description: 'Play 2 complete games today.',
+    reward: 200,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_play_4',
+    type: QUEST_TYPES.PLAY_GAMES,
+    target: 4,
+    title: 'Hardcore Pilot',
+    description: 'Play 4 complete games today.',
+    reward: 400,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_score_3k',
     type: QUEST_TYPES.REACH_SCORE,
-    target: 5000,
-    title: 'Legendary Run',
-    description: 'Reach a score of 5,000 points in a single run.',
-    reward: 1000,
+    target: 3000,
+    title: 'Solid Run',
+    description: 'Reach a score of 3,000 points in a single run today.',
+    reward: 400,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_score_7k',
+    type: QUEST_TYPES.REACH_SCORE,
+    target: 7000,
+    title: 'Supernova Flight',
+    description: 'Reach a score of 7,000 points in a single run today.',
+    reward: 800,
     progress: 0,
     completed: false,
     claimed: false
@@ -54,6 +88,26 @@ let questState = {
   streak: 0,
   lastPlayedDate: ''
 };
+
+/**
+ * Get deterministic quests for a specific date string
+ */
+function getQuestsForDate(dateStr) {
+  let hash = 0;
+  for (let i = 0; i < dateStr.length; i++) {
+    hash = dateStr.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const seed = Math.abs(hash);
+
+  const selected = [];
+  const pool = JSON.parse(JSON.stringify(MASTER_QUEST_POOL));
+
+  for (let i = 0; i < 3; i++) {
+    const index = (seed + i) % pool.length;
+    selected.push(pool.splice(index, 1)[0]);
+  }
+  return selected;
+}
 
 /**
  * Get current date string (YYYY-MM-DD)
@@ -89,7 +143,7 @@ export function loadQuests() {
   // Initialize brand new state
   questState = {
     lastUpdatedDate: today,
-    quests: JSON.parse(JSON.stringify(DEFAULT_QUESTS)),
+    quests: getQuestsForDate(today),
     streak: 0,
     lastPlayedDate: today
   };
@@ -113,7 +167,7 @@ export function saveQuests() {
  */
 function resetDailyQuests(dateString) {
   questState.lastUpdatedDate = dateString;
-  questState.quests = JSON.parse(JSON.stringify(DEFAULT_QUESTS));
+  questState.quests = getQuestsForDate(dateString);
   saveQuests();
 }
 
