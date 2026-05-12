@@ -13,6 +13,7 @@ import {
 import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 import { checkCircleCollision, calculateShockwavePush } from './physics.js';
+import { updateQuestProgress, QUEST_TYPES } from './quests.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -63,6 +64,7 @@ let onLevelUpdate = null;
 let onLevelProgress = null;
 let onAchievement = null;
 let onVibrate = null;
+let onQuestCompleted = null;
 let onGameOver = null;
 
 // ─── Constants ───
@@ -80,6 +82,7 @@ export function initGame(canvasEl, callbacks) {
   onLevelProgress = callbacks.onLevelProgress;
   onAchievement = callbacks.onAchievement;
   onVibrate = callbacks.onVibrate;
+  onQuestCompleted = callbacks.onQuestCompleted;
   onGameOver = callbacks.onGameOver;
   onPauseToggle = callbacks.onPauseToggle;
 
@@ -432,6 +435,13 @@ function update() {
         score += points;
         spawnFloatingText(a.x, a.y, `+${points}`);
         asteroidsDestroyed++;
+        
+        // Update Daily Quest
+        const newlyCompleted = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
+        if (newlyCompleted && newlyCompleted.length > 0 && onQuestCompleted) {
+          newlyCompleted.forEach(q => onQuestCompleted(q));
+        }
+
         if (onScoreUpdate) onScoreUpdate(score);
         if (onLevelProgress) {
           const progress = (asteroidsDestroyed % LEVEL_THRESHOLD) / LEVEL_THRESHOLD * 100;
@@ -484,6 +494,16 @@ function update() {
           if (lives <= 0) {
             gameRunning = false;
             playGameOver();
+
+            // Update daily quests on game complete
+            let completedList = [];
+            completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.PLAY_GAMES, 1));
+            completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, score, true));
+            
+            if (completedList.length > 0 && onQuestCompleted) {
+              completedList.forEach(q => onQuestCompleted(q));
+            }
+
             if (onGameOver) {
               onGameOver({ score, level, asteroidsDestroyed });
             }
