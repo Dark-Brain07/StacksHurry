@@ -1,25 +1,25 @@
-# Daily Workflow: Stacks Hurry Development (May 11, 2026)
+# Daily Workflow: Stacks Hurry Development (May 12, 2026)
 
-This document tracks today's 15 high-quality commits to ensure organic, professional repository growth for Talent Protocol.
+This document tracks today's 15 high-quality, granular commits focusing on the **Daily Missions & Local Storage Persistence System**. This upgrades the game's retention loop and adds robust, professional-grade code to meet the Talent Protocol review standard.
 
 ## Commit Plan
 
-1.  **[x] Commit 1: UI Upgrade** - Add visual progress bar for Level-Up progress in the HUD.
-2.  **[x] Commit 2: UI Upgrade** - Add visual "Power-up Countdown" timers/bars below the player.
-3.  **[x] Commit 3: Refactoring** - Extract `particles.js` logic to its own module for better maintainability.
-4.  **[x] Commit 4: Refactoring** - Extract `enemies.js` logic to its own module.
-5.  **[x] Commit 5: Gameplay** - Add "Kamikaze" enemy type with distinct red trail and rush behavior.
-6.  **[x] Commit 6: Visuals** - Implement canvas filters for a subtle CRT/Scanline overlay.
-7.  **[x] Commit 7: Audio** - Add "Level Up" jingle and "Power-up Expire" warning sound.
-8.  **[x] Commit 8: Gameplay** - Add "Secondary Fire" (Double-tap/Right-click) with a cooldown.
-9.  **[x] Commit 9: Web3 UI** - Add "Hall of Fame" mini-preview on the main menu.
-10. **[x] Commit 10: Visuals** - Add "Warp Drive" effect when leveling up (star burst).
-11. **[x] Commit 11: Refactoring** - Move entity collision logic into a specialized `physics.js`.
-12. **[x] Commit 12: UI Upgrade** - Add an "Achievements" toast system for milestones.
-13. **[x] Commit 13: Gameplay** - Add "Asteroid Splitting" (Large asteroids break into 2 smaller ones).
-14. **[x] Commit 14: Mobile UX** - Add haptic feedback (vibration) for critical game events.
-15. **[x] Commit 15: Code Quality** - Implement a centralized `GameConfig` for balance tuning.
+1.  **[x] Commit 1: Infrastructure** - Create `src/quests.js` module for daily mission definitions, state management, and `localStorage` integration.
+2.  **[ ] Commit 2: UI Integration** - Add the Daily Missions panel structure to the main menu in `index.html`.
+3.  **[ ] Commit 3: Styling** - Add sleek glassmorphic styles for daily quests and progress metrics in `style.css`.
+4.  **[ ] Commit 4: UI Logic** - Implement dynamic rendering of quests, progress bars, and reward buttons in `src/ui.js`.
+5.  **[ ] Commit 5: Core Integration** - Connect the quest progress tracker to actual game loops, scoring, and lifecycle events in `src/game.js`.
+6.  **[ ] Commit 6: Quest Rewards** - Implement quest reward claiming logic (e.g. permanent score multipliers, Web3 credentials).
+7.  **[ ] Commit 7: Quest Notification** - Add trigger to dispatch toast notifications when a quest is completed during gameplay.
+8.  **[ ] Commit 8: Audio Upgrade** - Add custom sound effect to `src/audio.js` and play it on quest completion.
+9.  **[ ] Commit 9: Quest Rotation** - Implement a date-based deterministic seed generator to auto-rotate missions every calendar day.
+10. **[ ] Commit 10: Daily Streak** - Implement daily streak persistence in `localStorage` with consecutive-day validation.
+11. **[ ] Commit 11: Web3 Bounties** - Create mock Web3 transaction preview to claim quest rewards on the Stacks blockchain.
+12. **[ ] Commit 12: Refactoring** - Refactor quest state engine to use a clean Event Dispatcher architecture.
+13. **[ ] Commit 13: Developer Tool** - Add a manual Quest Reset and Quick Complete toggle in Settings for testing.
+14. **[ ] Commit 14: Mobile Polish** - Ensure quest lists are scrollable and fully responsive on mobile screen heights.
+15. **[ ] Commit 15: Documentation** - Update documentation and complete workflow log.
 
 ## Progress Tracking
-- Total Commits Today: 15/15
-- Status: ✅ COMPLETE
+- Total Commits Today: 0/15
+- Status: Ready to start
