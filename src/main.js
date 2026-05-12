@@ -35,8 +35,10 @@ import {
   showSettingsModal,
   hideSettingsModal,
   vibrate,
+  renderQuests,
 } from './ui.js';
 import { initAudio, toggleSound } from './audio.js';
+import { loadQuests, claimQuestReward } from './quests.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -47,7 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initUI();
   bindEvents();
   checkExistingConnection();
+  updateQuestsUI();
 });
+
+// ─── Update Quests UI ───
+function updateQuestsUI() {
+  const state = loadQuests();
+  renderQuests(state.quests, state.streak, (id) => {
+    const claimed = claimQuestReward(id);
+    if (claimed) {
+      showToast(`Claimed +${claimed.reward} PTS reward!`, 'success');
+      updateQuestsUI();
+    }
+  });
+}
 
 // ─── Check if wallet was previously connected ───
 function checkExistingConnection() {
@@ -152,6 +167,10 @@ function startNewGame() {
     onLevelProgress: updateHUDLevelProgress,
     onAchievement: showAchievement,
     onVibrate: vibrate,
+    onQuestCompleted: (q) => {
+      showAchievement('QUEST COMPLETED', q.title, '🎯');
+      updateQuestsUI();
+    },
     onGameOver: handleGameOver,
     onPauseToggle: handlePauseToggle,
   });
@@ -174,6 +193,7 @@ function handlePauseToggle(isPaused) {
 function handleGameOver(data) {
   lastGameData = data;
   stopGame();
+  updateQuestsUI();
   setTimeout(() => {
     showGameOver(data);
   }, 600);

@@ -10,7 +10,7 @@ This document tracks today's 15 high-quality, granular commits focusing on the *
 4.  **[x] Commit 4: UI Logic** - Implement dynamic rendering of quests, progress bars, and reward buttons in `src/ui.js`.
 5.  **[x] Commit 5: Core Integration** - Connect the quest progress tracker to actual game loops, scoring, and lifecycle events in `src/game.js`.
 6.  **[x] Commit 6: Quest Rewards** - Implement quest reward claiming logic (e.g. permanent score multipliers, Web3 credentials).
-7.  **[ ] Commit 7: Quest Notification** - Add trigger to dispatch toast notifications when a quest is completed during gameplay.
+7.  **[x] Commit 7: Quest Notification** - Add trigger to dispatch toast notifications when a quest is completed during gameplay.
 8.  **[ ] Commit 8: Audio Upgrade** - Add custom sound effect to `src/audio.js` and play it on quest completion.
 9.  **[ ] Commit 9: Quest Rotation** - Implement a date-based deterministic seed generator to auto-rotate missions every calendar day.
 10. **[ ] Commit 10: Daily Streak** - Implement daily streak persistence in `localStorage` with consecutive-day validation.
