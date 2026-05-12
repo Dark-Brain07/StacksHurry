@@ -5,7 +5,7 @@ This document tracks today's 15 high-quality, granular commits focusing on the *
 ## Commit Plan
 
 1.  **[x] Commit 1: Infrastructure** - Create `src/quests.js` module for daily mission definitions, state management, and `localStorage` integration.
-2.  **[ ] Commit 2: UI Integration** - Add the Daily Missions panel structure to the main menu in `index.html`.
+2.  **[x] Commit 2: UI Integration** - Add the Daily Missions panel structure to the main menu in `index.html`.
 3.  **[ ] Commit 3: Styling** - Add sleek glassmorphic styles for daily quests and progress metrics in `style.css`.
 4.  **[ ] Commit 4: UI Logic** - Implement dynamic rendering of quests, progress bars, and reward buttons in `src/ui.js`.
 5.  **[ ] Commit 5: Core Integration** - Connect the quest progress tracker to actual game loops, scoring, and lifecycle events in `src/game.js`.
