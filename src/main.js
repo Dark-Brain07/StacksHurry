@@ -37,7 +37,7 @@ import {
   vibrate,
   renderQuests,
 } from './ui.js';
-import { initAudio, toggleSound } from './audio.js';
+import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
 import { loadQuests, claimQuestReward } from './quests.js';
 
 // ─── App State ───
@@ -58,6 +58,7 @@ function updateQuestsUI() {
   renderQuests(state.quests, state.streak, (id) => {
     const claimed = claimQuestReward(id);
     if (claimed) {
+      playCollect();
       showToast(`Claimed +${claimed.reward} PTS reward!`, 'success');
       updateQuestsUI();
     }
@@ -169,6 +170,7 @@ function startNewGame() {
     onVibrate: vibrate,
     onQuestCompleted: (q) => {
       showAchievement('QUEST COMPLETED', q.title, '🎯');
+      playQuestComplete();
       updateQuestsUI();
     },
     onGameOver: handleGameOver,

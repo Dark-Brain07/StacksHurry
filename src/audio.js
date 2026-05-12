@@ -213,3 +213,32 @@ export function playShockwave() {
     osc.stop(ctx.currentTime + 0.5);
   } catch (e) { /* silent fail */ }
 }
+
+/** Quest complete fanfare sound */
+export function playQuestComplete() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      
+      const startDelay = i * 0.12;
+      const t = ctx.currentTime + startDelay;
+      
+      osc.frequency.setValueAtTime(freq, t);
+      
+      // Dynamic volume progression for build up
+      const vol = 0.1 + i * 0.02;
+      gain.gain.setValueAtTime(vol, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      
+      osc.start(t);
+      osc.stop(t + 0.25);
+    });
+  } catch (e) { /* silent fail */ }
+}
