@@ -22,6 +22,23 @@ let gameRunning = false;
 let gamePaused = false;
 let onPauseToggle = null;
 
+// Object Pooling for bullets
+class ObjectPool {
+  constructor(createFn) {
+    this.pool = [];
+    this.createFn = createFn;
+  }
+  get() {
+    return this.pool.length > 0 ? this.pool.pop() : this.createFn();
+  }
+  release(obj) {
+    obj.active = false;
+    this.pool.push(obj);
+  }
+}
+
+const bulletPool = new ObjectPool(() => ({ x: 0, y: 0, vx: 0, vy: 0, active: false }));
+
 // Player
 let player = {};
 let bullets = [];
@@ -393,7 +410,9 @@ function update() {
   bullets = bullets.filter(b => {
     b.x += b.vx;
     b.y += b.vy;
-    return b.y > -10 && b.x > -10 && b.x < canvas.width + 10;
+    const active = b.y > -10 && b.x > -10 && b.x < canvas.width + 10;
+    if (!active) bulletPool.release(b);
+    return active;
   });
 
   // Spawn asteroids
@@ -418,7 +437,7 @@ function update() {
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
       if (checkCircleCollision(b.x, b.y, BULLET_RADIUS, a.x, a.y, a.radius)) {
-        bullets.splice(i, 1);
+        bulletPool.release(bullets.splice(i, 1)[0]);
         spawnExplosion(a.x, a.y, a.radius, lowGraphics);
         playExplosion();
 
@@ -588,18 +607,26 @@ function update() {
 
 // ─── Spawn Functions ───
 
+function createBullet(x, y, vx, vy) {
+  const b = bulletPool.get();
+  b.x = x;
+  b.y = y;
+  b.vx = vx;
+  b.vy = vy;
+  b.active = true;
+  return b;
+}
+
 function fireBullet() {
   const bSpeed = player.speedActive > 0 ? BULLET_SPEED * 1.5 : BULLET_SPEED;
 
   if (player.multiShotActive > 0) {
-    // 3 bullets
-    bullets.push({ x: player.x, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
-    bullets.push({ x: player.x - 12, y: player.y - PLAYER_SIZE + 5, vx: -bSpeed * 0.2, vy: -bSpeed * 0.98 });
-    bullets.push({ x: player.x + 12, y: player.y - PLAYER_SIZE + 5, vx: bSpeed * 0.2, vy: -bSpeed * 0.98 });
+    bullets.push(createBullet(player.x, player.y - PLAYER_SIZE, 0, -bSpeed));
+    bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98));
+    bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98));
   } else {
-    // Standard 2 bullets
-    bullets.push({ x: player.x - 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
-    bullets.push({ x: player.x + 8, y: player.y - PLAYER_SIZE, vx: 0, vy: -bSpeed });
+    bullets.push(createBullet(player.x - 8, player.y - PLAYER_SIZE, 0, -bSpeed));
+    bullets.push(createBullet(player.x + 8, player.y - PLAYER_SIZE, 0, -bSpeed));
   }
   playShoot();
 }
