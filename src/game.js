@@ -66,9 +66,6 @@ let onAchievement = null;
 let onVibrate = null;
 let onGameOver = null;
 
-// ─── Constants ───
-import { PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, LEVEL_THRESHOLD, COLORS } from './constants.js';
-
 // ─── Initialization ───
 
 export function initGame(canvasEl, callbacks) {
@@ -641,8 +638,6 @@ function generateAsteroidShape(radius) {
     vertices.push({ x: Math.cos(angle) * r, y: Math.sin(angle) * r });
   }
   return vertices;
-}
-
 }
 
 function spawnPowerup(x, y) {
