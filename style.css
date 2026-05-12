@@ -1005,6 +1005,23 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.quests-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.quests-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+}
+
+.quests-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--cyan), var(--purple));
+  border-radius: 2px;
 }
 
 .quest-item-placeholder {
