@@ -13,7 +13,7 @@ This document tracks today's 15 high-quality, granular commits focusing on the *
 7.  **[x] Commit 7: Quest Notification** - Add trigger to dispatch toast notifications when a quest is completed during gameplay.
 8.  **[x] Commit 8: Audio Upgrade** - Add custom sound effect to `src/audio.js` and play it on quest completion.
 9.  **[x] Commit 9: Quest Rotation** - Implement a date-based deterministic seed generator to auto-rotate missions every calendar day.
-10. **[ ] Commit 10: Daily Streak** - Implement daily streak persistence in `localStorage` with consecutive-day validation.
+10. **[x] Commit 10: Daily Streak** - Implement daily streak persistence in `localStorage` with consecutive-day validation.
 11. **[ ] Commit 11: Web3 Bounties** - Create mock Web3 transaction preview to claim quest rewards on the Stacks blockchain.
 12. **[ ] Commit 12: Refactoring** - Refactor quest state engine to use a clean Event Dispatcher architecture.
 13. **[ ] Commit 13: Developer Tool** - Add a manual Quest Reset and Quick Complete toggle in Settings for testing.

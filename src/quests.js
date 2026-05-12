@@ -118,6 +118,22 @@ function getTodayString() {
 }
 
 /**
+ * Calculate the difference in calendar days between two date strings
+ */
+function getDayDifference(dateStr1, dateStr2) {
+  if (!dateStr1 || !dateStr2) return 0;
+  const d1 = new Date(dateStr1);
+  const d2 = new Date(dateStr2);
+  
+  // Strip hours/minutes to compare pure calendar days
+  d1.setHours(0,0,0,0);
+  d2.setHours(0,0,0,0);
+  
+  const diffTime = Math.abs(d2 - d1);
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
+
+/**
  * Load quests from localStorage or initialize defaults
  */
 export function loadQuests() {
@@ -131,6 +147,16 @@ export function loadQuests() {
         
         // Reset daily quests if date changed
         if (questState.lastUpdatedDate !== today) {
+          const oldQuests = questState.quests || [];
+          const allCompleted = oldQuests.length > 0 && oldQuests.every(q => q.completed);
+          const dayDiff = getDayDifference(questState.lastUpdatedDate, today);
+          
+          if (dayDiff === 1 && allCompleted) {
+            questState.streak++;
+          } else {
+            questState.streak = 0;
+          }
+          
           resetDailyQuests(today);
         }
         return questState;
