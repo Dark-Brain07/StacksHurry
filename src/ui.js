@@ -236,3 +236,91 @@ export function vibrate(pattern) {
     navigator.vibrate(pattern);
   }
 }
+
+export function renderQuests(quests, streak, onClaimCallback) {
+  const listEl = document.getElementById('daily-quests-list');
+  const streakEl = document.getElementById('streak-badge');
+  if (!listEl) return;
+
+  // Render streak
+  if (streakEl) {
+    streakEl.textContent = `${streak} Day Streak 🔥`;
+  }
+
+  if (!quests || quests.length === 0) {
+    listEl.innerHTML = '<div class="quest-item-placeholder">No quests active today.</div>';
+    return;
+  }
+
+  listEl.innerHTML = '';
+  quests.forEach(q => {
+    const item = document.createElement('div');
+    
+    // Class names based on state
+    let stateClass = '';
+    if (q.claimed) {
+      stateClass = 'claimed';
+    } else if (q.completed) {
+      stateClass = 'completed-unclaimed';
+    }
+    item.className = `quest-item ${stateClass}`;
+
+    const percent = Math.min(100, Math.floor((q.progress / q.target) * 100));
+
+    // Action element (Claim button, Claimed badge, or Progress text)
+    let actionHtml = '';
+    if (q.claimed) {
+      actionHtml = '<span class="claimed-badge">Claimed ✓</span>';
+    } else if (q.completed) {
+      const btn = document.createElement('button');
+      btn.className = 'btn-claim';
+      btn.textContent = 'CLAIM';
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        onClaimCallback(q.id);
+      });
+      actionHtml = btn;
+    } else {
+      actionHtml = `<span class="quest-progress-text">${q.progress}/${q.target}</span>`;
+    }
+
+    // Build item container
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'quest-meta';
+    
+    const detailsDiv = document.createElement('div');
+    detailsDiv.className = 'quest-details';
+    detailsDiv.innerHTML = `
+      <span class="quest-name">${q.title}</span>
+      <span class="quest-desc">${q.description}</span>
+    `;
+    
+    const rewardSpan = document.createElement('span');
+    rewardSpan.className = 'quest-reward';
+    rewardSpan.textContent = `+${q.reward} PTS`;
+
+    metaDiv.appendChild(detailsDiv);
+    metaDiv.appendChild(rewardSpan);
+    item.appendChild(metaDiv);
+
+    // Progress bar row
+    const barRow = document.createElement('div');
+    barRow.className = 'quest-bar-row';
+    
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'quest-progress-container';
+    progressContainer.innerHTML = `<div class="quest-progress-fill" style="width: ${percent}%"></div>`;
+    
+    barRow.appendChild(progressContainer);
+    if (typeof actionHtml === 'string') {
+      const tempSpan = document.createElement('div');
+      tempSpan.innerHTML = actionHtml;
+      barRow.appendChild(tempSpan.firstElementChild || tempSpan);
+    } else {
+      barRow.appendChild(actionHtml);
+    }
+
+    item.appendChild(barRow);
+    listEl.appendChild(item);
+  });
+}
