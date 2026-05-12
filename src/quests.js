@@ -255,3 +255,46 @@ export function claimQuestReward(questId) {
   }
   return claimedQuest;
 }
+
+// ─── Event Dispatcher Architecture ───
+const listeners = {};
+
+export const QuestsEventDispatcher = {
+  subscribe(event, callback) {
+    if (!listeners[event]) listeners[event] = [];
+    listeners[event].push(callback);
+  },
+  
+  dispatchEvent(event, data) {
+    if (listeners[event]) {
+      listeners[event].forEach(cb => cb(data));
+    }
+  }
+};
+
+/**
+ * Initialize core listeners to map game actions to quest types
+ */
+export function initQuestListeners(onQuestCompletedCallback) {
+  // Clear any existing subscriptions (important if re-initialized)
+  listeners['asteroidSmashed'] = [];
+  listeners['gameFinished'] = [];
+
+  QuestsEventDispatcher.subscribe('asteroidSmashed', () => {
+    const completed = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
+    if (completed && completed.length > 0 && onQuestCompletedCallback) {
+      completed.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+
+  QuestsEventDispatcher.subscribe('gameFinished', (data) => {
+    let completedList = [];
+    completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.PLAY_GAMES, 1));
+    if (data && typeof data.score === 'number') {
+      completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, data.score, true));
+    }
+    if (completedList.length > 0 && onQuestCompletedCallback) {
+      completedList.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+}

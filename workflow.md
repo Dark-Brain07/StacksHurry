@@ -15,7 +15,7 @@ This document tracks today's 15 high-quality, granular commits focusing on the *
 9.  **[x] Commit 9: Quest Rotation** - Implement a date-based deterministic seed generator to auto-rotate missions every calendar day.
 10. **[x] Commit 10: Daily Streak** - Implement daily streak persistence in `localStorage` with consecutive-day validation.
 11. **[x] Commit 11: Web3 Bounties** - Create mock Web3 transaction preview to claim quest rewards on the Stacks blockchain.
-12. **[ ] Commit 12: Refactoring** - Refactor quest state engine to use a clean Event Dispatcher architecture.
+12. **[x] Commit 12: Refactoring** - Refactor quest state engine to use a clean Event Dispatcher architecture.
 13. **[ ] Commit 13: Developer Tool** - Add a manual Quest Reset and Quick Complete toggle in Settings for testing.
 14. **[ ] Commit 14: Mobile Polish** - Ensure quest lists are scrollable and fully responsive on mobile screen heights.
 15. **[ ] Commit 15: Documentation** - Update documentation and complete workflow log.

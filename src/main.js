@@ -38,7 +38,7 @@ import {
   renderQuests,
 } from './ui.js';
 import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
-import { loadQuests, claimQuestReward } from './quests.js';
+import { loadQuests, claimQuestReward, initQuestListeners } from './quests.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -49,6 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initUI();
   bindEvents();
   checkExistingConnection();
+  
+  // Initialize decentralized quest events dispatcher
+  initQuestListeners((q) => {
+    showAchievement('QUEST COMPLETED', q.title, '🎯');
+    playQuestComplete();
+    updateQuestsUI();
+  });
+
   updateQuestsUI();
 });
 
@@ -180,11 +188,6 @@ function startNewGame() {
     onLevelProgress: updateHUDLevelProgress,
     onAchievement: showAchievement,
     onVibrate: vibrate,
-    onQuestCompleted: (q) => {
-      showAchievement('QUEST COMPLETED', q.title, '🎯');
-      playQuestComplete();
-      updateQuestsUI();
-    },
     onGameOver: handleGameOver,
     onPauseToggle: handlePauseToggle,
   });
