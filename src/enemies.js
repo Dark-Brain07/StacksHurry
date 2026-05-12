@@ -6,6 +6,7 @@
 import { spawnExplosion } from './particles.js';
 import { playHit, playExplosion } from './audio.js';
 import { BULLET_RADIUS, PLAYER_SIZE } from './constants.js';
+import { seek } from './ai.js';
 
 let enemies = [];
 let enemyBullets = [];
@@ -17,10 +18,8 @@ export function updateEnemies(canvas, frameCount, player) {
     e.y += e.vy;
 
     if (e.type === 'kamikaze') {
-      // Seek player X
-      const dx = player.x - e.x;
-      e.vx += dx * 0.005;
-      e.vx = Math.max(-4, Math.min(4, e.vx));
+      // Advanced tracking using steering behaviors
+      seek(e, player, 4.5, 0.04);
       
       // Trail
       if (frameCount % 2 === 0) {
