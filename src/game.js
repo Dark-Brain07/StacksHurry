@@ -438,6 +438,14 @@ function update() {
       const b = bullets[i];
       if (checkCircleCollision(b.x, b.y, BULLET_RADIUS, a.x, a.y, a.radius)) {
         bulletPool.release(bullets.splice(i, 1)[0]);
+        
+        a.hp--;
+        if (a.hp > 0) {
+          playHit();
+          spawnExplosion(b.x, b.y, 8, lowGraphics); 
+          continue; 
+        }
+
         spawnExplosion(a.x, a.y, a.radius, lowGraphics);
         playExplosion();
 
@@ -445,7 +453,7 @@ function update() {
         comboCount++;
         if (comboCount >= 5) multiplierTimer = COMBO_TIMEOUT; 
         const mult = multiplierTimer > 0 ? 2 : 1;
-        const points = Math.ceil(a.radius * 2) * mult;
+        const points = Math.ceil(a.radius * 2) * (a.isShielded ? 3 : 1) * mult;
         score += points;
         spawnFloatingText(a.x, a.y, `+${points}`);
         asteroidsDestroyed++;
@@ -632,7 +640,9 @@ function fireBullet() {
 }
 
 function spawnAsteroid() {
-  const radius = Math.random() * 26 + 14; // 14 to 40
+  const radius = Math.random() * 26 + 14; 
+  const isShielded = level > 2 && Math.random() < (0.1 + (level * 0.02));
+  
   asteroids.push({
     x: Math.random() * (canvas.width - 60) + 30,
     y: -50,
@@ -641,6 +651,8 @@ function spawnAsteroid() {
     rotation: 0,
     rotationSpeed: (Math.random() - 0.5) * 0.06,
     vertices: generateAsteroidShape(radius),
+    hp: isShielded ? 3 : 1,
+    isShielded: isShielded
   });
 }
 
@@ -653,6 +665,8 @@ function spawnSmallAsteroid(x, y, radius) {
     rotation: Math.random() * Math.PI,
     rotationSpeed: (Math.random() - 0.5) * 0.15,
     vertices: generateAsteroidShape(radius),
+    hp: 1,
+    isShielded: false
   });
 }
 
@@ -782,10 +796,19 @@ function render() {
     });
     ctx.closePath();
 
-    ctx.fillStyle = 'rgba(100,116,139,0.6)';
-    ctx.fill();
-    ctx.strokeStyle = COLORS.asteroidStroke;
-    ctx.lineWidth = 2;
+    if (a.isShielded) {
+      ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + (a.hp / 3) * 0.2})`;
+      ctx.fill();
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#00f0ff';
+      ctx.shadowBlur = 10;
+    } else {
+      ctx.fillStyle = 'rgba(100,116,139,0.6)';
+      ctx.fill();
+      ctx.strokeStyle = COLORS.asteroidStroke;
+      ctx.lineWidth = 2;
+    }
     ctx.stroke();
 
     ctx.restore();

@@ -7,7 +7,7 @@ This document tracks today's 15 high-quality, granular commits focusing on **Adv
 1.  **[x] Commit 1: AI Framework** - Create `src/ai.js` for modular enemy behavior patterns.
 2.  **[x] Commit 2: Kamikaze Drones** - Implement a new enemy type that tracks and lunges at the player.
 3.  **[x] Commit 3: Object Pooling** - Implement a reusable pool for bullets to optimize memory on high-fire rates.
-4.  **[ ] Commit 4: Shielded Asteroids** - Add multi-hit "Shielded" entities with distinct visual armor.
+4.  **[x] Commit 4: Shielded Asteroids** - Add multi-hit "Shielded" entities with distinct visual armor.
 5.  **[ ] Commit 5: Weapon Variety** - Implement "Triple-Shot" and "Homing Missile" logic.
 6.  **[ ] Commit 6: Screen Shake** - Add a sophisticated screen-shake utility for visceral impact feedback.
 7.  **[ ] Commit 7: Particle Variance** - Upgrade the particle system with color-coded explosions based on enemy type.
