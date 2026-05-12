@@ -298,3 +298,26 @@ export function initQuestListeners(onQuestCompletedCallback) {
     }
   });
 }
+
+/**
+ * Developer helper: Quick complete all daily quests
+ */
+export function devCompleteAllQuests() {
+  questState.quests.forEach(q => {
+    q.progress = q.target;
+    q.completed = true;
+  });
+  saveQuests();
+}
+
+/**
+ * Developer helper: Reset today's daily quests progress
+ */
+export function devResetAllQuests() {
+  questState.quests.forEach(q => {
+    q.progress = 0;
+    q.completed = false;
+    q.claimed = false;
+  });
+  saveQuests();
+}

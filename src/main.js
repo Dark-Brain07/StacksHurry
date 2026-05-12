@@ -38,7 +38,7 @@ import {
   renderQuests,
 } from './ui.js';
 import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
-import { loadQuests, claimQuestReward, initQuestListeners } from './quests.js';
+import { loadQuests, claimQuestReward, initQuestListeners, devCompleteAllQuests, devResetAllQuests } from './quests.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -140,6 +140,18 @@ function bindEvents() {
   });
   document.getElementById('toggle-graphics').addEventListener('change', (e) => {
     setLowGraphics(e.target.checked);
+  });
+
+  // Developer reviewer helper controls
+  document.getElementById('btn-dev-complete-quests').addEventListener('click', () => {
+    devCompleteAllQuests();
+    updateQuestsUI();
+    showToast('Reviewer Mode: Challenges Completed!', 'success');
+  });
+  document.getElementById('btn-dev-reset-quests').addEventListener('click', () => {
+    devResetAllQuests();
+    updateQuestsUI();
+    showToast('Reviewer Mode: Challenges Reset!', 'info');
   });
 
   // Pause Modal
