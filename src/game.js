@@ -57,6 +57,10 @@ let frameCount = 0;
 let comboCount = 0;
 let multiplierTimer = 0;
 let shake = { duration: 0, intensity: 0 };
+let currentWave = 1;
+let waveEnemiesRemaining = 0;
+let waveInProgress = false;
+let waveGracePeriod = 0;
 
 /**
  * Trigger a screen shake with specific intensity
@@ -433,13 +437,21 @@ function update() {
     return active;
   });
 
+  // Wave Management
+  if (!waveInProgress) {
+    if (waveGracePeriod > 0) waveGracePeriod--;
+    else startNextWave();
+  }
+
   // Spawn asteroids
-  if (frameCount % asteroidSpawnRate === 0) {
+  if (waveInProgress && frameCount % asteroidSpawnRate === 0) {
     spawnAsteroid();
+    waveEnemiesRemaining--;
+    if (waveEnemiesRemaining <= 0) waveInProgress = false;
   }
 
   // Spawn enemies
-  if (frameCount > 0 && frameCount % 400 === 0) {
+  if (waveInProgress && frameCount % 350 === 0) {
     spawnEnemy(canvas);
   }
 
@@ -632,6 +644,14 @@ function update() {
 }
 
 // ─── Spawn Functions ───
+
+function startNextWave() {
+  currentWave++;
+  waveEnemiesRemaining = 5 + (currentWave * 2);
+  waveInProgress = true;
+  waveGracePeriod = 120;
+  spawnFloatingText(canvas.width / 2, canvas.height / 2, `WAVE ${currentWave}`);
+}
 
 function findNearestTarget(x, y, maxDist = 300) {
   let nearest = null;
