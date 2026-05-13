@@ -142,7 +142,8 @@ export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics) {
       if (dist < e.radius + BULLET_RADIUS) {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
-        spawnExplosion(e.x, e.y, e.radius, lowGraphics);
+        const expColor = e.type === 'kamikaze' ? '#f87171' : '#94a3b8';
+        spawnExplosion(e.x, e.y, e.radius, lowGraphics, expColor);
         playExplosion();
         onEnemyHit(e.x, e.y, 150);
         return; 

@@ -464,7 +464,7 @@ function update() {
           continue; 
         }
 
-        spawnExplosion(a.x, a.y, a.radius, lowGraphics);
+        spawnExplosion(a.x, a.y, a.radius, lowGraphics, a.isShielded ? '#00f0ff' : null);
         playExplosion();
 
         // Score & Combo

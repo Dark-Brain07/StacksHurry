@@ -28,22 +28,25 @@ export function renderParticles(ctx) {
   });
 }
 
-export function spawnExplosion(x, y, radius, lowGraphics = false) {
-  const baseCount = Math.floor(radius * 1.5) + 8;
+export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {
+  const baseCount = Math.floor(radius * 1.8) + 10;
   const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
+  const defaultColors = ['#00f0ff', '#a855f7', '#fb923c', '#f87171', '#fbbf24', '#f0f4ff'];
+  
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 4 + 1;
-    const colors = ['#00f0ff', '#a855f7', '#fb923c', '#f87171', '#fbbf24', '#f0f4ff'];
+    const speed = Math.random() * 5 + 1.5;
+    const particleLife = Math.floor(Math.random() * 40) + 20;
+    
     particles.push({
       x,
       y,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      life: Math.floor(Math.random() * 30) + 15,
-      maxLife: 45,
-      radius: Math.random() * 3 + 1,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      life: particleLife,
+      maxLife: particleLife,
+      radius: Math.random() * 4 + 1.5,
+      color: colorOverride || defaultColors[Math.floor(Math.random() * defaultColors.length)],
     });
   }
 }
