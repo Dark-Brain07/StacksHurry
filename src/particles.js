@@ -29,7 +29,7 @@ export function renderParticles(ctx) {
 }
 
 export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {
-  const baseCount = Math.floor(radius * 1.8) + 10;
+  const baseCount = Math.floor(radius * 1.5) + 8; // Optimized for mobile
   const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
   const defaultColors = ['#00f0ff', '#a855f7', '#fb923c', '#f87171', '#fbbf24', '#f0f4ff'];
   
