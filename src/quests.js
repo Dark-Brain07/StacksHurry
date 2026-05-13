@@ -8,7 +8,9 @@ export const QUEST_TYPES = {
   SMASH_ASTEROIDS: 'smash_asteroids',
   PLAY_GAMES: 'play_games',
   REACH_SCORE: 'reach_score',
-  SURVIVE_TIME: 'survive_time'
+  SURVIVE_TIME: 'survive_time',
+  DESTROY_ENEMIES: 'destroy_enemies',
+  SURVIVE_WAVES: 'survive_waves'
 };
 
 // Default daily quest definitions
@@ -76,6 +78,39 @@ const MASTER_QUEST_POOL = [
     title: 'Supernova Flight',
     description: 'Reach a score of 7,000 points in a single run today.',
     reward: 800,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_hunter_5',
+    type: QUEST_TYPES.DESTROY_ENEMIES,
+    target: 5,
+    title: 'UFO Hunter',
+    description: 'Destroy 5 enemy UFOs or Drones today.',
+    reward: 600,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_waves_3',
+    type: QUEST_TYPES.SURVIVE_WAVES,
+    target: 3,
+    title: 'Wave Survivor',
+    description: 'Survive 3 structured combat waves in a single game today.',
+    reward: 500,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_hunter_10',
+    type: QUEST_TYPES.DESTROY_ENEMIES,
+    target: 10,
+    title: 'Elite Interceptor',
+    description: 'Destroy 10 enemy UFOs or Drones today.',
+    reward: 1000,
     progress: 0,
     completed: false,
     claimed: false
@@ -279,9 +314,25 @@ export function initQuestListeners(onQuestCompletedCallback) {
   // Clear any existing subscriptions (important if re-initialized)
   listeners['asteroidSmashed'] = [];
   listeners['gameFinished'] = [];
+  listeners['enemyDestroyed'] = [];
+  listeners['waveCleared'] = [];
 
   QuestsEventDispatcher.subscribe('asteroidSmashed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
+    if (completed && completed.length > 0 && onQuestCompletedCallback) {
+      completed.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+
+  QuestsEventDispatcher.subscribe('enemyDestroyed', () => {
+    const completed = updateQuestProgress(QUEST_TYPES.DESTROY_ENEMIES, 1);
+    if (completed && completed.length > 0 && onQuestCompletedCallback) {
+      completed.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+
+  QuestsEventDispatcher.subscribe('waveCleared', () => {
+    const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
     if (completed && completed.length > 0 && onQuestCompletedCallback) {
       completed.forEach(q => onQuestCompletedCallback(q));
     }

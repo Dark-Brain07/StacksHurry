@@ -460,7 +460,10 @@ function update() {
   if (waveInProgress && frameCount % asteroidSpawnRate === 0) {
     spawnAsteroid();
     waveEnemiesRemaining--;
-    if (waveEnemiesRemaining <= 0) waveInProgress = false;
+    if (waveEnemiesRemaining <= 0) {
+      waveInProgress = false;
+      QuestsEventDispatcher.dispatchEvent('waveCleared');
+    }
   }
 
   // Spawn enemies

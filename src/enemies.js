@@ -7,6 +7,7 @@ import { spawnExplosion } from './particles.js';
 import { playHit, playExplosion } from './audio.js';
 import { BULLET_RADIUS, PLAYER_SIZE } from './constants.js';
 import { seek } from './ai.js';
+import { QuestsEventDispatcher } from './quests.js';
 
 let enemies = [];
 let enemyBullets = [];
@@ -146,6 +147,7 @@ export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics) {
         spawnExplosion(e.x, e.y, e.radius, lowGraphics, expColor);
         playExplosion();
         onEnemyHit(e.x, e.y, 150);
+        QuestsEventDispatcher.dispatchEvent('enemyDestroyed');
         return; 
       }
     }
