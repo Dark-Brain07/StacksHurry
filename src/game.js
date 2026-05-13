@@ -3,7 +3,7 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio, playShieldHit, playWaveClear } from './audio.js';
 import { 
   COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
   LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
@@ -463,6 +463,7 @@ function update() {
     if (waveEnemiesRemaining <= 0) {
       waveInProgress = false;
       QuestsEventDispatcher.dispatchEvent('waveCleared');
+      playWaveClear();
     }
   }
 
@@ -487,7 +488,8 @@ function update() {
         
         a.hp--;
         if (a.hp > 0) {
-          playHit();
+          if (a.isShielded) playShieldHit();
+          else playHit();
           spawnExplosion(b.x, b.y, 8, lowGraphics); 
           continue; 
         }
