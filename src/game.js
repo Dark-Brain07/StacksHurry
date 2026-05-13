@@ -883,6 +883,16 @@ function render() {
     ctx.stroke();
 
     ctx.restore();
+
+    // HP Bar for shielded
+    if (a.isShielded && a.hp < 3) {
+      const barWidth = a.radius * 1.5;
+      const barHeight = 4;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth, barHeight);
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth * (a.hp / 3), barHeight);
+    }
   });
 
   // Enemies
