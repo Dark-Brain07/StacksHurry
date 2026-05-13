@@ -56,8 +56,17 @@ let asteroidsDestroyed = 0;
 let frameCount = 0;
 let comboCount = 0;
 let multiplierTimer = 0;
-let shakeTime = 0;
+let shake = { duration: 0, intensity: 0 };
 
+/**
+ * Trigger a screen shake with specific intensity
+ */
+export function addShake(duration, intensity) {
+  if (intensity >= shake.intensity || shake.duration <= 0) {
+    shake.duration = duration;
+    shake.intensity = intensity;
+  }
+}
 // Difficulty
 let asteroidSpawnRate = 90; // frames between spawns
 let asteroidSpeed = 2;
@@ -300,7 +309,7 @@ function triggerSecondary() {
     shockwave.radius = 0;
     secondaryCooldown = SHOCKWAVE_COOLDOWN;
     playShockwave();
-    shakeTime = 10;
+    addShake(10, 15);
   }
 }
 
@@ -512,7 +521,7 @@ function update() {
         } else {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
-          shakeTime = 15;
+          addShake(15, 20);
           spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
           if (onVibrate) onVibrate([150, 100, 150]);
@@ -589,7 +598,7 @@ function update() {
     } else {
       lives--;
       player.invincible = 90;
-      shakeTime = 15;
+      addShake(15, 20);
       playHit();
       if (onLivesUpdate) onLivesUpdate(lives);
       if (lives <= 0) {
@@ -744,11 +753,12 @@ function render() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.save();
-  if (shakeTime > 0) {
-    const dx = (Math.random() - 0.5) * 15;
-    const dy = (Math.random() - 0.5) * 15;
+  if (shake.duration > 0) {
+    const dx = (Math.random() - 0.5) * shake.intensity;
+    const dy = (Math.random() - 0.5) * shake.intensity;
     ctx.translate(dx, dy);
-    shakeTime--;
+    shake.duration--;
+    shake.intensity *= 0.9; // Smooth decay
   }
 
   // Stars
