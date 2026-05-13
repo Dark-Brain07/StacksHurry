@@ -15,7 +15,7 @@ This document tracks today's 15 high-quality, granular commits focusing on **Adv
 9.  **[x] Commit 9: Combat HUD** - Add a "Combo Multiplier" visual popup and "Crit" indicators.
 10. **[x] Commit 10: Physics Kickback** - Implement knockback forces when the player hits large objects.
 11. **[x] Commit 11: Enemy HP Bars** - Add subtle, mini health indicators for elite/shielded enemies.
-12. **[ ] Commit 12: Settings Expansion** - Add "Screen Shake Intensity" and "Auto-fire" toggles to Settings.
+12. **[x] Commit 12: Settings Expansion** - Add "Screen Shake Intensity" and "Auto-fire" toggles to Settings.
 13. **[ ] Commit 13: Elite Quests** - Add "Hunter" and "Survivor" challenges to the `quests.js` pool.
 14. **[ ] Commit 14: Soundscapes** - Add distinct impact sounds for different materials (shield vs rock).
 15. **[ ] Commit 15: Documentation** - Finalize today's contribution log and verify production build.

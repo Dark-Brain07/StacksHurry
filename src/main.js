@@ -12,7 +12,7 @@ import {
   getHallOfFameScore,
   getPlayerCount,
 } from './contracts.js';
-import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setLowGraphics } from './game.js';
+import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setSettings } from './game.js';
 import {
   initUI,
   showScreen,
@@ -139,7 +139,19 @@ function bindEvents() {
     toggleSound(e.target.checked);
   });
   document.getElementById('toggle-graphics').addEventListener('change', (e) => {
-    setLowGraphics(e.target.checked);
+    setSettings({ lowGraphics: e.target.checked });
+  });
+
+  // Combat Settings
+  document.getElementById('toggle-autofire').addEventListener('change', (e) => {
+    setSettings({ autoFire: e.target.checked });
+    showToast(e.target.checked ? 'Auto-fire: ON' : 'Auto-fire: OFF', 'info');
+  });
+
+  document.getElementById('slider-shake').addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    document.getElementById('shake-val').textContent = `${val}%`;
+    setSettings({ shakeMultiplier: val / 100 });
   });
 
   // Developer reviewer helper controls

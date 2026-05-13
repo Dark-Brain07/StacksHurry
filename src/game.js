@@ -66,9 +66,10 @@ let waveGracePeriod = 0;
  * Trigger a screen shake with specific intensity
  */
 export function addShake(duration, intensity) {
-  if (intensity >= shake.intensity || shake.duration <= 0) {
+  const actualIntensity = intensity * shakeMultiplier;
+  if (actualIntensity >= shake.intensity || shake.duration <= 0) {
     shake.duration = duration;
-    shake.intensity = intensity;
+    shake.intensity = actualIntensity;
   }
 }
 // Difficulty
@@ -82,6 +83,14 @@ let shooting = false;
 let shootCooldown = 0;
 let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
 let lowGraphics = false;
+let autoFire = true;
+let shakeMultiplier = 1.0;
+
+export function setSettings(settings) {
+  if (settings.lowGraphics !== undefined) lowGraphics = settings.lowGraphics;
+  if (settings.autoFire !== undefined) autoFire = settings.autoFire;
+  if (settings.shakeMultiplier !== undefined) shakeMultiplier = settings.shakeMultiplier;
+}
 let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
 let lastTouchTime = 0;
@@ -230,9 +239,7 @@ function handleTouchEnd(e) {
 
 // ─── Game Lifecycle ───
 
-export function setLowGraphics(enabled) {
-  lowGraphics = enabled;
-}
+
 
 export function startGame() {
   // Reset state
@@ -421,7 +428,7 @@ function update() {
 
   // Shooting
   if (shootCooldown > 0) shootCooldown--;
-  if (shooting && shootCooldown <= 0) {
+  if ((shooting || autoFire) && shootCooldown <= 0) {
     fireBullet();
     shootCooldown = SHOOT_COOLDOWN;
   }
