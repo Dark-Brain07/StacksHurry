@@ -8,12 +8,15 @@ A fast-paced blockchain-powered rocket shooter game built on the **Stacks** netw
 
 ## 🎮 Features
 
-- **Rocket Shooter Gameplay** — Pilot your rocket, dodge asteroids, and shoot to survive
-- **On-Chain Scoring** — Submit scores directly to Stacks smart contracts
-- **NFT Minting** — Mint collectible Stacks Hurry NFTs
-- **Leaderboard** — View global player statistics from the blockchain
-- **Progressive Difficulty** — Game gets harder as you level up
-- **Wallet Integration** — Connect via Stacks Connect (Hiro Wallet, etc.)
+- **Rocket Shooter Gameplay** — Pilot your rocket, dodge asteroids, and shoot to survive.
+- **Advanced AI Systems** — Encounter Kamikaze Drones with intelligent steering and pursuit logic.
+- **Structured Wave System** — Face timed combat waves with progressive difficulty and grace periods.
+- **Enhanced Physics & Combat** — Recoil-based shooting, screen shake, and knockback impact physics.
+- **Elite Quest Engine** — Daily challenges for UFO hunting, wave survival, and high-score milestones.
+- **On-Chain Scoring** — Submit scores directly to Stacks smart contracts.
+- **NFT Minting** — Mint collectible Stacks Hurry NFTs.
+- **Leaderboard** — View global player statistics from the blockchain.
+- **Wallet Integration** — Connect via Stacks Connect (Hiro Wallet, etc.).
 
 
 ## 📜 Smart Contracts
