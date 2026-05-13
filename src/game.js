@@ -14,6 +14,7 @@ import { updateParticles, renderParticles, spawnExplosion, resetParticles } from
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 import { checkCircleCollision, calculateShockwavePush } from './physics.js';
 import { QuestsEventDispatcher } from './quests.js';
+import { seek } from './ai.js';
 
 // ─── Game State ───
 let canvas, ctx;
@@ -408,6 +409,14 @@ function update() {
 
   // Update bullets
   bullets = bullets.filter(b => {
+    if (b.isHoming && b.target) {
+      if (b.target.hp <= 0 || b.target.y > canvas.height) {
+        b.target = null;
+      } else {
+        seek(b, b.target, BULLET_SPEED * 1.2, 0.08);
+      }
+    }
+    
     b.x += b.vx;
     b.y += b.vy;
     const active = b.y > -10 && b.x > -10 && b.x < canvas.width + 10;
@@ -615,13 +624,31 @@ function update() {
 
 // ─── Spawn Functions ───
 
-function createBullet(x, y, vx, vy) {
+function findNearestTarget(x, y, maxDist = 300) {
+  let nearest = null;
+  let minDist = maxDist;
+
+  // Check asteroids
+  asteroids.forEach(a => {
+    const d = Math.hypot(a.x - x, a.y - y);
+    if (d < minDist) {
+      minDist = d;
+      nearest = a;
+    }
+  });
+
+  return nearest;
+}
+
+function createBullet(x, y, vx, vy, isHoming = false) {
   const b = bulletPool.get();
   b.x = x;
   b.y = y;
   b.vx = vx;
   b.vy = vy;
   b.active = true;
+  b.isHoming = isHoming;
+  b.target = isHoming ? findNearestTarget(x, y) : null;
   return b;
 }
 
@@ -629,9 +656,9 @@ function fireBullet() {
   const bSpeed = player.speedActive > 0 ? BULLET_SPEED * 1.5 : BULLET_SPEED;
 
   if (player.multiShotActive > 0) {
-    bullets.push(createBullet(player.x, player.y - PLAYER_SIZE, 0, -bSpeed));
-    bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98));
-    bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98));
+    bullets.push(createBullet(player.x, player.y - PLAYER_SIZE, 0, -bSpeed, true));
+    bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98, true));
+    bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98, true));
   } else {
     bullets.push(createBullet(player.x - 8, player.y - PLAYER_SIZE, 0, -bSpeed));
     bullets.push(createBullet(player.x + 8, player.y - PLAYER_SIZE, 0, -bSpeed));
