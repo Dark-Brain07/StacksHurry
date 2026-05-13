@@ -272,6 +272,8 @@ export function startGame() {
     shieldActive: false,
     multiShotActive: 0,
     speedActive: 0,
+    kickbackX: 0,
+    kickbackY: 0,
   };
 
   mouseX = player.x;
@@ -345,8 +347,12 @@ function update() {
   } else {
     const dx = mouseX - player.x;
     const dy = mouseY - player.y;
-    player.x += dx * speedMult;
-    player.y += dy * speedMult;
+    player.x += (dx * speedMult) + player.kickbackX;
+    player.y += (dy * speedMult) + player.kickbackY;
+    
+    // Friction
+    player.kickbackX *= 0.85;
+    player.kickbackY *= 0.85;
   }
 
   // Clamp to canvas
@@ -692,9 +698,11 @@ function fireBullet() {
     bullets.push(createBullet(player.x, player.y - PLAYER_SIZE, 0, -bSpeed, true));
     bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98, true));
     bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98, true));
+    player.kickbackY += 4; // Extra recoil for heavy weapons
   } else {
     bullets.push(createBullet(player.x - 8, player.y - PLAYER_SIZE, 0, -bSpeed));
     bullets.push(createBullet(player.x + 8, player.y - PLAYER_SIZE, 0, -bSpeed));
+    player.kickbackY += 2;
   }
   playShoot();
 }

@@ -13,7 +13,7 @@ This document tracks today's 15 high-quality, granular commits focusing on **Adv
 7.  **[x] Commit 7: Particle Variance** - Upgrade the particle system with color-coded explosions based on enemy type.
 8.  **[x] Commit 8: Wave System** - Transition from random spawning to structured "Combat Waves" with difficulty scaling.
 9.  **[x] Commit 9: Combat HUD** - Add a "Combo Multiplier" visual popup and "Crit" indicators.
-10. **[ ] Commit 10: Physics Kickback** - Implement knockback forces when the player hits large objects.
+10. **[x] Commit 10: Physics Kickback** - Implement knockback forces when the player hits large objects.
 11. **[ ] Commit 11: Enemy HP Bars** - Add subtle, mini health indicators for elite/shielded enemies.
 12. **[ ] Commit 12: Settings Expansion** - Add "Screen Shake Intensity" and "Auto-fire" toggles to Settings.
 13. **[ ] Commit 13: Elite Quests** - Add "Hunter" and "Survivor" challenges to the `quests.js` pool.
