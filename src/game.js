@@ -485,6 +485,10 @@ function update() {
         const mult = multiplierTimer > 0 ? 2 : 1;
         const points = Math.ceil(a.radius * 2) * (a.isShielded ? 3 : 1) * mult;
         score += points;
+        if (a.isShielded) {
+          spawnFloatingText(a.x, a.y - 20, "CRIT!", "#fbbf24");
+        }
+        
         spawnFloatingText(a.x, a.y, `+${points}`);
         asteroidsDestroyed++;
         
@@ -756,12 +760,14 @@ function spawnPowerup(x, y) {
 
 
 
-function spawnFloatingText(x, y, text) {
+function spawnFloatingText(x, y, text, color = '#ffffff') {
   floatingTexts.push({
     x,
     y,
     text,
+    color,
     life: 30,
+    maxLife: 30
   });
 }
 
@@ -878,12 +884,14 @@ function render() {
   // Floating texts
   floatingTexts.forEach(ft => {
     ctx.save();
-    ctx.fillStyle = `rgba(255, 255, 255, ${ft.life / 30})`;
+    ctx.fillStyle = ft.color;
+    ctx.globalAlpha = ft.life / ft.maxLife;
     ctx.font = 'bold 16px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0, 240, 255, 0.5)';
     ctx.shadowBlur = 5;
     ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.globalAlpha = 1.0;
     ctx.restore();
   });
 
