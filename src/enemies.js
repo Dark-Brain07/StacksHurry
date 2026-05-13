@@ -126,7 +126,7 @@ export function spawnEnemy(canvas) {
     x: isLeft ? -30 : canvas.width + 30,
     y: Math.random() * 150 + 50,
     vx: isLeft ? (isKamikaze ? 3 : 2) : (isKamikaze ? -3 : -2),
-    vy: isKamikaze ? 1.2 : 0.5,
+    vy: isKamikaze ? (1.2 + Math.random() * 0.3) : (0.5 + Math.random() * 0.2),
     radius: isKamikaze ? 15 : 20,
     type: isKamikaze ? 'kamikaze' : 'ufo',
     trail: []
