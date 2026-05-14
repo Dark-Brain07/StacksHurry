@@ -655,7 +655,7 @@ function update() {
 
   // Update stars
   if (warpTime > 0) warpTime--;
-  const starSpeedMult = (1 + (level * 0.2)) * (warpTime > 0 ? 15 : 1);
+  const starSpeedMult = (1 + (level * 0.25)) * (warpTime > 0 ? 18 : 1);
   stars.forEach(s => {
     s.y += s.speed * starSpeedMult;
     if (s.y > canvas.height) {
