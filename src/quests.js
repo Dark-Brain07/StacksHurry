@@ -115,6 +115,17 @@ const MASTER_QUEST_POOL = [
     progress: 0,
     completed: false,
     claimed: false
+  },
+  {
+    id: 'quest_login_1',
+    type: QUEST_TYPES.DAILY_LOGIN,
+    target: 1,
+    title: 'Daily Report',
+    description: 'Log into the Stacks Network today.',
+    reward: 100,
+    progress: 0,
+    completed: false,
+    claimed: false
   }
 ];
 
