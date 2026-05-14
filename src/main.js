@@ -39,6 +39,7 @@ import {
 } from './ui.js';
 import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
 import { loadQuests, claimQuestReward, initQuestListeners, devCompleteAllQuests, devResetAllQuests } from './quests.js';
+import { loadWorkflow, completeCommit, getWorkflowState } from './workflow.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -58,7 +59,71 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   updateQuestsUI();
+  updateWorkflowUI();
+  loadPersistedSettings();
 });
+
+// ─── Persist Settings ───
+function loadPersistedSettings() {
+  try {
+    const raw = localStorage.getItem('stacks_hurry_settings');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      setSettings(parsed);
+      
+      // Sync UI elements
+      const soundToggle = document.getElementById('toggle-sound');
+      const graphicsToggle = document.getElementById('toggle-graphics');
+      const autofireToggle = document.getElementById('toggle-autofire');
+      const shakeSlider = document.getElementById('slider-shake');
+      const shakeVal = document.getElementById('shake-val');
+      
+      if (parsed.soundEnabled !== undefined && soundToggle) {
+        soundToggle.checked = parsed.soundEnabled;
+        toggleSound(parsed.soundEnabled);
+      }
+      if (parsed.lowGraphics !== undefined && graphicsToggle) {
+        graphicsToggle.checked = parsed.lowGraphics;
+      }
+      if (parsed.autoFire !== undefined && autofireToggle) {
+        autofireToggle.checked = parsed.autoFire;
+      }
+      if (parsed.shakeMultiplier !== undefined && shakeSlider && shakeVal) {
+        const pct = Math.round(parsed.shakeMultiplier * 100);
+        shakeSlider.value = pct;
+        shakeVal.textContent = `${pct}%`;
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load settings:', e);
+  }
+}
+
+function savePersistedSettings() {
+  try {
+    const soundToggle = document.getElementById('toggle-sound');
+    const graphicsToggle = document.getElementById('toggle-graphics');
+    const autofireToggle = document.getElementById('toggle-autofire');
+    const shakeSlider = document.getElementById('slider-shake');
+    
+    const settingsObj = {
+      soundEnabled: soundToggle ? soundToggle.checked : true,
+      lowGraphics: graphicsToggle ? graphicsToggle.checked : false,
+      autoFire: autofireToggle ? autofireToggle.checked : true,
+      shakeMultiplier: shakeSlider ? parseInt(shakeSlider.value) / 100 : 1.0
+    };
+    localStorage.setItem('stacks_hurry_settings', JSON.stringify(settingsObj));
+  } catch (e) {
+    console.error('Failed to save settings:', e);
+  }
+}
+
+
+// ─── Update Workflow UI ───
+function updateWorkflowUI() {
+  const state = loadWorkflow();
+  renderWorkflow(state);
+}
 
 // ─── Update Quests UI ───
 function updateQuestsUI() {
@@ -137,21 +202,25 @@ function bindEvents() {
   document.querySelector('#modal-settings .modal-backdrop')?.addEventListener('click', () => hideSettingsModal());
   document.getElementById('toggle-sound').addEventListener('change', (e) => {
     toggleSound(e.target.checked);
+    savePersistedSettings();
   });
   document.getElementById('toggle-graphics').addEventListener('change', (e) => {
     setSettings({ lowGraphics: e.target.checked });
+    savePersistedSettings();
   });
 
   // Combat Settings
   document.getElementById('toggle-autofire').addEventListener('change', (e) => {
     setSettings({ autoFire: e.target.checked });
     showToast(e.target.checked ? 'Auto-fire: ON' : 'Auto-fire: OFF', 'info');
+    savePersistedSettings();
   });
 
   document.getElementById('slider-shake').addEventListener('input', (e) => {
     const val = parseInt(e.target.value);
     document.getElementById('shake-val').textContent = `${val}%`;
     setSettings({ shakeMultiplier: val / 100 });
+    savePersistedSettings();
   });
 
   // Developer reviewer helper controls
@@ -175,6 +244,20 @@ function bindEvents() {
     showScreen('menu');
   });
   document.getElementById('btn-pause-settings').addEventListener('click', () => showSettingsModal());
+
+  // Workflow shortcut (Alt+Shift+W to complete next commit in roadmap)
+  window.addEventListener('keydown', (e) => {
+    if (e.altKey && e.shiftKey && e.key === 'W') {
+      const state = getWorkflowState();
+      const nextTask = state.tasks.find(t => !t.completed);
+      if (nextTask) {
+        completeCommit(nextTask.commitNum);
+        updateWorkflowUI();
+        showToast(`Commit #${nextTask.commitNum} recorded: ${nextTask.title}`, 'success');
+        showAchievement('ROADMAP UPDATED', `Progress: ${getWorkflowState().completedCount}/15 commits`, '🛠️');
+      }
+    }
+  });
 }
 
 // ─── Wallet Connection (v8 API) ───

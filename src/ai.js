@@ -1,7 +1,46 @@
 /**
  * Stacks Hurry - AI & Steering Behaviors
  * Provides advanced movement logic for non-linear enemy types
+ * Includes a modular State Machine for complex entity behavior
  */
+
+export const AI_STATES = {
+    IDLE: 'idle',
+    SEEK: 'seek',
+    LUNGE: 'lunge',
+    ORBIT: 'orbit',
+    RETREAT: 'retreat'
+};
+
+/**
+ * State-based AI Update
+ * Processes the entity behavior based on its current state
+ */
+export function updateAI(entity, target, dt) {
+    if (!entity.aiState) entity.aiState = AI_STATES.IDLE;
+    
+    switch (entity.aiState) {
+        case AI_STATES.SEEK:
+            seek(entity, target, entity.speed || 2, 0.05);
+            break;
+            
+        case AI_STATES.LUNGE:
+            processLunge(entity, target);
+            break;
+            
+        case AI_STATES.ORBIT:
+            orbit(entity, target, entity.orbitRadius || 150, entity.orbitSpeed || 0.02);
+            break;
+            
+        case AI_STATES.RETREAT:
+            seek(entity, target, -(entity.speed || 2), 0.05);
+            break;
+            
+        default:
+            // Do nothing or slight drift
+            break;
+    }
+}
 
 /**
  * Calculate steering velocity to seek a target position
@@ -25,31 +64,35 @@ export function seek(entity, target, maxSpeed, force) {
 }
 
 /**
- * Lunge behavior: charges towards target at high speed after a delay
+ * Lunge behavior: charges towards target at high speed
  */
-export function lunge(entity, target, speedMultiplier) {
-    if (entity.lunging) {
-        entity.x += entity.lungeDir.x;
-        entity.y += entity.lungeDir.y;
-        return;
+function processLunge(entity, target) {
+    if (!entity.lunging) {
+        const dx = target.x - entity.x;
+        const dy = target.y - entity.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        const speed = (entity.speed || 2) * 4;
+        entity.vx = (dx / dist) * speed;
+        entity.vy = (dy / dist) * speed;
+        entity.lunging = true;
+        
+        // Timer to reset lunge
+        setTimeout(() => {
+            entity.lunging = false;
+            entity.aiState = AI_STATES.SEEK; // Go back to seeking
+        }, 1000);
     }
     
-    const dx = target.x - entity.x;
-    const dy = target.y - entity.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    
-    entity.lungeDir = {
-        x: (dx / dist) * speedMultiplier,
-        y: (dy / dist) * speedMultiplier
-    };
-    entity.lunging = true;
+    entity.x += entity.vx;
+    entity.y += entity.vy;
 }
 
 /**
  * Orbital behavior: circles around a target at a fixed distance
  */
 export function orbit(entity, target, radius, speed) {
-    entity.angle = (entity.angle || 0) + speed;
-    entity.x = target.x + Math.cos(entity.angle) * radius;
-    entity.y = target.y + Math.sin(entity.angle) * radius;
+    entity.orbitAngle = (entity.orbitAngle || 0) + speed;
+    entity.x = target.x + Math.cos(entity.orbitAngle) * radius;
+    entity.y = target.y + Math.sin(entity.orbitAngle) * radius;
 }

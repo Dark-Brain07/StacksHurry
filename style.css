@@ -1302,3 +1302,85 @@ input:checked + .slider:before {
   from { transform: translateX(0); opacity: 1; }
   to { transform: translateX(120%); opacity: 0; }
 }
+
+/* ---------- Workflow Panel ---------- */
+.workflow-panel {
+  border-color: rgba(168, 85, 247, 0.2);
+  margin-top: 8px;
+}
+
+.workflow-description {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -8px 0 12px 0;
+  font-style: italic;
+  padding-left: 36px;
+}
+
+.workflow-list {
+  max-height: 280px !important;
+  gap: 6px !important;
+}
+
+.workflow-item {
+  padding: 10px 14px;
+  background: rgba(168, 85, 247, 0.03);
+  border: 1px solid rgba(168, 85, 247, 0.1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all var(--transition-fast);
+}
+
+.workflow-item:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.workflow-item.completed {
+  opacity: 0.6;
+  background: rgba(52, 211, 153, 0.05);
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.workflow-num {
+  font-family: var(--font-display);
+  font-size: 10px;
+  color: var(--purple);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(168, 85, 247, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.workflow-item.completed .workflow-num {
+  background: var(--green);
+  color: var(--bg-primary);
+}
+
+.workflow-details {
+  flex: 1;
+}
+
+.workflow-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.workflow-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.workflow-status {
+  font-size: 14px;
+}

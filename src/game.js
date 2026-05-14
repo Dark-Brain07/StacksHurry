@@ -3,7 +3,7 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio, playShieldHit, playWaveClear } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio, playShieldHit, playWaveClear, playHeavyHit } from './audio.js';
 import { 
   COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
   LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
@@ -64,12 +64,17 @@ let waveGracePeriod = 0;
 
 /**
  * Trigger a screen shake with specific intensity
+ * Supports additive accumulation up to a maximum cap for premium visceral feedback
  */
 export function addShake(duration, intensity) {
   const actualIntensity = intensity * shakeMultiplier;
-  if (actualIntensity >= shake.intensity || shake.duration <= 0) {
+  if (shake.duration <= 0) {
     shake.duration = duration;
     shake.intensity = actualIntensity;
+  } else {
+    // Additive accumulation with cap
+    shake.duration = Math.max(shake.duration, duration);
+    shake.intensity = Math.min(50, shake.intensity + actualIntensity * 0.5);
   }
 }
 // Difficulty
@@ -347,8 +352,8 @@ function update() {
   // Smooth player follow
   const speedMult = player.speedActive > 0 ? 0.22 : 0.12;
   if (joystick.active) {
-    player.x += joystick.dx * 0.15;
-    player.y += joystick.dy * 0.15;
+    player.x += (joystick.dx * 0.15) + player.kickbackX;
+    player.y += (joystick.dy * 0.15) + player.kickbackY;
     mouseX = player.x; // Sync mouse
     mouseY = player.y;
   } else {
@@ -356,11 +361,11 @@ function update() {
     const dy = mouseY - player.y;
     player.x += (dx * speedMult) + player.kickbackX;
     player.y += (dy * speedMult) + player.kickbackY;
-    
-    // Friction
-    player.kickbackX *= 0.85;
-    player.kickbackY *= 0.85;
   }
+  
+  // Apply recoil friction uniformly
+  player.kickbackX *= 0.85;
+  player.kickbackY *= 0.85;
 
   // Clamp to canvas
   player.x = Math.max(PLAYER_SIZE, Math.min(canvas.width - PLAYER_SIZE, player.x));
@@ -499,7 +504,11 @@ function update() {
         }
 
         spawnExplosion(a.x, a.y, a.radius, lowGraphics, a.isShielded ? '#00f0ff' : null);
-        playExplosion();
+        if (a.radius > 25 && !a.isShielded) {
+          playHeavyHit();
+        } else {
+          playExplosion();
+        }
 
         // Score & Combo
         comboCount++;
@@ -511,7 +520,11 @@ function update() {
           spawnFloatingText(a.x, a.y - 20, "CRIT!", "#fbbf24");
         }
         
-        spawnFloatingText(a.x, a.y, `+${points}`);
+        if (mult > 1) {
+          spawnFloatingText(a.x, a.y, `+${points} (2X)`, "#a855f7");
+        } else {
+          spawnFloatingText(a.x, a.y, `+${points}`);
+        }
         asteroidsDestroyed++;
         
         // Dispatch event to decentralized Daily Quests engine
@@ -622,7 +635,11 @@ function update() {
     const mult = multiplierTimer > 0 ? 2 : 1;
     const finalPoints = points * mult;
     score += finalPoints;
-    spawnFloatingText(x, y, `+${finalPoints}`);
+    if (mult > 1) {
+      spawnFloatingText(x, y, `+${finalPoints} (2X)`, "#a855f7");
+    } else {
+      spawnFloatingText(x, y, `+${finalPoints}`);
+    }
     if (onScoreUpdate) onScoreUpdate(score);
     comboCount++;
     if (comboCount >= 5) multiplierTimer = 300;
@@ -673,10 +690,20 @@ function update() {
 
 function startNextWave() {
   currentWave++;
-  waveEnemiesRemaining = 5 + (currentWave * 2);
+  // Progressive non-linear difficulty curve
+  waveEnemiesRemaining = Math.floor(5 + currentWave * 2.5 + Math.pow(currentWave, 1.25));
   waveInProgress = true;
   waveGracePeriod = 120;
-  spawnFloatingText(canvas.width / 2, canvas.height / 2, `WAVE ${currentWave}`);
+  
+  // Compress spawn rate slightly per wave to accelerate intensity
+  asteroidSpawnRate = Math.max(20, Math.floor(asteroidSpawnRate * 0.95));
+  
+  if (currentWave >= 5) {
+    spawnFloatingText(canvas.width / 2, canvas.height / 2 - 20, "DANGER: HIGH ESCALATION", "#ef4444");
+    spawnFloatingText(canvas.width / 2, canvas.height / 2 + 10, `WAVE ${currentWave}`, "#fbbf24");
+  } else {
+    spawnFloatingText(canvas.width / 2, canvas.height / 2, `WAVE ${currentWave}`, "#00f0ff");
+  }
 }
 
 function findNearestTarget(x, y, maxDist = 300) {
@@ -715,10 +742,12 @@ function fireBullet() {
     bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98, true));
     bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98, true));
     player.kickbackY += 4; // Extra recoil for heavy weapons
+    player.kickbackX += (Math.random() - 0.5) * 2.5;
   } else {
     bullets.push(createBullet(player.x - 8, player.y - PLAYER_SIZE, 0, -bSpeed));
     bullets.push(createBullet(player.x + 8, player.y - PLAYER_SIZE, 0, -bSpeed));
     player.kickbackY += 2;
+    player.kickbackX += (Math.random() - 0.5) * 1.0;
   }
   playShoot();
 }
@@ -726,6 +755,7 @@ function fireBullet() {
 function spawnAsteroid() {
   const radius = Math.random() * 26 + 14; 
   const isShielded = level > 2 && Math.random() < (0.1 + (level * 0.02));
+  const eliteHp = isShielded ? Math.min(6, 2 + Math.floor(level / 2)) : 1;
   
   asteroids.push({
     x: Math.random() * (canvas.width - 60) + 30,
@@ -735,7 +765,8 @@ function spawnAsteroid() {
     rotation: 0,
     rotationSpeed: (Math.random() - 0.5) * (0.06 + level * 0.005),
     vertices: generateAsteroidShape(radius),
-    hp: isShielded ? 3 : 1,
+    hp: eliteHp,
+    maxHp: eliteHp,
     isShielded: isShielded
   });
 }
@@ -885,7 +916,8 @@ function render() {
     ctx.closePath();
 
     if (a.isShielded) {
-      ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + (a.hp / 3) * 0.2})`;
+      const maxHp = a.maxHp || 3;
+      ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + (a.hp / maxHp) * 0.2})`;
       ctx.fill();
       ctx.strokeStyle = '#00f0ff';
       ctx.lineWidth = 3;
@@ -902,13 +934,14 @@ function render() {
     ctx.restore();
 
     // HP Bar for shielded
-    if (a.isShielded && a.hp < 3) {
+    if (a.isShielded && a.hp < (a.maxHp || 3)) {
+      const maxHp = a.maxHp || 3;
       const barWidth = a.radius * 1.5;
       const barHeight = 4;
       ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
       ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth, barHeight);
       ctx.fillStyle = '#ef4444';
-      ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth * (a.hp / 3), barHeight);
+      ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth * (a.hp / maxHp), barHeight);
     }
   });
 
