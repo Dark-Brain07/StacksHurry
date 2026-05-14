@@ -32,7 +32,7 @@ export function updateEnemies(canvas, frameCount, player) {
       });
     } else {
       // Boundary bounce for UFOs
-      if (e.x < 20 || e.x > canvas.width - 20) e.vx *= -1;
+      if (e.x < 25 || e.x > canvas.width - 25) e.vx *= -1; // Added padding to prevent clipping
 
       // Shooting for UFOs
       if (frameCount % 120 === 0) {
