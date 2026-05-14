@@ -781,8 +781,9 @@ function spawnPowerup(x, y) {
 
 
 function spawnFloatingText(x, y, text, color = '#ffffff') {
+  const safeX = Math.max(40, Math.min(canvas ? canvas.width - 40 : 1000, x));
   floatingTexts.push({
-    x,
+    x: safeX,
     y,
     text,
     color,
