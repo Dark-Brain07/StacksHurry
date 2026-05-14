@@ -729,7 +729,7 @@ function spawnAsteroid() {
     radius,
     speed: asteroidSpeed + Math.random() * 1.5,
     rotation: 0,
-    rotationSpeed: (Math.random() - 0.5) * 0.06,
+    rotationSpeed: (Math.random() - 0.5) * (0.06 + level * 0.005),
     vertices: generateAsteroidShape(radius),
     hp: isShielded ? 3 : 1,
     isShielded: isShielded
