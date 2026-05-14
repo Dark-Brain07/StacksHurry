@@ -95,7 +95,7 @@ let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
 let lastTouchTime = 0;
 let warpTime = 0;
-let achievements = { score1k: false, level5: false, asteroids50: false };
+let achievements = { score1k: false, score5k: false, level5: false, asteroids50: false };
 
 // Callbacks
 let onScoreUpdate = null;
@@ -395,6 +395,10 @@ function update() {
   if (!achievements.score1k && score >= 1000) {
     achievements.score1k = true;
     if (onAchievement) onAchievement('SCORE MASTER', 'Reached 1,000 points!', '💎');
+  }
+  if (!achievements.score5k && score >= 5000) {
+    achievements.score5k = true;
+    if (onAchievement) onAchievement('GRAND MASTER', 'Reached 5,000 points!', '🏆');
   }
   if (!achievements.level5 && level >= 5) {
     achievements.level5 = true;
