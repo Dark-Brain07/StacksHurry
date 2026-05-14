@@ -499,7 +499,7 @@ function update() {
 
         // Score & Combo
         comboCount++;
-        if (comboCount >= 5) multiplierTimer = COMBO_TIMEOUT; 
+        if (comboCount >= 5) multiplierTimer = Math.max(120, COMBO_TIMEOUT - level * 10); 
         const mult = multiplierTimer > 0 ? 2 : 1;
         const points = Math.ceil(a.radius * 2) * (a.isShielded ? 3 : 1) * mult;
         score += points;
