@@ -29,3 +29,10 @@ export function calculateShockwavePush(entity, shockwave, power = 8) {
   }
   return null;
 }
+
+/**
+ * Calculate kinetic knockback
+ */
+export function calculateKnockback(mass, velocity) {
+  return mass * velocity * 0.5;
+}
