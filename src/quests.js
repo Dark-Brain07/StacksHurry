@@ -10,7 +10,8 @@ export const QUEST_TYPES = {
   REACH_SCORE: 'reach_score',
   SURVIVE_TIME: 'survive_time',
   DESTROY_ENEMIES: 'destroy_enemies',
-  SURVIVE_WAVES: 'survive_waves'
+  SURVIVE_WAVES: 'survive_waves',
+  DAILY_LOGIN: 'daily_login'
 };
 
 // Default daily quest definitions
