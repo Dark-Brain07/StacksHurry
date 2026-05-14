@@ -191,7 +191,7 @@ async function connectWallet() {
       showWalletConnected(userAddress);
       showToast('Wallet connected successfully!', 'success');
     } else {
-      showToast('Could not retrieve wallet address', 'error');
+      showToast('Wallet address not found in local cache', 'error');
     }
   } catch (err) {
     console.error('Wallet connection failed:', err);
