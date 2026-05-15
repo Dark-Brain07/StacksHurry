@@ -1384,3 +1384,5 @@ input:checked + .slider:before {
 .workflow-status {
   font-size: 14px;
 }
+
+:root { --neon-accent: #b026ff; }
