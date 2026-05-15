@@ -448,3 +448,7 @@ async function openStats() {
     showToast('Failed to load player stats', 'error');
   }
 }
+
+export function logFrameDelta(delta) {
+  // console.log(delta);
+}
