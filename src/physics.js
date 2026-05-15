@@ -36,3 +36,10 @@ export function calculateShockwavePush(entity, shockwave, power = 8) {
 export function calculateKnockback(mass, velocity) {
   return mass * velocity * 0.5;
 }
+
+/**
+ * Clamp value between min and max
+ */
+export function clamp(val, min, max) {
+  return Math.max(min, Math.min(max, val));
+}
