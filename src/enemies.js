@@ -192,3 +192,5 @@ export function clearEnemyProjectiles(x, y, radius) {
     return true;
   });
 }
+
+export const ADVANCED_EVASION_RATE = 1.2;
