@@ -300,3 +300,7 @@ export function playHeavyHit() {
   } catch (e) { /* silent fail */ }
 }
 
+
+export function initSpatialAudioPlaceholder() {
+  return null;
+}
