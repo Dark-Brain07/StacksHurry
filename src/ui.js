@@ -356,3 +356,7 @@ export function renderWorkflow(state) {
     listEl.appendChild(item);
   });
 }
+
+export function logLoadingSpinner() {
+  console.log('[UI] Loading spinner active...');
+}
