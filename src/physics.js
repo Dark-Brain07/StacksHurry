@@ -43,3 +43,5 @@ export function calculateKnockback(mass, velocity) {
 export function clamp(val, min, max) {
   return Math.max(min, Math.min(max, val));
 }
+
+export const DEFAULT_COLLISION_RADIUS = 15;
