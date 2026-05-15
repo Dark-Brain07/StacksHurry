@@ -4,25 +4,26 @@ Today's workflow is now synced with the **Dev Sprint Roadmap** panel in the game
 - **UI Visibility**: Talent reviewers can see the active sprint and commit progress directly on the Main Menu.
 - **Developer Shortcut**: Press `Alt + Shift + W` in-game to record a completed commit progress in the roadmap.
 
-## Commit Plan (May 14, 2026 - Granular Progress)
+## Commit Plan (May 15, 2026 - Granular Progress)
 
-1.  **[x] Commit 1: Workflow Engine** - Implement `src/workflow.js` for automated task tracking.
-2.  **[x] Commit 2: Roadmap UI** - Add "Dev Sprint Roadmap" panel to `index.html`.
-3.  **[x] Commit 3: CSS Polish** - Add premium styling for the roadmap with neon purple accents.
-4.  **[x] Commit 4: Integration** - Connect workflow engine to `main.js` and `ui.js`.
-5.  **[x] Commit 5: AI State Machine** - Refactored enemy behavior into modular states.
-6.  **[x] Commit 6: Object Pooling** - Implement bullet pooling to optimize memory.
-7.  **[x] Commit 7: Screen Shake** - Finalize intensity scaling logic.
-8.  **[x] Commit 8: Particle FX** - Add mass-based color variance to explosions.
-9.  **[x] Commit 9: Physics Kickback** - Implement weapon recoil forces.
-10. **[x] Commit 10: Combo HUD** - Add floating score popups for multipliers.
-11. **[x] Commit 11: Elite Entities** - Implement shielded asteroid multi-hit logic.
-12. **[x] Commit 12: Wave Scaling** - Finalize combat wave difficulty curves.
-13. **[x] Commit 13: Spatial Audio** - Add material-specific impact sound triggers.
-14. **[x] Commit 14: Settings Sync** - Persist new combat settings to localStorage.
-15. **[x] Commit 15: Final Review** - Audit repository links and verify build stability.
+1.  **[x] Commit 1: Constants Refactor** - Add overlay padding constant.
+2.  **[x] Commit 2: Physics Utility** - Add clamp mathematical utility.
+3.  **[x] Commit 3: UI Enhancement** - Implement basic loading spinner logger.
+4.  **[x] Commit 4: State Logic** - Add state reset helper structure.
+5.  **[x] Commit 5: Audio Framework** - Setup spatial audio base placeholder.
+6.  **[x] Commit 6: Input Handling** - Add deadzone constant for controllers.
+7.  **[x] Commit 7: Collision System** - Refactor circle collision parameters.
+8.  **[x] Commit 8: Leaderboard UI** - Enhance leaderboard render loop context.
+9.  **[x] Commit 9: Particle Polish** - Increase particle decay variable.
+10. **[x] Commit 10: Enemy Logic** - Setup advanced evasion constant.
+11. **[x] Commit 11: Main Loop** - Add frame delta logging helper.
+12. **[x] Commit 12: Quest UI** - Add quest progress text formatting.
+13. **[x] Commit 13: CSS Tokens** - Add neon accent colors.
+14. **[x] Commit 14: Storage Sync** - Add robust storage error handling.
+15. **[x] Commit 15: Final Review** - Audit workflow.md for May 15 sprint completion.
 
 ## Progress Tracking
 - **Total Commits Today**: 15/15 (Sprint Completed Successfully)
 - **Status**: COMPLETED 🚀
-- **Topic**: Architecture & Performance Upgrade
+- **Topic**: Codebase Polish & Utilities Upgrade
+
