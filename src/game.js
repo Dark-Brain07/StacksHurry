@@ -1183,3 +1183,7 @@ function drawIndicator(x, y, percent, color) {
   ctx.fillRect(x - 20, y, 40 * percent, 4);
   ctx.restore();
 }
+
+export function resetGameStateHelpers() {
+  return { isResetting: true };
+}
