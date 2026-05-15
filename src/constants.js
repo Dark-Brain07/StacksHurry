@@ -22,3 +22,6 @@ export const COLORS = {
   asteroid: '#94a3b8',
   asteroidStroke: '#64748b',
 };
+
+// UI Overlay Config
+export const OVERLAY_PADDING = 10;
