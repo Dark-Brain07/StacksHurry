@@ -25,3 +25,5 @@ export const COLORS = {
 
 // UI Overlay Config
 export const OVERLAY_PADDING = 10;
+
+export const JOYSTICK_DEADZONE = 0.15;
