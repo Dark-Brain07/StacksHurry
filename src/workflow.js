@@ -131,3 +131,7 @@ export function completeCommit(commitNum) {
 export function getWorkflowState() {
   return workflowState;
 }
+
+export function handleStorageError(e) {
+  console.error('Storage Error:', e);
+}
