@@ -68,3 +68,5 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 export function resetParticles() {
   particles = [];
 }
+
+export const BASE_PARTICLE_DECAY = 0.05;
