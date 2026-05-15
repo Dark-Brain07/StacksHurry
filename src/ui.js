@@ -360,3 +360,7 @@ export function renderWorkflow(state) {
 export function logLoadingSpinner() {
   console.log('[UI] Loading spinner active...');
 }
+
+export function getLeaderboardRenderContext() {
+  return 'lb_context';
+}
