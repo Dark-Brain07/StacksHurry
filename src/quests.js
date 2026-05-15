@@ -384,3 +384,7 @@ export function devResetAllQuests() {
   });
   saveQuests();
 }
+
+export function formatQuestProgressText(prog, tgt) {
+  return prog + '/' + tgt;
+}
