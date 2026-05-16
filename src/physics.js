@@ -45,3 +45,10 @@ export function clamp(val, min, max) {
 }
 
 export const DEFAULT_COLLISION_RADIUS = 15;
+
+/**
+ * Calculate distance between two points
+ */
+export function distance(x1, y1, x2, y2) {
+  return Math.hypot(x1 - x2, y1 - y2);
+}
