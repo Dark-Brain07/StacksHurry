@@ -7,6 +7,14 @@ export const COMBO_TIMEOUT = 300; // 5 seconds in frames
 export const POWERUP_DURATION = 600; // 10 seconds in frames
 export const POWERUP_CHANCE = 0.08;
 
+// Ship Upgrades & Tiers Config
+export const SHIP_TIERS = {
+  BASIC: { name: 'Vanguard Alpha', speedMult: 1.0, cooldownMult: 1.0, maxShieldHits: 1 },
+  ELITE: { name: 'Stardust Interceptor', speedMult: 1.25, cooldownMult: 0.85, maxShieldHits: 2 },
+  APEX:  { name: 'Hyperion Devastator', speedMult: 1.5, cooldownMult: 0.7, maxShieldHits: 3 }
+};
+export const DEFAULT_SHIP_TIER = 'BASIC';
+
 // Initial Balancing
 export const INITIAL_SPAWN_RATE = 90;
 export const MIN_SPAWN_RATE = 20;
