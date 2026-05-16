@@ -388,3 +388,10 @@ export function devResetAllQuests() {
 export function formatQuestProgressText(prog, tgt) {
   return prog + '/' + tgt;
 }
+
+/**
+ * Format total lifetime completed quests
+ */
+export function formatTotalQuestsCompleted(count) {
+  return count > 99 ? '99+' : count.toString();
+}
