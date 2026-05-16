@@ -77,6 +77,10 @@ export class Vector2D {
 }
 
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
+  // Overload to support Vector2D parameters: checkCircleCollision(vec1, r1, vec2, r2)
+  if (x1 instanceof Vector2D && x2 instanceof Vector2D) {
+    return x1.dist(x2) < y1 + y2;
+  }
   const dx = x1 - x2;
   const dy = y1 - y2;
   return Math.hypot(dx, dy) < r1 + r2;
@@ -120,6 +124,10 @@ export const DEFAULT_COLLISION_RADIUS = 15;
  * Calculate distance between two points
  */
 export function distance(x1, y1, x2, y2) {
+  // Overload to support Vector2D parameters: distance(vec1, vec2)
+  if (x1 instanceof Vector2D && y1 instanceof Vector2D) {
+    return x1.dist(y1);
+  }
   return Math.hypot(x1 - x2, y1 - y2);
 }
 
