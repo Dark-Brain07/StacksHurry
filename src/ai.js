@@ -96,3 +96,20 @@ export function orbit(entity, target, radius, speed) {
     entity.x = target.x + Math.cos(entity.orbitAngle) * radius;
     entity.y = target.y + Math.sin(entity.orbitAngle) * radius;
 }
+
+/**
+ * Evade behavior: flee from a target
+ */
+export function evade(entity, target, maxSpeed, force) {
+    const desiredX = entity.x - target.x;
+    const desiredY = entity.y - target.y;
+    const dist = Math.sqrt(desiredX * desiredX + desiredY * desiredY);
+    
+    if (dist === 0 || dist > 300) return { x: 0, y: 0 }; // Only evade if close
+    
+    const steerX = (desiredX / dist) * maxSpeed;
+    const steerY = (desiredY / dist) * maxSpeed;
+    
+    entity.vx = (entity.vx || 0) + (steerX - (entity.vx || 0)) * force;
+    entity.vy = (entity.vy || 0) + (steerY - (entity.vy || 0)) * force;
+}
