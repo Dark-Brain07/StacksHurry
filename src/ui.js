@@ -325,14 +325,6 @@ export function renderQuests(quests, streak, onClaimCallback) {
   });
 }
 
-export function renderWorkflow(state) {
-  const listEl = document.getElementById('workflow-list');
-  const progressEl = document.getElementById('workflow-progress');
-  if (!listEl) return;
-
-  if (progressEl) {
-    progressEl.textContent = `${state.completedCount}/15 COMMITS`;
-  }
 
   if (!state.tasks || state.tasks.length === 0) {
     listEl.innerHTML = '<div class="quest-item-placeholder">No active sprint today.</div>';
