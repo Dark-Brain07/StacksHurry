@@ -52,3 +52,10 @@ export const DEFAULT_COLLISION_RADIUS = 15;
 export function distance(x1, y1, x2, y2) {
   return Math.hypot(x1 - x2, y1 - y2);
 }
+
+/**
+ * Linear interpolation
+ */
+export function lerp(start, end, amt) {
+  return (1 - amt) * start + amt * end;
+}
