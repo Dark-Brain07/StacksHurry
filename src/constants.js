@@ -29,3 +29,7 @@ export const OVERLAY_PADDING = 10;
 export const JOYSTICK_DEADZONE = 0.15;
 
 export const MAX_PARTICLES = 200;
+export const SHIELD_COLORS = {
+  active: '#3b82f6',
+  depleted: '#ef4444'
+};
