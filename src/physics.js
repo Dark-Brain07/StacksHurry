@@ -6,6 +6,76 @@
 /**
  * Basic circle collision detection
  */
+/**
+ * Robust 2D Vector utility class for high-performance physics computations
+ */
+export class Vector2D {
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+  }
+
+  set(x, y) {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  add(v) {
+    this.x += v.x;
+    this.y += v.y;
+    return this;
+  }
+
+  sub(v) {
+    this.x -= v.x;
+    this.y -= v.y;
+    return this;
+  }
+
+  mult(n) {
+    this.x *= n;
+    this.y *= n;
+    return this;
+  }
+
+  div(n) {
+    if (n !== 0) {
+      this.x /= n;
+      this.y /= n;
+    }
+    return this;
+  }
+
+  mag() {
+    return Math.hypot(this.x, this.y);
+  }
+
+  normalize() {
+    const m = this.mag();
+    if (m !== 0) {
+      this.div(m);
+    }
+    return this;
+  }
+
+  limit(max) {
+    if (this.mag() > max) {
+      this.normalize();
+      this.mult(max);
+    }
+    return this;
+  }
+
+  dot(v) {
+    return this.x * v.x + this.y * v.y;
+  }
+
+  dist(v) {
+    return Math.hypot(this.x - v.x, this.y - v.y);
+  }
+}
+
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   const dx = x1 - x2;
   const dy = y1 - y2;
