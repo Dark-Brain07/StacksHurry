@@ -119,12 +119,6 @@ function savePersistedSettings() {
 }
 
 
-// ─── Update Workflow UI ───
-function updateWorkflowUI() {
-  const state = loadWorkflow();
-  renderWorkflow(state);
-}
-
 // ─── Update Quests UI ───
 function updateQuestsUI() {
   const state = loadQuests();
@@ -245,19 +239,6 @@ function bindEvents() {
   });
   document.getElementById('btn-pause-settings').addEventListener('click', () => showSettingsModal());
 
-  // Workflow shortcut (Alt+Shift+W to complete next commit in roadmap)
-  window.addEventListener('keydown', (e) => {
-    if (e.altKey && e.shiftKey && e.key === 'W') {
-      const state = getWorkflowState();
-      const nextTask = state.tasks.find(t => !t.completed);
-      if (nextTask) {
-        completeCommit(nextTask.commitNum);
-        updateWorkflowUI();
-        showToast(`Commit #${nextTask.commitNum} recorded: ${nextTask.title}`, 'success');
-        showAchievement('ROADMAP UPDATED', `Progress: ${getWorkflowState().completedCount}/15 commits`, '🛠️');
-      }
-    }
-  });
 }
 
 // ─── Wallet Connection (v8 API) ───
