@@ -483,7 +483,7 @@ function update() {
 
   // Update asteroids
   asteroids = asteroids.filter(a => {
-    a.y += a.speed;
+    if (a.vx !== undefined) { a.x += a.vx; a.y += a.vy; } else { a.y += a.speed; }
     a.rotation += a.rotationSpeed;
 
     // Off screen
@@ -549,8 +549,8 @@ function update() {
 
         // Split large asteroids
         if (a.radius > 26) {
-          spawnSmallAsteroid(a.x - 10, a.y, a.radius * 0.6);
-          spawnSmallAsteroid(a.x + 10, a.y, a.radius * 0.6);
+          spawnSmallAsteroid(a.x - 10, a.y, a.radius * 0.6, a.speed, -0.5);
+          spawnSmallAsteroid(a.x + 10, a.y, a.radius * 0.6, a.speed, 0.5);
         }
 
         // Random powerup drop
@@ -771,14 +771,20 @@ function spawnAsteroid() {
   });
 }
 
-function spawnSmallAsteroid(x, y, radius) {
+function spawnSmallAsteroid(x, y, radius, parentSpeed = 2, angleOffset = 0.5) {
+  const angle = Math.PI / 2 + angleOffset;
+  const speedX = Math.cos(angle) * (parentSpeed * 1.2);
+  const speedY = Math.sin(angle) * (parentSpeed * 1.2);
+
   asteroids.push({
     x,
     y,
+    vx: speedX,
+    vy: speedY,
     radius,
-    speed: asteroidSpeed * 1.3,
+    speed: Math.hypot(speedX, speedY),
     rotation: Math.random() * Math.PI,
-    rotationSpeed: (Math.random() - 0.5) * 0.15,
+    rotationSpeed: (Math.random() - 0.5) * 0.25,
     vertices: generateAsteroidShape(radius),
     hp: 1,
     isShielded: false
