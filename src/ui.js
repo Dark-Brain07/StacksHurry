@@ -364,3 +364,11 @@ export function safeHideElement(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('hidden');
 }
+
+/**
+ * Helper to safely show elements
+ */
+export function safeShowElement(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
