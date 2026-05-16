@@ -3,31 +3,48 @@
  * Manages explosions and visual feedback effects
  */
 
+export class Particle {
+  constructor(x, y, vx, vy, life, color, radius) {
+    this.x = x;
+    this.y = y;
+    this.vx = vx;
+    this.vy = vy;
+    this.life = life;
+    this.maxLife = life;
+    this.color = color;
+    this.radius = radius;
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+    return this.life > 0;
+  }
+
+  render(ctx) {
+    const alpha = this.life / this.maxLife;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius * alpha, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
 let particles = [];
 
 export function getParticleCount() { return particles.length; }
 
 export function updateParticles() {
-  particles = particles.filter(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.life--;
-    p.vx *= 0.98;
-    p.vy *= 0.98;
-    return p.life > 0;
-  });
+  particles = particles.filter(p => p.update());
 }
 
 export function renderParticles(ctx) {
-  particles.forEach(p => {
-    const alpha = p.life / p.maxLife;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius * alpha, 0, Math.PI * 2);
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = alpha;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  });
+  particles.forEach(p => p.render(ctx));
 }
 
 export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {
@@ -54,16 +71,15 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
     const speed = Math.random() * 5 + 1.5;
     const particleLife = Math.floor(Math.random() * 40) + 20;
     
-    particles.push({
+    particles.push(new Particle(
       x,
       y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      life: particleLife,
-      maxLife: particleLife,
-      radius: Math.random() * 4 + 1.5,
-      color: palette[Math.floor(Math.random() * palette.length)],
-    });
+      Math.cos(angle) * speed,
+      Math.sin(angle) * speed,
+      particleLife,
+      palette[Math.floor(Math.random() * palette.length)],
+      Math.random() * 4 + 1.5
+    ));
   }
 }
 
