@@ -40,18 +40,30 @@ async function readOnly(contractId, functionName, args = []) {
 }
 
 // ─── Helper: Write contract call via request() ───
-async function writeContract(contractId, functionName, functionArgs) {
+async function writeContract(contractId, functionName, functionArgs, retries = 3, delay = 1000) {
   const hexArgs = functionArgs.map(arg => Cl.serialize(arg));
 
-  const result = await request('stx_callContract', {
-    contract: contractId,
-    functionName,
-    functionArgs: hexArgs,
-    network: NETWORK,
-  });
-
-  console.log(`TX submitted:`, result);
-  return result;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      console.log(`[TX Attempt ${attempt}/${retries}] calling ${functionName} on ${contractId}...`);
+      const result = await request('stx_callContract', {
+        contract: contractId,
+        functionName,
+        functionArgs: hexArgs,
+        network: NETWORK,
+      });
+      console.log(`[TX Success] ${functionName} transaction submitted:`, result);
+      return result;
+    } catch (error) {
+      console.error(`[TX Error] Attempt ${attempt} failed for ${functionName}:`, error);
+      if (attempt === retries) {
+        throw new Error(`Transaction failed after ${retries} attempts. Reason: ${error.message || error}`);
+      }
+      const backoff = delay * Math.pow(2, attempt - 1);
+      console.log(`[TX Retry] Backing off for ${backoff}ms before retry...`);
+      await new Promise(resolve => setTimeout(resolve, backoff));
+    }
+  }
 }
 
 // ══════════════════════════════════════════
