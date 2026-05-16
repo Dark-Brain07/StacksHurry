@@ -5,11 +5,24 @@
 
 let audioCtx = null;
 let soundEnabled = true;
+try {
+  if (typeof localStorage !== 'undefined') {
+    const cached = localStorage.getItem('stacks_hurry_audio_pref');
+    if (cached !== null) {
+      soundEnabled = cached === 'true';
+    }
+  }
+} catch (e) {}
 let bgmOsc = null;
 let bgmGain = null;
 
 export function toggleSound(enabled) {
   soundEnabled = enabled;
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('stacks_hurry_audio_pref', enabled ? 'true' : 'false');
+    }
+  } catch (e) {}
   if (bgmGain && audioCtx) {
     if (soundEnabled) {
       bgmGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 0.1);
