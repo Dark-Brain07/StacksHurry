@@ -33,3 +33,4 @@ export const SHIELD_COLORS = {
   active: '#3b82f6',
   depleted: '#ef4444'
 };
+export const AI_DETECTION_RADIUS = 300;
