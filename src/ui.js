@@ -184,51 +184,74 @@ export function hideSettingsModal() {
 
 // ─── Toast Notifications ───
 
-export function showAchievement(title, message, icon = '🏆') {
+const toastQueue = [];
+let isProcessingToast = false;
+
+function processToastQueue() {
+  if (isProcessingToast || toastQueue.length === 0) return;
+  isProcessingToast = true;
+
+  const item = toastQueue.shift();
   const container = document.getElementById('toast-container');
-  if (!container) return;
+  if (!container) {
+    isProcessingToast = false;
+    return;
+  }
 
   const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `
-    <div class="toast-icon">${icon}</div>
-    <div class="toast-content">
-      <div class="toast-title">${title}</div>
-      <div class="toast-msg">${message}</div>
-    </div>
-  `;
+  toast.className = item.isAchievement ? 'toast achievement' : `toast ${item.type || ''}`;
+  
+  if (item.isAchievement) {
+    toast.innerHTML = `
+      <div class="toast-icon">${item.icon}</div>
+      <div class="toast-content">
+        <div class="toast-title">${item.title}</div>
+        <div class="toast-msg">${item.message}</div>
+      </div>
+    `;
+  } else {
+    toast.innerHTML = `
+      <div class="toast-icon">${item.icon}</div>
+      <div class="toast-content">
+        <div class="toast-msg">${item.message}</div>
+      </div>
+    `;
+  }
 
   container.appendChild(toast);
 
   setTimeout(() => {
     toast.classList.add('fade-out');
-    toast.addEventListener('animationend', () => toast.remove());
-  }, 4500);
+    toast.addEventListener('animationend', () => {
+      toast.remove();
+      isProcessingToast = false;
+      processToastQueue();
+    });
+  }, item.duration || 3000);
+}
+
+export function showAchievement(title, message, icon = '🏆') {
+  toastQueue.push({
+    isAchievement: true,
+    title,
+    message,
+    icon,
+    duration: 4500
+  });
+  processToastQueue();
 }
 
 export function showToast(message, type = 'info', duration = 4000) {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
-
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-
   const icons = { success: '✅', error: '❌', info: 'ℹ️' };
   const icon = icons[type] || 'ℹ️';
-
-  toast.innerHTML = `
-    <div class="toast-icon">${icon}</div>
-    <div class="toast-content">
-      <div class="toast-msg">${message}</div>
-    </div>
-  `;
-
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    toast.addEventListener('animationend', () => toast.remove());
-  }, duration);
+  toastQueue.push({
+    isAchievement: false,
+    message,
+    type,
+    icon,
+    duration
+  });
+  processToastQueue();
 }
 
 export function vibrate(pattern) {
