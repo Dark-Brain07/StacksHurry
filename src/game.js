@@ -584,7 +584,7 @@ function update() {
             playGameOver();
 
             // Dispatch game event to decentralized Quests listener
-            QuestsEventDispatcher.dispatchEvent('gameFinished', { score });
+            QuestsEventDispatcher.dispatchEvent('gameFinished', { score, timeSurvived: Math.floor(frameCount / 60) });
 
             if (onGameOver) {
               onGameOver({ score, level, asteroidsDestroyed });

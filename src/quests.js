@@ -116,6 +116,28 @@ const MASTER_QUEST_POOL = [
     completed: false,
     claimed: false
   },
+    {
+    id: 'quest_survival_120',
+    type: QUEST_TYPES.SURVIVE_TIME,
+    target: 120,
+    title: 'Void Drifter',
+    description: 'Survive for 120 seconds in a single game today.',
+    reward: 500,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_score_12k',
+    type: QUEST_TYPES.REACH_SCORE,
+    target: 12000,
+    title: 'Legendary Flight',
+    description: 'Reach a score of 12,000 points in a single run today.',
+    reward: 1200,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
   {
     id: 'quest_login_1',
     type: QUEST_TYPES.DAILY_LOGIN,
@@ -353,6 +375,9 @@ export function initQuestListeners(onQuestCompletedCallback) {
   QuestsEventDispatcher.subscribe('gameFinished', (data) => {
     let completedList = [];
     completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.PLAY_GAMES, 1));
+    if (data && typeof data.timeSurvived === 'number') {
+      completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.SURVIVE_TIME, data.timeSurvived, true));
+    }
     if (data && typeof data.score === 'number') {
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, data.score, true));
     }
