@@ -356,3 +356,11 @@ export function logLoadingSpinner() {
 export function getLeaderboardRenderContext() {
   return 'lb_context';
 }
+
+/**
+ * Helper to safely hide elements
+ */
+export function safeHideElement(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('hidden');
+}
