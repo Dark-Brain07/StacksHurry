@@ -836,11 +836,13 @@ function render() {
 
   ctx.save();
   if (shake.duration > 0) {
-    const dx = (Math.random() - 0.5) * shake.intensity;
-    const dy = (Math.random() - 0.5) * shake.intensity;
+    const angle = Math.random() * Math.PI * 2;
+    const offset = Math.sin(shake.duration * 1.5) * shake.intensity;
+    const dx = Math.cos(angle) * offset;
+    const dy = Math.sin(angle) * offset;
     ctx.translate(dx, dy);
     shake.duration--;
-    shake.intensity *= 0.9; // Smooth decay
+    shake.intensity *= 0.92;
   }
 
   // Stars
