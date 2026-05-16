@@ -268,6 +268,18 @@ export function renderQuests(quests, streak, onClaimCallback) {
   // Render streak
   if (streakEl) {
     streakEl.textContent = `${streak} Day Streak 🔥`;
+    if (streak > 0) {
+      streakEl.style.transform = 'scale(1.15)';
+      streakEl.style.transition = 'transform 0.3s ease-out';
+      setTimeout(() => streakEl.style.transform = 'scale(1)', 300);
+    }
+  }
+
+  // Render total claimed points badge
+  const totalPointsEl = document.getElementById('total-points-badge');
+  if (totalPointsEl && quests) {
+    const totalPoints = quests.reduce((sum, q) => q.claimed ? sum + q.reward : sum, 0);
+    totalPointsEl.textContent = `🏆 ${totalPoints} PTS`;
   }
 
   if (!quests || quests.length === 0) {
