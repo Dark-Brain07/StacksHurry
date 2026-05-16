@@ -5,6 +5,8 @@
 
 let particles = [];
 
+export function getParticleCount() { return particles.length; }
+
 export function updateParticles() {
   particles = particles.filter(p => {
     p.x += p.vx;
