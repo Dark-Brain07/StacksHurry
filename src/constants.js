@@ -34,3 +34,4 @@ export const SHIELD_COLORS = {
   depleted: '#ef4444'
 };
 export const AI_DETECTION_RADIUS = 300;
+export const DEFAULT_GAME_VOLUME = 0.5;

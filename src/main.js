@@ -39,7 +39,6 @@ import {
 } from './ui.js';
 import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
 import { loadQuests, claimQuestReward, initQuestListeners, devCompleteAllQuests, devResetAllQuests } from './quests.js';
-import { loadWorkflow, completeCommit, getWorkflowState } from './workflow.js';
 
 // ─── App State ───
 let userAddress = null;
@@ -58,9 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateQuestsUI();
   });
 
-  updateQuestsUI();
-  updateWorkflowUI();
-  loadPersistedSettings();
+  updateQuestsUI();  loadPersistedSettings();
 });
 
 // ─── Persist Settings ───

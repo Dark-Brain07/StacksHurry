@@ -325,30 +325,6 @@ export function renderQuests(quests, streak, onClaimCallback) {
   });
 }
 
-
-  if (!state.tasks || state.tasks.length === 0) {
-    listEl.innerHTML = '<div class="quest-item-placeholder">No active sprint today.</div>';
-    return;
-  }
-
-  listEl.innerHTML = '';
-  state.tasks.forEach(t => {
-    const item = document.createElement('div');
-    item.className = `workflow-item ${t.completed ? 'completed' : ''}`;
-    
-    item.innerHTML = `
-      <div class="workflow-num">${t.completed ? '✓' : t.commitNum}</div>
-      <div class="workflow-details">
-        <span class="workflow-name">${t.title}</span>
-        <span class="workflow-desc">${t.desc}</span>
-      </div>
-      <div class="workflow-status">${t.completed ? '🚀' : '⏳'}</div>
-    `;
-    
-    listEl.appendChild(item);
-  });
-}
-
 export function logLoadingSpinner() {
   console.log('[UI] Loading spinner active...');
 }
