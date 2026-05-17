@@ -90,6 +90,8 @@ let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: n
 let lowGraphics = false;
 let autoFire = true;
 let shakeMultiplier = 1.0;
+const keys = { w: false, a: false, s: false, d: false, Space: false };
+let keyboardActive = false;
 
 export function setSettings(settings) {
   if (settings.lowGraphics !== undefined) lowGraphics = settings.lowGraphics;
@@ -129,8 +131,36 @@ export function initGame(canvasEl, callbacks) {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
   
+  const keyboardKeys = ['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' ', 'p', 'escape'];
+  
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && gameRunning) togglePause();
+    const keyLower = e.key.toLowerCase();
+    if (keyboardKeys.includes(keyLower) || keyboardKeys.includes(e.key)) {
+      keyboardActive = true;
+      if (keyLower === 'w' || e.key === 'ArrowUp') keys.w = true;
+      if (keyLower === 'a' || e.key === 'ArrowLeft') keys.a = true;
+      if (keyLower === 's' || e.key === 'ArrowDown') keys.s = true;
+      if (keyLower === 'd' || e.key === 'ArrowRight') keys.d = true;
+      if (e.key === ' ') {
+        keys.Space = true;
+        shooting = true;
+      }
+      if ((keyLower === 'p' || e.key === 'Escape') && gameRunning) {
+        togglePause();
+      }
+    }
+  });
+
+  window.addEventListener('keyup', (e) => {
+    const keyLower = e.key.toLowerCase();
+    if (keyLower === 'w' || e.key === 'ArrowUp') keys.w = false;
+    if (keyLower === 'a' || e.key === 'ArrowLeft') keys.a = false;
+    if (keyLower === 's' || e.key === 'ArrowDown') keys.s = false;
+    if (keyLower === 'd' || e.key === 'ArrowRight') keys.d = false;
+    if (e.key === ' ') {
+      keys.Space = false;
+      shooting = false;
+    }
   });
 
   // Input
@@ -351,16 +381,43 @@ function update() {
 
   // Smooth player follow
   const speedMult = player.speedActive > 0 ? 0.22 : 0.12;
-  if (joystick.active) {
+  const keyboardSpeed = player.speedActive > 0 ? 9 : 6;
+  
+  if (keyboardActive && (keys.w || keys.a || keys.s || keys.d)) {
+    let moveX = 0;
+    let moveY = 0;
+    if (keys.w) moveY -= 1;
+    if (keys.s) moveY += 1;
+    if (keys.a) moveX -= 1;
+    if (keys.d) moveX += 1;
+    
+    // Normalize diagonal movement speed
+    if (moveX !== 0 && moveY !== 0) {
+      moveX *= 0.7071;
+      moveY *= 0.7071;
+    }
+    
+    player.x += moveX * keyboardSpeed + player.kickbackX;
+    player.y += moveY * keyboardSpeed + player.kickbackY;
+    
+    // Keep mouse coordinates synced so they don't snap back when mouse moves
+    mouseX = player.x;
+    mouseY = player.y;
+  } else if (joystick.active) {
     player.x += (joystick.dx * 0.15) + player.kickbackX;
     player.y += (joystick.dy * 0.15) + player.kickbackY;
     mouseX = player.x; // Sync mouse
     mouseY = player.y;
   } else {
+    // If mouse moves, switch keyboard off
     const dx = mouseX - player.x;
     const dy = mouseY - player.y;
-    player.x += (dx * speedMult) + player.kickbackX;
-    player.y += (dy * speedMult) + player.kickbackY;
+    // We only update via mouse if mouse is actually away from player to prevent micro-stutter
+    if (Math.hypot(dx, dy) > 2) {
+      keyboardActive = false;
+      player.x += (dx * speedMult) + player.kickbackX;
+      player.y += (dy * speedMult) + player.kickbackY;
+    }
   }
   
   // Apply recoil friction uniformly
