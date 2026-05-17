@@ -667,9 +667,9 @@ function update() {
       if (p.type === 'shield') {
         player.shieldActive = true;
       } else if (p.type === 'multishot') {
-        player.multiShotActive = 600;
+        player.multiShotActive = Math.min(1200, (player.multiShotActive || 0) + 600);
       } else if (p.type === 'speed') {
-        player.speedActive = 600;
+        player.speedActive = Math.min(1200, (player.speedActive || 0) + 600);
       } else if (p.type === 'health') {
         if (lives < 5) {
           lives++;
