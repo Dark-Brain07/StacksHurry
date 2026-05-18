@@ -215,7 +215,10 @@ export function playLevelUp() {
   } catch (e) { /* silent fail */ }
 }
 
-/** Collect / powerup sound */
+/**
+ * Collect / powerup sound
+ * Played when player picks up a buff item
+ */
 export function playCollect() {
   if (!soundEnabled) return;
   try {
@@ -234,7 +237,10 @@ export function playCollect() {
   } catch (e) { /* silent fail */ }
 }
 
-/** Warning sound for expiring power-ups */
+/**
+ * Warning sound for expiring power-ups
+ * Alert player before effect ends
+ */
 export function playWarning() {
   if (!soundEnabled) return;
   try {
