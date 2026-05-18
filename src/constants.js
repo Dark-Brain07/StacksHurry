@@ -32,7 +32,7 @@ export const COLORS = {
   asteroidStroke: '#64748b',
 };
 
-// UI Overlay Config
+// UI Overlay Position
 export const OVERLAY_PADDING = 10;
 
 export const JOYSTICK_DEADZONE = 0.15;
