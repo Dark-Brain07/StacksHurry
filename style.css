@@ -37,6 +37,7 @@
   --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
 
+  /* Transition timings for UI animations */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
