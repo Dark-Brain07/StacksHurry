@@ -159,6 +159,7 @@ html, body {
   color: var(--text-primary);
   text-shadow: 0 0 30px rgba(0,240,255,0.4);
   line-height: 1.1;
+  user-select: none;
 }
 
 .title-accent {
