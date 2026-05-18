@@ -231,6 +231,11 @@ html, body {
   text-transform: uppercase;
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
 .btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
