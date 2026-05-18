@@ -2,6 +2,7 @@ export const PLAYER_SIZE = 28;
 export const BULLET_SPEED = 10;
 export const BULLET_RADIUS = 3;
 export const SHOOT_COOLDOWN = 10;
+// Game Progression Constants
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
 export const COMBO_TIMEOUT = 300; // 5 seconds in frames
 export const POWERUP_DURATION = 600; // 10 seconds in frames
