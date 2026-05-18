@@ -41,5 +41,6 @@ export const SHIELD_COLORS = {
   active: '#3b82f6',
   depleted: '#ef4444'
 };
+// AI Behavior
 export const AI_DETECTION_RADIUS = 300;
 export const DEFAULT_GAME_VOLUME = 0.5;
