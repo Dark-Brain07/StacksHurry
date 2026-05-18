@@ -16,6 +16,10 @@ try {
 let bgmOsc = null;
 let bgmGain = null;
 
+/**
+ * Toggle sound on or off and save preference to localStorage
+ * @param {boolean} enabled - Whether sound should be enabled
+ */
 export function toggleSound(enabled) {
   soundEnabled = enabled;
   try {
