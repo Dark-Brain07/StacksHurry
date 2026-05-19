@@ -439,6 +439,10 @@ html, body {
   opacity: 0.4;
 }
 
+.crt-overlay.disabled {
+  display: none !important;
+}
+
 .crt-overlay::after {
   content: "";
   position: absolute;

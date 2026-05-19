@@ -82,6 +82,11 @@ function loadPersistedSettings() {
       if (parsed.lowGraphics !== undefined && graphicsToggle) {
         graphicsToggle.checked = parsed.lowGraphics;
       }
+      const scanlinesToggle = document.getElementById('toggle-scanlines');
+      if (parsed.scanlinesEnabled !== undefined && scanlinesToggle) {
+        scanlinesToggle.checked = parsed.scanlinesEnabled;
+        updateScanlinesOverlay(parsed.scanlinesEnabled);
+      }
       if (parsed.autoFire !== undefined && autofireToggle) {
         autofireToggle.checked = parsed.autoFire;
       }
@@ -96,20 +101,36 @@ function loadPersistedSettings() {
   }
 }
 
+function updateScanlinesOverlay(enabled) {
+  const overlay = document.querySelector('.crt-overlay');
+  if (overlay) {
+    if (enabled) {
+      overlay.classList.remove('disabled');
+    } else {
+      overlay.classList.add('disabled');
+    }
+  }
+}
+
 function savePersistedSettings() {
   try {
     const soundToggle = document.getElementById('toggle-sound');
     const graphicsToggle = document.getElementById('toggle-graphics');
+    const scanlinesToggle = document.getElementById('toggle-scanlines');
     const autofireToggle = document.getElementById('toggle-autofire');
     const shakeSlider = document.getElementById('slider-shake');
     
     const settingsObj = {
       soundEnabled: soundToggle ? soundToggle.checked : true,
       lowGraphics: graphicsToggle ? graphicsToggle.checked : false,
+      scanlinesEnabled: scanlinesToggle ? scanlinesToggle.checked : true,
       autoFire: autofireToggle ? autofireToggle.checked : true,
       shakeMultiplier: shakeSlider ? parseInt(shakeSlider.value) / 100 : 1.0
     };
     localStorage.setItem('stacks_hurry_settings', JSON.stringify(settingsObj));
+    if (scanlinesToggle) {
+      updateScanlinesOverlay(scanlinesToggle.checked);
+    }
   } catch (e) {
     console.error('Failed to save settings:', e);
   }
@@ -197,6 +218,10 @@ function bindEvents() {
   });
   document.getElementById('toggle-graphics').addEventListener('change', (e) => {
     setSettings({ lowGraphics: e.target.checked });
+    savePersistedSettings();
+  });
+  document.getElementById('toggle-scanlines').addEventListener('change', (e) => {
+    updateScanlinesOverlay(e.target.checked);
     savePersistedSettings();
   });
 
