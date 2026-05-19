@@ -383,7 +383,20 @@ export function renderQuests(quests, streak, onClaimCallback) {
     
     const progressContainer = document.createElement('div');
     progressContainer.className = 'quest-progress-container';
-    progressContainer.innerHTML = `<div class="quest-progress-fill" style="width: ${percent}%"></div>`;
+    progressContainer.style.position = 'relative';
+    let markersHtml = '';
+    if (q.target > 10) {
+      markersHtml = `
+        <div style="position: absolute; left: 33.3%; top: 0; bottom: 0; width: 2px; background: rgba(0,0,0,0.3); z-index: 2;"></div>
+        <div style="position: absolute; left: 66.6%; top: 0; bottom: 0; width: 2px; background: rgba(0,0,0,0.3); z-index: 2;"></div>
+      `;
+    }
+    progressContainer.innerHTML = `
+      <div style="position: relative; width: 100%; height: 100%; border-radius: inherit; overflow: hidden;">
+        <div class="quest-progress-fill" style="width: ${percent}%"></div>
+        ${markersHtml}
+      </div>
+    `;
     
     barRow.appendChild(progressContainer);
     if (typeof actionHtml === 'string') {
