@@ -1,10 +1,22 @@
 /**
  * Stacks Hurry - Particle System
- * Manages explosions and visual feedback effects
+ * Manages explosions and visual feedback effects using high-performance object pooling
  */
 
 export class Particle {
-  constructor(x, y, vx, vy, life, color, radius) {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.vx = 0;
+    this.vy = 0;
+    this.life = 0;
+    this.maxLife = 0;
+    this.color = '#ffffff';
+    this.radius = 1;
+    this.active = false;
+  }
+
+  init(x, y, vx, vy, life, color, radius) {
     this.x = x;
     this.y = y;
     this.vx = vx;
@@ -13,18 +25,24 @@ export class Particle {
     this.maxLife = life;
     this.color = color;
     this.radius = radius;
+    this.active = true;
   }
 
   update() {
+    if (!this.active) return false;
     this.x += this.vx;
     this.y += this.vy;
     this.life--;
     this.vx *= 0.98;
     this.vy *= 0.98;
-    return this.life > 0;
+    if (this.life <= 0) {
+      this.active = false;
+    }
+    return this.active;
   }
 
   render(ctx) {
+    if (!this.active) return;
     const alpha = this.life / this.maxLife;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius * alpha, 0, Math.PI * 2);
@@ -35,6 +53,24 @@ export class Particle {
   }
 }
 
+// Streamlined Particle Pool for zero GC allocations
+class ParticlePool {
+  constructor(size = 800) {
+    this.pool = Array.from({ length: size }, () => new Particle());
+  }
+
+  get(x, y, vx, vy, life, color, radius) {
+    const p = this.pool.find(item => !item.active) || this.pool[0];
+    p.init(x, y, vx, vy, life, color, radius);
+    return p;
+  }
+
+  reset() {
+    this.pool.forEach(p => p.active = false);
+  }
+}
+
+const poolInstance = new ParticlePool(1000);
 let particles = [];
 
 export function getParticleCount() { return particles.length; }
@@ -48,21 +84,17 @@ export function renderParticles(ctx) {
 }
 
 export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {
-  const baseCount = Math.floor(radius * 1.5) + 8; // Optimized for mobile
+  const baseCount = Math.floor(radius * 1.5) + 8;
   const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
   
-  // Mass-based color palettes
   let palette;
   if (colorOverride) {
     palette = [colorOverride];
   } else if (radius > 25) {
-    // Heavy mass: fiery dense core
     palette = ['#f87171', '#fb923c', '#fbbf24', '#b91c1c', '#ea580c'];
   } else if (radius > 15) {
-    // Medium mass: vibrant cosmic plasma
     palette = ['#00f0ff', '#a855f7', '#f472b6', '#3b82f6', '#8b5cf6'];
   } else {
-    // Light mass: quick bright sparks
     palette = ['#e0e7ff', '#f0f4ff', '#00f0ff', '#fbbf24'];
   }
   
@@ -71,7 +103,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
     const speed = Math.random() * 5 + 1.5;
     const particleLife = Math.floor(Math.random() * 40) + 20;
     
-    particles.push(new Particle(
+    particles.push(poolInstance.get(
       x,
       y,
       Math.cos(angle) * speed,
@@ -85,6 +117,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 
 export function resetParticles() {
   particles = [];
+  poolInstance.reset();
 }
 
 export const BASE_PARTICLE_DECAY = 0.05;
