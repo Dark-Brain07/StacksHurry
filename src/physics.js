@@ -79,11 +79,15 @@ export class Vector2D {
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   // Overload to support Vector2D parameters: checkCircleCollision(vec1, r1, vec2, r2)
   if (x1 instanceof Vector2D && x2 instanceof Vector2D) {
-    return x1.dist(x2) < y1 + y2;
+    const sum = y1 + y2;
+    if (Math.abs(x1.x - x2.x) >= sum || Math.abs(x1.y - x2.y) >= sum) return false;
+    return x1.dist(x2) < sum;
   }
   const dx = x1 - x2;
   const dy = y1 - y2;
-  return Math.hypot(dx, dy) < r1 + r2;
+  const sum = r1 + r2;
+  if (Math.abs(dx) >= sum || Math.abs(dy) >= sum) return false;
+  return Math.hypot(dx, dy) < sum;
 }
 
 /**
