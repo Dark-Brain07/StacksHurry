@@ -8,6 +8,21 @@
 const screens = {};
 
 export function initUI() {
+  // A11y: Press Escape to close overlay modals
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const settings = document.getElementById('modal-settings');
+      if (settings && !settings.classList.contains('hidden')) {
+        hideSettingsModal();
+        e.stopPropagation();
+      }
+      const mint = document.getElementById('modal-mint');
+      if (mint && !mint.classList.contains('hidden')) {
+        hideMintModal();
+        e.stopPropagation();
+      }
+    }
+  });
   ['menu', 'game', 'gameover', 'leaderboard', 'stats'].forEach(name => {
     screens[name] = document.getElementById(`screen-${name}`);
   });
