@@ -142,7 +142,23 @@ export function playWaveClear() {
     const ctx = getCtx();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    osc.type = 'square';
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'triangle';
+      o.connect(g);
+      g.connect(ctx.destination);
+      const start = ctx.currentTime + i * 0.08;
+      o.frequency.setValueAtTime(freq, start);
+      o.frequency.exponentialRampToValueAtTime(freq * 1.5, start + 0.25);
+      g.gain.setValueAtTime(0.08, start);
+      g.gain.exponentialRampToValueAtTime(0.001, start + 0.3);
+      o.start(start);
+      o.stop(start + 0.3);
+    });
     osc.frequency.setValueAtTime(440, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.3);
     gain.gain.setValueAtTime(0.05, ctx.currentTime);
