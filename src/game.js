@@ -380,8 +380,9 @@ function update() {
   frameCount++;
 
   // Smooth player follow
-  const speedMult = player.speedActive > 0 ? 0.22 : 0.12;
-  const keyboardSpeed = player.speedActive > 0 ? 9 : 6;
+  const currentStack = player.speedStack || 0;
+  const speedMult = currentStack === 0 ? 0.12 : (0.12 + currentStack * 0.08);
+  const keyboardSpeed = currentStack === 0 ? 6 : (6 + currentStack * 2.5);
   
   if (keyboardActive && (keys.w || keys.a || keys.s || keys.d)) {
     let moveX = 0;
@@ -449,6 +450,15 @@ function update() {
   // Speed timer
   if (player.speedActive > 0) {
     player.speedActive--;
+    if (player.speedActive <= 0) {
+      if (player.speedStack > 1) {
+        player.speedStack--;
+        player.speedActive = 300;
+        spawnFloatingText(player.x, player.y - 20, "SPEED DECAY", "#ea580c");
+      } else {
+        player.speedStack = 0;
+      }
+    }
     if (player.speedActive === 120 || player.speedActive === 60 || player.speedActive === 30) {
       playWarning();
     }
@@ -676,7 +686,9 @@ function update() {
       } else if (p.type === 'multishot') {
         player.multiShotActive = Math.min(1200, (player.multiShotActive || 0) + 600);
       } else if (p.type === 'speed') {
+        player.speedStack = Math.min(3, (player.speedStack || 0) + 1);
         player.speedActive = Math.min(1200, (player.speedActive || 0) + 600);
+        spawnFloatingText(player.x, player.y - 20, `SPEED X${player.speedStack}!`, "#38bdf8");
       } else if (p.type === 'health') {
         if (lives < 5) {
           lives++;
