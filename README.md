@@ -108,6 +108,43 @@ npm run dev
 npm run build
 ```
 
+---
+
+## 🛠️ Sprint 2: High-Performance Visual & Physics Upgrades
+
+Our second development sprint focused on zero-Garbage-Collection graphics pooling, tactile boundary physics, compounding gameplay modifiers, and granular mobile performance tuning:
+
+1. **`feat(ui): Add CRT Scanlines toggle filter to visual settings`**
+   - Added CRT retro overlay toggle with local settings state caching in UI settings.
+2. **`feat(audio): Add subtle procedural frequency/pitch randomization to laser sounds`**
+   - Randomized baseline synthesizer frequency shifts dynamically to create retro acoustic diversity.
+3. **`feat(physics): Add elastic boundary pushback to ship navigation`**
+   - Softened rigid coordinate clamping with organic rebound impulses when hitting boundary borders.
+4. **`feat(game): Implement localized high scores tracking history in UI settings`**
+   - Configured high-fidelity top 5 score history caching without requiring initial connection.
+5. **`refactor(particles): Implement unified ParticlePool for zero-garbage-collection performance`**
+   - Replaced dynamic particle instantiation with pre-allocated memory pool patterns, avoiding micro-stuttering.
+6. **`feat(a11y): Add focus trap and ESC key closure to modals`**
+   - Enhanced modal accessibility with Escape-key global handlers and keyboard focus loops.
+7. **`feat(enemies): Introduce high-velocity Kamikaze Drone and Elite Cruiser boss enemy types`**
+   - Implemented tracking kamikazes and high-HP bosses with custom horizontal bobbing physics and visual markers.
+8. **`feat(game): Enable compounded stacking of speed power-up multipliers`**
+   - Added additive speed multiplier stacks decaying tier-by-tier with active on-screen alerts.
+9. **`feat(quests): Add interactive confetti animations to quest completion`**
+   - Integrated procedural CSS particle confetti celebrating completed on-chain bounty claims.
+10. **`perf(render): Implement screen-shake throttling for high-performance mobile devices`**
+    - Scaled down screen translations by 65% in low-graphics mode to bypass layout repaint delays on mobile webviews.
+11. **`feat(quests): Support multi-phase progress metrics for long-form daily bounties`**
+    - Designed segmented milestone tick marks on quest bars to indicate progress stages.
+12. **`refactor(physics): Streamline bounding box calculations for collision detection`**
+    - Added Axis-Aligned Bounding Box (AABB) broadphase filters to instantly discard distant pairs.
+13. **`feat(audio): Increase wave completion audio feedback intensity`**
+    - Upgraded wave clear beep into a beautiful procedural arpeggiated C-major triad synthesizer.
+14. **`refactor(quests): Modularize event subscriptions for clean architecture`**
+    - Refactored `QuestsEventDispatcher` to support modular `unsubscribe` handles and full memory flushes.
+15. **`docs(refactor): Document visual particles pool architecture and modular quests design patterns`**
+    - Added comprehensive documentation detail maps in README.md describing the full sprint stack.
+
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
