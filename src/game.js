@@ -918,8 +918,9 @@ function render() {
 
   ctx.save();
   if (shake.duration > 0) {
+    const scale = lowGraphics ? 0.35 : 1.0;
     const angle = Math.random() * Math.PI * 2;
-    const offset = Math.sin(shake.duration * 1.5) * shake.intensity;
+    const offset = Math.sin(shake.duration * 1.5) * shake.intensity * scale;
     const dx = Math.cos(angle) * offset;
     const dy = Math.sin(angle) * offset;
     ctx.translate(dx, dy);
