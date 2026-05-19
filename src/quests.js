@@ -329,6 +329,21 @@ export function claimQuestReward(questId) {
 const listeners = {};
 
 export const QuestsEventDispatcher = {
+  unsubscribe(event, callback) {
+    if (listeners[event]) {
+      listeners[event] = listeners[event].filter(cb => cb !== callback);
+    }
+  },
+  
+  clear(event) {
+    if (event) {
+      listeners[event] = [];
+    } else {
+      Object.keys(listeners).forEach(key => {
+        listeners[key] = [];
+      });
+    }
+  },
   subscribe(event, callback) {
     if (!listeners[event]) listeners[event] = [];
     listeners[event].push(callback);
