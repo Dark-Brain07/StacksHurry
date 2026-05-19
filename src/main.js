@@ -317,7 +317,25 @@ function handlePauseToggle(isPaused) {
 }
 
 // ─── Game Over Handler ───
+function saveScoreLocally(score) {
+  if (!score || score <= 0) return;
+  try {
+    const raw = localStorage.getItem('stacks_hurry_local_scores') || '[]';
+    const list = JSON.parse(raw);
+    list.push({
+      score,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+    list.sort((a, b) => b.score - a.score);
+    localStorage.setItem('stacks_hurry_local_scores', JSON.stringify(list.slice(0, 5)));
+  } catch (e) {
+    console.error('Failed to save score locally:', e);
+  }
+}
+
 function handleGameOver(data) {
+  saveScoreLocally(data.score);
   lastGameData = data;
   stopGame();
   updateQuestsUI();

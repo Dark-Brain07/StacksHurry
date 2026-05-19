@@ -143,6 +143,30 @@ export function showLeaderboardLoading() {
 // ─── Stats UI ───
 
 export function renderStats(data) {
+  setTimeout(() => {
+    const listEl = document.getElementById('local-scores-list');
+    if (listEl) {
+      try {
+        const raw = localStorage.getItem('stacks_hurry_local_scores') || '[]';
+        const list = JSON.parse(raw);
+        if (list.length === 0) {
+          listEl.innerHTML = '<div style="text-align: center; color: var(--text-secondary); font-size: 13px;">No local scores yet. Start playing!</div>';
+        } else {
+          listEl.innerHTML = list.map((item, idx) => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--cyan); font-weight: bold;">#${idx + 1}</span>
+                <span style="color: var(--text-secondary); font-size: 11px;">${item.date} ${item.time}</span>
+              </div>
+              <strong style="color: var(--gold); font-family: var(--font-display);">${item.score.toLocaleString()}</strong>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        listEl.innerHTML = '<div style="text-align: center; color: var(--red); font-size: 13px;">Failed to load local scores.</div>';
+      }
+    }
+  }, 10);
   document.getElementById('stat-highscore').textContent = (data.highScore || 0).toLocaleString();
   document.getElementById('stat-games').textContent = (data.gamesPlayed || 0).toLocaleString();
   document.getElementById('stat-halloffame').textContent = (data.hallOfFameScore || 0).toLocaleString();
