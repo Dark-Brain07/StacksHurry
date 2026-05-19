@@ -425,8 +425,15 @@ function update() {
   player.kickbackY *= 0.85;
 
   // Clamp to canvas
-  player.x = Math.max(PLAYER_SIZE, Math.min(canvas.width - PLAYER_SIZE, player.x));
-  player.y = Math.max(PLAYER_SIZE * 2, Math.min(canvas.height - PLAYER_SIZE, player.y));
+  // Elastic boundaries
+  const leftBound = PLAYER_SIZE;
+  const rightBound = canvas.width - PLAYER_SIZE;
+  if (player.x < leftBound) { player.x = leftBound; player.kickbackX = 3.0; }
+  else if (player.x > rightBound) { player.x = rightBound; player.kickbackX = -3.0; }
+  const topBound = PLAYER_SIZE * 2;
+  const bottomBound = canvas.height - PLAYER_SIZE;
+  if (player.y < topBound) { player.y = topBound; player.kickbackY = 3.0; }
+  else if (player.y > bottomBound) { player.y = bottomBound; player.kickbackY = -3.0; }
 
   // Invincibility timer
   if (player.invincible > 0) player.invincible--;
