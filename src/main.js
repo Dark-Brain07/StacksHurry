@@ -36,6 +36,7 @@ import {
   hideSettingsModal,
   vibrate,
   renderQuests,
+  triggerConfetti,
 } from './ui.js';
 import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
 import { loadQuests, claimQuestReward, initQuestListeners, devCompleteAllQuests, devResetAllQuests } from './quests.js';
@@ -156,6 +157,7 @@ function updateQuestsUI() {
         const mockTxHash = '0x' + Array.from({length: 16}, () => Math.floor(Math.random()*16).toString(16)).join('');
         showToast(`Bounty Claim Confirmed! TX: ${mockTxHash.slice(0, 10)}...`, 'success');
         showAchievement('BOUNTY SECURED', `On-chain reward of ${claimed.reward} PTS confirmed!`, '💎');
+        triggerConfetti();
         updateQuestsUI();
       }
     }, 2500);

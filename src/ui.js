@@ -422,3 +422,42 @@ export function safeShowElement(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('hidden');
 }
+
+
+export function triggerConfetti() {
+  const container = document.body;
+  const count = 45;
+  const colors = ['#00f0ff', '#a855f7', '#fbbf24', '#f472b6', '#38bdf8', '#10b981'];
+  
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-particle';
+    el.style.left = `${Math.random() * 100}vw`;
+    el.style.top = `-2vh`;
+    el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width = `${Math.random() * 8 + 6}px`;
+    el.style.height = `${Math.random() * 12 + 6}px`;
+    el.style.transform = `rotate(${Math.random() * 360}deg)`;
+    el.style.position = 'fixed';
+    el.style.zIndex = '9999';
+    el.style.pointerEvents = 'none';
+    el.style.borderRadius = '2px';
+    
+    el.style.transition = 'transform 2s cubic-bezier(0.1, 0.8, 0.3, 1), top 2s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 2s ease-out';
+    
+    container.appendChild(el);
+    
+    requestAnimationFrame(() => {
+      el.style.top = `${Math.random() * 55 + 35}vh`;
+      el.style.transform = `rotate(${Math.random() * 720 + 360}deg) translate(${(Math.random() - 0.5) * 150}px)`;
+      el.style.opacity = '0';
+    });
+    
+    setTimeout(() => {
+      el.remove();
+    }, 2000);
+  }
+}
+
+
+
