@@ -10,7 +10,7 @@ import {
   INITIAL_SPAWN_RATE, MIN_SPAWN_RATE, INITIAL_ASTEROID_SPEED,
   SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS
 } from './constants.js';
-import { updateParticles, renderParticles, spawnExplosion, resetParticles } from './particles.js';
+import { updateParticles, renderParticles, spawnExplosion, resetParticles, spawnPlayerExhaust } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 import { checkCircleCollision, calculateShockwavePush } from './physics.js';
 import { QuestsEventDispatcher } from './quests.js';
@@ -379,6 +379,9 @@ function gameLoop() {
 function update() {
   frameCount++;
 
+  const oldX = player.x;
+  const oldY = player.y;
+
   // Smooth player follow
   const currentStack = player.speedStack || 0;
   const speedMult = currentStack === 0 ? 0.12 : (0.12 + currentStack * 0.08);
@@ -435,6 +438,14 @@ function update() {
   const bottomBound = canvas.height - PLAYER_SIZE;
   if (player.y < topBound) { player.y = topBound; player.kickbackY = 3.0; }
   else if (player.y > bottomBound) { player.y = bottomBound; player.kickbackY = -3.0; }
+
+  // Spawn exhaust trail particles
+  if (frameCount % 2 === 0 && !lowGraphics) {
+    const vx = player.x - oldX;
+    const vy = player.y - oldY;
+    const exhaustColor = player.shieldActive ? '#60a5fa' : '#38bdf8';
+    spawnPlayerExhaust(player.x, player.y, vx, vy, exhaustColor);
+  }
 
   // Invincibility timer
   if (player.invincible > 0) player.invincible--;
