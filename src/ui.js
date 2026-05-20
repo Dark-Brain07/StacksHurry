@@ -60,12 +60,22 @@ export function showWalletConnected(address) {
 
 export function updateHUDScore(score) {
   const el = document.getElementById('hud-score');
-  if (el) el.textContent = score.toLocaleString();
+  if (el) {
+    el.textContent = score.toLocaleString();
+    el.classList.remove('score-animate');
+    void el.offsetWidth; // Trigger reflow to restart animation
+    el.classList.add('score-animate');
+  }
 }
 
 export function updateHUDLives(lives) {
   const el = document.getElementById('hud-lives');
-  if (el) el.textContent = '❤️'.repeat(Math.max(0, lives));
+  if (el) {
+    el.textContent = '❤️'.repeat(Math.max(0, lives));
+    el.classList.remove('lives-animate');
+    void el.offsetWidth; // Trigger reflow to restart animation
+    el.classList.add('lives-animate');
+  }
 }
 
 export function updateHUDLevel(level) {
