@@ -131,27 +131,29 @@ export function runCountdown(callback) {
 
 // ─── Leaderboard UI ───
 
-export function renderLeaderboard(entries) {
+export function renderLeaderboard(entries, isLocal = false) {
   const list = document.getElementById('leaderboard-list');
   const countEl = document.getElementById('lb-player-count');
 
   if (!entries || entries.length === 0) {
     list.innerHTML = `
       <div class="leaderboard-loading">
-        <p>No scores recorded yet. Be the first!</p>
+        <p>${isLocal ? 'No local scores recorded yet. Play a game to set a record!' : 'No scores recorded yet. Be the first!'}</p>
       </div>
     `;
     countEl.textContent = '0 Players';
     return;
   }
 
-  countEl.textContent = `${entries.length} Player${entries.length > 1 ? 's' : ''}`;
+  countEl.textContent = isLocal 
+    ? `${entries.length} Score${entries.length > 1 ? 's' : ''}`
+    : `${entries.length} Player${entries.length > 1 ? 's' : ''}`;
 
   list.innerHTML = entries.map((entry, i) => {
     const rank = i + 1;
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
     const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-    const addr = entry.address.slice(0, 8) + '...' + entry.address.slice(-4);
+    const addr = isLocal ? `Pilot #${rank} (${entry.date || 'Today'})` : (entry.address.slice(0, 8) + '...' + entry.address.slice(-4));
 
     return `
       <div class="lb-entry ${rankClass}">

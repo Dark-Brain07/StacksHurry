@@ -214,6 +214,8 @@ function bindEvents() {
 
   // Leaderboard
   document.getElementById('btn-lb-back').addEventListener('click', () => showScreen('menu'));
+  document.getElementById('btn-lb-tab-chain').addEventListener('click', () => switchLeaderboardTab('chain'));
+  document.getElementById('btn-lb-tab-local').addEventListener('click', () => switchLeaderboardTab('local'));
 
   // Stats
   document.getElementById('btn-stats-back').addEventListener('click', () => showScreen('menu'));
@@ -437,36 +439,94 @@ async function handleMintNFT() {
 }
 
 // ─── Leaderboard ───
+let currentLeaderboardTab = 'chain';
+
 async function openLeaderboard() {
   showScreen('leaderboard');
   showLeaderboardLoading();
+  
+  // Set tab UI active state
+  if (currentLeaderboardTab === 'chain') {
+    document.getElementById('btn-lb-tab-chain').classList.add('active');
+    document.getElementById('btn-lb-tab-local').classList.remove('active');
+  } else {
+    document.getElementById('btn-lb-tab-chain').classList.remove('active');
+    document.getElementById('btn-lb-tab-local').classList.add('active');
+  }
 
-  try {
-    const count = await getPlayerCount();
-    const entries = [];
+  await loadLeaderboardData();
+}
 
-    if (userAddress) {
-      const playerData = await getPlayerScore(userAddress);
-      if (playerData.highScore > 0) {
-        entries.push({
-          address: userAddress,
-          score: playerData.highScore,
-        });
+async function switchLeaderboardTab(tab) {
+  if (currentLeaderboardTab === tab) return;
+  currentLeaderboardTab = tab;
+  
+  if (currentLeaderboardTab === 'chain') {
+    document.getElementById('btn-lb-tab-chain').classList.add('active');
+    document.getElementById('btn-lb-tab-local').classList.remove('active');
+  } else {
+    document.getElementById('btn-lb-tab-chain').classList.remove('active');
+    document.getElementById('btn-lb-tab-local').classList.add('active');
+  }
+
+  showLeaderboardLoading();
+  await loadLeaderboardData();
+}
+
+async function loadLeaderboardData() {
+  if (currentLeaderboardTab === 'chain') {
+    try {
+      const count = await getPlayerCount();
+      const entries = [];
+
+      if (userAddress) {
+        const playerData = await getPlayerScore(userAddress);
+        if (playerData.highScore > 0) {
+          entries.push({
+            address: userAddress,
+            score: playerData.highScore,
+          });
+        }
       }
+
+      const countEl = document.getElementById('lb-player-count');
+      countEl.textContent = `${count} Total Players on Chain`;
+
+      renderLeaderboard(entries, false);
+
+      if (entries.length === 0) {
+        showToast(`${count} players on-chain. Play and submit your score!`, 'info');
+      }
+    } catch (err) {
+      console.error('Leaderboard error:', err);
+      showToast('Failed to load on-chain leaderboard data', 'error');
+      renderLeaderboard([], false);
     }
+  } else {
+    // Local scores tab
+    try {
+      const raw = localStorage.getItem('stacks_hurry_local_scores') || '[]';
+      const localScores = JSON.parse(raw);
+      
+      // Sort by score descending
+      localScores.sort((a, b) => b.score - a.score);
+      
+      // Take top 10
+      const entries = localScores.slice(0, 10).map((item, idx) => ({
+        address: `Pilot #${idx + 1}`,
+        score: item.score,
+        date: item.date || 'Today'
+      }));
 
-    const countEl = document.getElementById('lb-player-count');
-    countEl.textContent = `${count} Total Players on Chain`;
+      const countEl = document.getElementById('lb-player-count');
+      countEl.textContent = `${localScores.length} Local High Scores`;
 
-    renderLeaderboard(entries);
-
-    if (entries.length === 0) {
-      showToast(`${count} players on-chain. Play and submit your score!`, 'info');
+      renderLeaderboard(entries, true);
+    } catch (err) {
+      console.error('Local leaderboard error:', err);
+      showToast('Failed to load local scores', 'error');
+      renderLeaderboard([], true);
     }
-  } catch (err) {
-    console.error('Leaderboard error:', err);
-    showToast('Failed to load leaderboard data', 'error');
-    renderLeaderboard([]);
   }
 }
 
