@@ -105,6 +105,10 @@ function loadPersistedSettings() {
         joystickSlider.value = pct;
         joystickVal.textContent = `${pct}%`;
       }
+      const shipThemeSelect = document.getElementById('select-ship-theme');
+      if (parsed.shipTheme !== undefined && shipThemeSelect) {
+        shipThemeSelect.value = parsed.shipTheme;
+      }
     }
   } catch (e) {
     console.error('Failed to load settings:', e);
@@ -130,6 +134,7 @@ function savePersistedSettings() {
     const autofireToggle = document.getElementById('toggle-autofire');
     const shakeSlider = document.getElementById('slider-shake');
     const joystickSlider = document.getElementById('slider-joystick-scale');
+    const shipThemeSelect = document.getElementById('select-ship-theme');
     
     const settingsObj = {
       soundEnabled: soundToggle ? soundToggle.checked : true,
@@ -137,7 +142,8 @@ function savePersistedSettings() {
       scanlinesEnabled: scanlinesToggle ? scanlinesToggle.checked : true,
       autoFire: autofireToggle ? autofireToggle.checked : true,
       shakeMultiplier: shakeSlider ? parseInt(shakeSlider.value) / 100 : 1.0,
-      joystickScale: joystickSlider ? parseInt(joystickSlider.value) / 100 : 1.0
+      joystickScale: joystickSlider ? parseInt(joystickSlider.value) / 100 : 1.0,
+      shipTheme: shipThemeSelect ? shipThemeSelect.value : 'vanguard'
     };
     localStorage.setItem('stacks_hurry_settings', JSON.stringify(settingsObj));
     if (scanlinesToggle) {
@@ -272,6 +278,14 @@ function bindEvents() {
       const joystickVal = document.getElementById('joystick-scale-val');
       if (joystickVal) joystickVal.textContent = `${val}%`;
       setSettings({ joystickScale: val / 100 });
+      savePersistedSettings();
+    });
+  }
+
+  const shipThemeSelect = document.getElementById('select-ship-theme');
+  if (shipThemeSelect) {
+    shipThemeSelect.addEventListener('change', (e) => {
+      setSettings({ shipTheme: e.target.value });
       savePersistedSettings();
     });
   }

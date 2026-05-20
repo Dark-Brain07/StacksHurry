@@ -8,7 +8,7 @@ import {
   COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
   LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
   INITIAL_SPAWN_RATE, MIN_SPAWN_RATE, INITIAL_ASTEROID_SPEED,
-  SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS
+  SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS, SHIP_THEMES, DEFAULT_SHIP_THEME
 } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles, spawnPlayerExhaust } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
@@ -91,6 +91,7 @@ let lowGraphics = false;
 let autoFire = true;
 let shakeMultiplier = 1.0;
 let joystickScale = 1.0;
+let shipTheme = DEFAULT_SHIP_THEME;
 const keys = { w: false, a: false, s: false, d: false, Space: false };
 let keyboardActive = false;
 
@@ -99,6 +100,7 @@ export function setSettings(settings) {
   if (settings.autoFire !== undefined) autoFire = settings.autoFire;
   if (settings.shakeMultiplier !== undefined) shakeMultiplier = settings.shakeMultiplier;
   if (settings.joystickScale !== undefined) joystickScale = settings.joystickScale;
+  if (settings.shipTheme !== undefined) shipTheme = settings.shipTheme;
 }
 let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
@@ -990,24 +992,25 @@ function render() {
   renderParticles(ctx);
 
   // Bullets
+  const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
   bullets.forEach(b => {
     // Glow
     ctx.beginPath();
     ctx.arc(b.x, b.y, 8, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.bulletGlow;
+    ctx.fillStyle = activeTheme.bulletGlow;
     ctx.fill();
 
     // Core
     ctx.beginPath();
     ctx.arc(b.x, b.y, BULLET_RADIUS, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.bullet;
+    ctx.fillStyle = activeTheme.bullet;
     ctx.fill();
 
     // Trail
     ctx.beginPath();
     ctx.moveTo(b.x, b.y);
     ctx.lineTo(b.x, b.y + 12);
-    ctx.strokeStyle = 'rgba(0,240,255,0.4)';
+    ctx.strokeStyle = activeTheme.trail;
     ctx.lineWidth = 2;
     ctx.stroke();
   });
@@ -1222,6 +1225,8 @@ function drawPlayer() {
   ctx.fillStyle = '#fbbf24';
   ctx.fill();
 
+  const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
+
   // Ship body
   ctx.beginPath();
   ctx.moveTo(0, -PLAYER_SIZE);        // Nose
@@ -1233,12 +1238,12 @@ function drawPlayer() {
   ctx.closePath();
 
   const bodyGrad = ctx.createLinearGradient(0, -PLAYER_SIZE, 0, PLAYER_SIZE * 0.3);
-  bodyGrad.addColorStop(0, '#00f0ff');
-  bodyGrad.addColorStop(0.5, '#0088aa');
-  bodyGrad.addColorStop(1, '#004466');
+  bodyGrad.addColorStop(0, activeTheme.bodyGradStart);
+  bodyGrad.addColorStop(0.5, activeTheme.bodyGradMiddle);
+  bodyGrad.addColorStop(1, activeTheme.bodyGradEnd);
   ctx.fillStyle = bodyGrad;
   ctx.fill();
-  ctx.strokeStyle = 'rgba(0,240,255,0.6)';
+  ctx.strokeStyle = activeTheme.stroke;
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
@@ -1252,7 +1257,7 @@ function drawPlayer() {
   ctx.stroke();
 
   // Ship glow
-  ctx.shadowColor = 'rgba(0,240,255,0.4)';
+  ctx.shadowColor = activeTheme.glow;
   ctx.shadowBlur = 20;
 
   // Draw Shield Bubble if active

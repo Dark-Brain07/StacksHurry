@@ -33,6 +33,63 @@ export const COLORS = {
   asteroidStroke: '#64748b',
 };
 
+// Ship Accent Themes
+export const SHIP_THEMES = {
+  vanguard: {
+    id: 'vanguard',
+    name: 'Vanguard Neon',
+    primary: '#00f0ff',
+    glow: 'rgba(0, 240, 255, 0.4)',
+    bullet: '#00f0ff',
+    bulletGlow: 'rgba(0, 240, 255, 0.6)',
+    bodyGradStart: '#00f0ff',
+    bodyGradMiddle: '#0088aa',
+    bodyGradEnd: '#004466',
+    trail: 'rgba(0, 240, 255, 0.4)',
+    stroke: 'rgba(0, 240, 255, 0.6)'
+  },
+  solar: {
+    id: 'solar',
+    name: 'Solar Flare',
+    primary: '#ffaa00',
+    glow: 'rgba(255, 170, 0, 0.4)',
+    bullet: '#ffaa00',
+    bulletGlow: 'rgba(255, 170, 0, 0.6)',
+    bodyGradStart: '#ffaa00',
+    bodyGradMiddle: '#cc5500',
+    bodyGradEnd: '#882200',
+    trail: 'rgba(255, 170, 0, 0.4)',
+    stroke: 'rgba(255, 170, 0, 0.6)'
+  },
+  stardust: {
+    id: 'stardust',
+    name: 'Stardust Void',
+    primary: '#ff00ff',
+    glow: 'rgba(255, 0, 255, 0.4)',
+    bullet: '#ff00ff',
+    bulletGlow: 'rgba(255, 0, 255, 0.6)',
+    bodyGradStart: '#ff00ff',
+    bodyGradMiddle: '#aa00aa',
+    bodyGradEnd: '#660066',
+    trail: 'rgba(255, 0, 255, 0.4)',
+    stroke: 'rgba(255, 0, 255, 0.6)'
+  },
+  matrix: {
+    id: 'matrix',
+    name: 'Matrix Aura',
+    primary: '#39ff14',
+    glow: 'rgba(57, 255, 20, 0.4)',
+    bullet: '#39ff14',
+    bulletGlow: 'rgba(57, 255, 20, 0.6)',
+    bodyGradStart: '#39ff14',
+    bodyGradMiddle: '#1dbb00',
+    bodyGradEnd: '#0d6600',
+    trail: 'rgba(57, 255, 20, 0.4)',
+    stroke: 'rgba(57, 255, 20, 0.6)'
+  }
+};
+export const DEFAULT_SHIP_THEME = 'vanguard';
+
 // UI Overlay Position
 export const OVERLAY_PADDING = 10;
 
