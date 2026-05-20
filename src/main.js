@@ -34,6 +34,8 @@ import {
   hidePauseModal,
   showSettingsModal,
   hideSettingsModal,
+  showAchievementsModal,
+  hideAchievementsModal,
   vibrate,
   renderQuests,
   triggerConfetti,
@@ -207,6 +209,7 @@ function bindEvents() {
   document.getElementById('btn-leaderboard').addEventListener('click', openLeaderboard);
   document.getElementById('btn-my-stats').addEventListener('click', openStats);
   document.getElementById('btn-settings').addEventListener('click', () => showSettingsModal());
+  document.getElementById('btn-achievements').addEventListener('click', () => showAchievementsModal());
 
   // HUD
   document.getElementById('btn-pause-game').addEventListener('click', togglePause);
@@ -243,6 +246,10 @@ function bindEvents() {
   // Settings Modal
   document.getElementById('btn-close-settings').addEventListener('click', () => hideSettingsModal());
   document.querySelector('#modal-settings .modal-backdrop')?.addEventListener('click', () => hideSettingsModal());
+
+  // Achievements Modal
+  document.getElementById('btn-close-achievements').addEventListener('click', () => hideAchievementsModal());
+  document.querySelector('#modal-achievements .modal-backdrop')?.addEventListener('click', () => hideAchievementsModal());
   document.getElementById('toggle-sound').addEventListener('change', (e) => {
     toggleSound(e.target.checked);
     updateMuteButtonUI(!e.target.checked);

@@ -49,6 +49,9 @@
                 <button id="btn-leaderboard" class="btn btn-secondary">
                     <span class="btn-icon">🏆</span> Leaderboard
                 </button>
+                <button id="btn-achievements" class="btn btn-secondary">
+                    <span class="btn-icon">🏅</span> Achievements
+                </button>
                 <button id="btn-my-stats" class="btn btn-secondary" disabled>
                     <span class="btn-icon">📊</span> My Stats
                 </button>
@@ -358,6 +361,19 @@
                         <button id="btn-dev-reset-quests" class="btn btn-secondary" style="flex: 1; font-size: 0.75rem; padding: 8px; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2);"><span style="color:#ef4444;">🔄</span> Reset Quests</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="modal-achievements" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content" style="max-width: 500px; width: 95%;">
+            <button id="btn-close-achievements" class="modal-close">✕</button>
+            <h3 class="modal-title">🏅 ACHIEVEMENTS</h3>
+            <p class="modal-desc">Unlock badges by completing milestones during your space runs!</p>
+            <div id="achievements-gallery-list" class="achievements-grid">
+                <!-- Injected dynamically via JS -->
             </div>
         </div>
     </div>

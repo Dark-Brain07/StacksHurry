@@ -289,7 +289,57 @@ function processToastQueue() {
   }, item.duration || 3000);
 }
 
+export const ACHIEVEMENT_DEFINITIONS = [
+  { id: 'score1k', title: 'SCORE MASTER', desc: 'Reach 1,000 points', icon: '💎' },
+  { id: 'score5k', title: 'GRAND MASTER', desc: 'Reach 5,000 points', icon: '🏆' },
+  { id: 'level5', title: 'ELITE PILOT', desc: 'Reach Level 5', icon: '🚀' },
+  { id: 'asteroids50', title: 'DESTROYER', desc: 'Smash 50 asteroids', icon: '💥' }
+];
+
+export function renderAchievementsGallery() {
+  const listEl = document.getElementById('achievements-gallery-list');
+  if (!listEl) return;
+
+  const earned = JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements') || '{}');
+
+  listEl.innerHTML = ACHIEVEMENT_DEFINITIONS.map(ach => {
+    const isUnlocked = !!earned[ach.id];
+    const dateStr = isUnlocked ? new Date(earned[ach.id]).toLocaleDateString() : '';
+    
+    return `
+      <div class="achievement-card ${isUnlocked ? 'unlocked' : 'locked'}">
+        ${!isUnlocked ? '<div class="achievement-lock-overlay">🔒</div>' : ''}
+        <div class="achievement-icon-wrapper">
+          ${ach.icon}
+        </div>
+        <div class="achievement-name">${ach.title}</div>
+        <div class="achievement-desc">${ach.desc}</div>
+        ${isUnlocked ? `<span class="achievement-date">Unlocked ${dateStr}</span>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+export function showAchievementsModal() {
+  renderAchievementsGallery();
+  document.getElementById('modal-achievements').classList.remove('hidden');
+}
+
+export function hideAchievementsModal() {
+  document.getElementById('modal-achievements').classList.add('hidden');
+}
+
 export function showAchievement(title, message, icon = '🏆') {
+  // Persist the achievement automatically when it's shown as a toast
+  const ach = ACHIEVEMENT_DEFINITIONS.find(a => a.title.toLowerCase() === title.toLowerCase());
+  if (ach) {
+    const earned = JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements') || '{}');
+    if (!earned[ach.id]) {
+      earned[ach.id] = Date.now();
+      localStorage.setItem('stacks_hurry_earned_achievements', JSON.stringify(earned));
+    }
+  }
+
   toastQueue.push({
     isAchievement: true,
     title,
@@ -299,6 +349,7 @@ export function showAchievement(title, message, icon = '🏆') {
   });
   processToastQueue();
 }
+
 
 export function showToast(message, type = 'info', duration = 4000) {
   const icons = { success: '✅', error: '❌', info: 'ℹ️' };
