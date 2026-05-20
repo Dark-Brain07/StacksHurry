@@ -358,6 +358,7 @@ function triggerSecondary() {
     secondaryCooldown = SHOCKWAVE_COOLDOWN;
     playShockwave();
     addShake(10, 15);
+    asteroids.forEach(a => { a.pushedByShockwave = false; });
   }
 }
 
@@ -513,11 +514,20 @@ function update() {
       if (push) {
         a.x += push.x;
         a.y += push.y;
+        if (!a.pushedByShockwave) {
+          a.pushedByShockwave = true;
+          QuestsEventDispatcher.dispatchEvent('shockwaveDeflected');
+        }
       }
     });
 
     // Clear projectiles
-    clearEnemyProjectiles(shockwave.x, shockwave.y, shockwave.radius);
+    const cleared = clearEnemyProjectiles(shockwave.x, shockwave.y, shockwave.radius);
+    if (cleared > 0) {
+      for (let i = 0; i < cleared; i++) {
+        QuestsEventDispatcher.dispatchEvent('shockwaveDeflected');
+      }
+    }
   }
 
   // Shooting
@@ -654,6 +664,7 @@ function update() {
           spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
           if (onVibrate) onVibrate(40);
+          QuestsEventDispatcher.dispatchEvent('shieldAbsorbed');
         } else {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
@@ -737,6 +748,7 @@ function update() {
       player.shieldActive = false;
       player.invincible = 30;
       playHit();
+      QuestsEventDispatcher.dispatchEvent('shieldAbsorbed');
     } else {
       lives--;
       player.invincible = 90;

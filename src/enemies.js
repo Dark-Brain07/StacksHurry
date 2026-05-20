@@ -251,14 +251,17 @@ export function resetEnemies() {
 }
 
 export function clearEnemyProjectiles(x, y, radius) {
+  let clearedCount = 0;
   enemyBullets = enemyBullets.filter(b => {
     const dist = Math.hypot(b.x - x, b.y - y);
     if (dist < radius) {
       spawnExplosion(b.x, b.y, 5, true);
+      clearedCount++;
       return false;
     }
     return true;
   });
+  return clearedCount;
 }
 
 export const ADVANCED_EVASION_RATE = 1.2;

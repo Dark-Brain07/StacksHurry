@@ -11,7 +11,9 @@ export const QUEST_TYPES = {
   SURVIVE_TIME: 'survive_time',
   DESTROY_ENEMIES: 'destroy_enemies',
   SURVIVE_WAVES: 'survive_waves',
-  DAILY_LOGIN: 'daily_login'
+  DAILY_LOGIN: 'daily_login',
+  SHOCKWAVE_DEFLECT: 'shockwave_deflect',
+  SHIELD_ABSORB: 'shield_absorb'
 };
 
 // Default daily quest definitions
@@ -145,6 +147,28 @@ const MASTER_QUEST_POOL = [
     title: 'Daily Report',
     description: 'Log into the Stacks Network today.',
     reward: 100,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_deflect_5',
+    type: QUEST_TYPES.SHOCKWAVE_DEFLECT,
+    target: 5,
+    title: 'Deflection Mastery',
+    description: 'Deflect 5 hazards or projectiles using shockwaves today.',
+    reward: 500,
+    progress: 0,
+    completed: false,
+    claimed: false
+  },
+  {
+    id: 'quest_shield_10',
+    type: QUEST_TYPES.SHIELD_ABSORB,
+    target: 10,
+    title: 'Shield Survival',
+    description: 'Absorb 10 hits using your energy shield today.',
+    reward: 600,
     progress: 0,
     completed: false,
     claimed: false
@@ -365,6 +389,8 @@ export function initQuestListeners(onQuestCompletedCallback) {
   listeners['gameFinished'] = [];
   listeners['enemyDestroyed'] = [];
   listeners['waveCleared'] = [];
+  listeners['shockwaveDeflected'] = [];
+  listeners['shieldAbsorbed'] = [];
 
   QuestsEventDispatcher.subscribe('asteroidSmashed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
@@ -382,6 +408,20 @@ export function initQuestListeners(onQuestCompletedCallback) {
 
   QuestsEventDispatcher.subscribe('waveCleared', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
+    if (completed && completed.length > 0 && onQuestCompletedCallback) {
+      completed.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+
+  QuestsEventDispatcher.subscribe('shockwaveDeflected', () => {
+    const completed = updateQuestProgress(QUEST_TYPES.SHOCKWAVE_DEFLECT, 1);
+    if (completed && completed.length > 0 && onQuestCompletedCallback) {
+      completed.forEach(q => onQuestCompletedCallback(q));
+    }
+  });
+
+  QuestsEventDispatcher.subscribe('shieldAbsorbed', () => {
+    const completed = updateQuestProgress(QUEST_TYPES.SHIELD_ABSORB, 1);
     if (completed && completed.length > 0 && onQuestCompletedCallback) {
       completed.forEach(q => onQuestCompletedCallback(q));
     }
