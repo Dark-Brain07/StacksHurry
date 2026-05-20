@@ -202,8 +202,40 @@ export function renderStats(data) {
       }
     }
   }, 10);
-  document.getElementById('stat-highscore').textContent = (data.highScore || 0).toLocaleString();
-  document.getElementById('stat-games').textContent = (data.gamesPlayed || 0).toLocaleString();
+
+  // Load cumulative statistics from local storage
+  let localStats = {
+    totalAsteroids: 0,
+    totalEnemies: 0,
+    totalDuration: 0,
+    bulletsFired: 0,
+    bulletsHit: 0,
+    gamesPlayed: 0
+  };
+  try {
+    const raw = localStorage.getItem('stacks_hurry_local_stats');
+    if (raw) {
+      localStats = { ...localStats, ...JSON.parse(raw) };
+    }
+  } catch (e) {
+    console.error('Failed to load local cumulative stats:', e);
+  }
+
+  // Load local high score from local scores list as fallback
+  let localHighScore = 0;
+  try {
+    const scoresList = JSON.parse(localStorage.getItem('stacks_hurry_local_scores') || '[]');
+    if (scoresList.length > 0) {
+      localHighScore = Math.max(...scoresList.map(s => s.score));
+    }
+  } catch (e) {}
+
+  const finalHighScore = data.highScore || localHighScore;
+  const finalGamesPlayed = data.gamesPlayed || localStats.gamesPlayed;
+
+  // Render main cards
+  document.getElementById('stat-highscore').textContent = finalHighScore.toLocaleString();
+  document.getElementById('stat-games').textContent = finalGamesPlayed.toLocaleString();
   document.getElementById('stat-halloffame').textContent = (data.hallOfFameScore || 0).toLocaleString();
 
   if (data.lastPlayed && data.lastPlayed > 0) {
@@ -211,6 +243,28 @@ export function renderStats(data) {
   } else {
     document.getElementById('stat-lastplayed').textContent = 'N/A';
   }
+
+  // Render new cumulative/local stats cards
+  document.getElementById('stat-total-asteroids').textContent = localStats.totalAsteroids.toLocaleString();
+  document.getElementById('stat-total-enemies').textContent = localStats.totalEnemies.toLocaleString();
+
+  // Format Time Flew (Duration) nicely, e.g., "3m 42s"
+  const sec = localStats.totalDuration;
+  let durationStr = '0s';
+  if (sec >= 60) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    durationStr = `${m}m ${s}s`;
+  } else {
+    durationStr = `${sec}s`;
+  }
+  document.getElementById('stat-total-duration').textContent = durationStr;
+
+  // Calculate and format Shot Accuracy percentage
+  const accuracy = localStats.bulletsFired > 0
+    ? Math.min(100, Math.round((localStats.bulletsHit / localStats.bulletsFired) * 100))
+    : 0;
+  document.getElementById('stat-accuracy').textContent = `${accuracy}%`;
 }
 
 // ─── Mint Modal ───

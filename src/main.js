@@ -577,12 +577,17 @@ async function loadLeaderboardData() {
 
 // ─── Player Stats ───
 async function openStats() {
+  showScreen('stats');
+
   if (!userAddress) {
-    showToast('Connect your wallet first!', 'error');
+    renderStats({
+      highScore: 0,
+      gamesPlayed: 0,
+      lastPlayed: 0,
+      hallOfFameScore: 0,
+    });
     return;
   }
-
-  showScreen('stats');
 
   try {
     const [playerData, hallOfFame] = await Promise.all([
@@ -598,7 +603,13 @@ async function openStats() {
     });
   } catch (err) {
     console.error('Stats error:', err);
-    showToast('Failed to load player stats', 'error');
+    showToast('Failed to load blockchain stats', 'warning');
+    renderStats({
+      highScore: 0,
+      gamesPlayed: 0,
+      lastPlayed: 0,
+      hallOfFameScore: 0,
+    });
   }
 }
 

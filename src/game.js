@@ -63,6 +63,12 @@ let waveEnemiesRemaining = 0;
 let waveInProgress = false;
 let waveGracePeriod = 0;
 
+// Cumulative run-specific stats tracking
+let bulletsFiredThisGame = 0;
+let bulletsHitThisGame = 0;
+let asteroidsSmashedThisGame = 0;
+let enemiesDestroyedThisGame = 0;
+
 /**
  * Trigger a screen shake with specific intensity
  * Supports additive accumulation up to a maximum cap for premium visceral feedback
@@ -290,6 +296,10 @@ export function startGame() {
   frameCount = 0;
   comboCount = 0;
   multiplierTimer = 0;
+  bulletsFiredThisGame = 0;
+  bulletsHitThisGame = 0;
+  asteroidsSmashedThisGame = 0;
+  enemiesDestroyedThisGame = 0;
   asteroidSpawnRate = INITIAL_SPAWN_RATE;
   asteroidSpeed = INITIAL_ASTEROID_SPEED;
   achievements = { score1k: false, level5: false, asteroids50: false };
@@ -636,6 +646,7 @@ function update() {
       const b = bullets[i];
       if (checkCircleCollision(b.x, b.y, BULLET_RADIUS, a.x, a.y, a.radius)) {
         bulletPool.release(bullets.splice(i, 1)[0]);
+        bulletsHitThisGame++;
         
         a.hp--;
         if (a.hp > 0) {
@@ -668,6 +679,7 @@ function update() {
           spawnFloatingText(a.x, a.y, `+${points}`);
         }
         asteroidsDestroyed++;
+        asteroidsSmashedThisGame++;
         
         // Dispatch event to decentralized Daily Quests engine
         QuestsEventDispatcher.dispatchEvent('asteroidSmashed');
@@ -728,6 +740,8 @@ function update() {
 
             // Dispatch game event to decentralized Quests listener
             QuestsEventDispatcher.dispatchEvent('gameFinished', { score, timeSurvived: Math.floor(frameCount / 60) });
+
+            saveLocalStats();
 
             if (onGameOver) {
               onGameOver({ score, level, asteroidsDestroyed });
@@ -791,7 +805,10 @@ function update() {
     if (onScoreUpdate) onScoreUpdate(score);
     comboCount++;
     if (comboCount >= 5) multiplierTimer = 300;
-  }, lowGraphics);
+    enemiesDestroyedThisGame++;
+  }, lowGraphics, () => {
+    bulletsHitThisGame++;
+  });
 
   if (enemyCollision) {
     if (player.shieldActive) {
@@ -808,6 +825,7 @@ function update() {
       if (lives <= 0) {
         gameRunning = false;
         playGameOver();
+        saveLocalStats();
         if (onGameOver) onGameOver({ score, level, asteroidsDestroyed });
       }
     }
@@ -891,11 +909,13 @@ function fireBullet() {
     bullets.push(createBullet(player.x, player.y - PLAYER_SIZE, 0, -bSpeed, true));
     bullets.push(createBullet(player.x - 12, player.y - PLAYER_SIZE + 5, -bSpeed * 0.2, -bSpeed * 0.98, true));
     bullets.push(createBullet(player.x + 12, player.y - PLAYER_SIZE + 5, bSpeed * 0.2, -bSpeed * 0.98, true));
+    bulletsFiredThisGame += 3;
     player.kickbackY += 4; // Extra recoil for heavy weapons
     player.kickbackX += (Math.random() - 0.5) * 2.5;
   } else {
     bullets.push(createBullet(player.x - 8, player.y - PLAYER_SIZE, 0, -bSpeed));
     bullets.push(createBullet(player.x + 8, player.y - PLAYER_SIZE, 0, -bSpeed));
+    bulletsFiredThisGame += 2;
     player.kickbackY += 2;
     player.kickbackX += (Math.random() - 0.5) * 1.0;
   }
@@ -1381,5 +1401,34 @@ export function showQuestNotificationInGame(text, color = '#38bdf8') {
     life: 150, // 2.5 seconds
     maxLife: 150
   });
+}
+
+function saveLocalStats() {
+  try {
+    const raw = localStorage.getItem('stacks_hurry_local_stats');
+    let stats = {
+      totalAsteroids: 0,
+      totalEnemies: 0,
+      totalDuration: 0,
+      bulletsFired: 0,
+      bulletsHit: 0,
+      gamesPlayed: 0
+    };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      stats = { ...stats, ...parsed };
+    }
+
+    stats.totalAsteroids += asteroidsSmashedThisGame;
+    stats.totalEnemies += enemiesDestroyedThisGame;
+    stats.totalDuration += Math.floor(frameCount / 60);
+    stats.bulletsFired += bulletsFiredThisGame;
+    stats.bulletsHit += bulletsHitThisGame;
+    stats.gamesPlayed += 1;
+
+    localStorage.setItem('stacks_hurry_local_stats', JSON.stringify(stats));
+  } catch (e) {
+    console.error('Failed to save local stats:', e);
+  }
 }
 

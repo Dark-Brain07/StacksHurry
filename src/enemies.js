@@ -259,7 +259,7 @@ export function spawnEnemy(canvas) {
   });
 }
 
-export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics) {
+export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics, onBulletHit) {
   // Bullets vs Enemies
   for (let i = bullets.length - 1; i >= 0; i--) {
     const b = bullets[i];
@@ -268,6 +268,7 @@ export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics) {
       const dist = Math.hypot(b.x - e.x, b.y - e.y);
       if (dist < e.radius + BULLET_RADIUS) {
         bullets.splice(i, 1);
+        if (onBulletHit) onBulletHit();
         
         // Handle Multi-hit enemies
         if (e.type === 'elite' || e.type === 'interceptor') {
