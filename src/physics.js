@@ -74,6 +74,45 @@ export class Vector2D {
   dist(v) {
     return Math.hypot(this.x - v.x, this.y - v.y);
   }
+
+  /**
+   * Get the angle of rotation (heading) of this vector
+   * @returns {number} The heading angle in radians
+   */
+  heading() {
+    return Math.atan2(this.y, this.x);
+  }
+
+  /**
+   * Clone this vector and return a new instance
+   * @returns {Vector2D} A new copy of this vector
+   */
+  copy() {
+    return new Vector2D(this.x, this.y);
+  }
+
+  /**
+   * Calculate the squared distance between this vector and another
+   * @param {Vector2D} v The target vector
+   * @returns {number} The squared distance
+   */
+  distSq(v) {
+    const dx = this.x - v.x;
+    const dy = this.y - v.y;
+    return dx * dx + dy * dy;
+  }
+
+  /**
+   * Linearly interpolate this vector towards another
+   * @param {Vector2D} v The target vector
+   * @param {number} amt The interpolation amount (usually 0 to 1)
+   * @returns {Vector2D} This vector (for chaining)
+   */
+  lerp(v, amt) {
+    this.x = (1 - amt) * this.x + amt * v.x;
+    this.y = (1 - amt) * this.y + amt * v.y;
+    return this;
+  }
 }
 
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
