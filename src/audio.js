@@ -36,6 +36,10 @@ export function toggleSound(enabled) {
   }
 }
 
+export function isSoundEnabled() {
+  return soundEnabled;
+}
+
 function getCtx() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();

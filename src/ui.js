@@ -78,6 +78,14 @@ export function updateHUDLevelProgress(percentage) {
   if (el) el.style.width = `${percentage}%`;
 }
 
+export function updateMuteButtonUI(isMuted) {
+  const el = document.getElementById('btn-hud-mute');
+  if (el) {
+    el.textContent = isMuted ? '🔇' : '🔊';
+    el.setAttribute('aria-label', isMuted ? 'Unmute Sound' : 'Mute Sound');
+  }
+}
+
 // ─── Game Over UI ───
 
 export function showGameOver(data) {

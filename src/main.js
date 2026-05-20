@@ -37,8 +37,9 @@ import {
   vibrate,
   renderQuests,
   triggerConfetti,
+  updateMuteButtonUI,
 } from './ui.js';
-import { initAudio, toggleSound, playQuestComplete, playCollect } from './audio.js';
+import { initAudio, toggleSound, playQuestComplete, playCollect, isSoundEnabled } from './audio.js';
 import { loadQuests, claimQuestReward, initQuestListeners, devCompleteAllQuests, devResetAllQuests } from './quests.js';
 
 // ─── App State ───
@@ -79,6 +80,7 @@ function loadPersistedSettings() {
       if (parsed.soundEnabled !== undefined && soundToggle) {
         soundToggle.checked = parsed.soundEnabled;
         toggleSound(parsed.soundEnabled);
+        updateMuteButtonUI(!parsed.soundEnabled);
       }
       if (parsed.lowGraphics !== undefined && graphicsToggle) {
         graphicsToggle.checked = parsed.lowGraphics;
@@ -193,6 +195,16 @@ function bindEvents() {
 
   // HUD
   document.getElementById('btn-pause-game').addEventListener('click', togglePause);
+  document.getElementById('btn-hud-mute').addEventListener('click', handleMuteToggle);
+
+  // M key for mute toggle shortcut
+  window.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'm' && !e.repeat) {
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        handleMuteToggle();
+      }
+    }
+  });
 
   // Game Over
   document.getElementById('btn-submit-score').addEventListener('click', handleSubmitScore);
@@ -216,6 +228,7 @@ function bindEvents() {
   document.querySelector('#modal-settings .modal-backdrop')?.addEventListener('click', () => hideSettingsModal());
   document.getElementById('toggle-sound').addEventListener('change', (e) => {
     toggleSound(e.target.checked);
+    updateMuteButtonUI(!e.target.checked);
     savePersistedSettings();
   });
   document.getElementById('toggle-graphics').addEventListener('change', (e) => {
@@ -263,6 +276,18 @@ function bindEvents() {
   });
   document.getElementById('btn-pause-settings').addEventListener('click', () => showSettingsModal());
 
+}
+
+function handleMuteToggle() {
+  const currentSound = isSoundEnabled();
+  toggleSound(!currentSound);
+  updateMuteButtonUI(currentSound);
+  
+  const toggle = document.getElementById('toggle-sound');
+  if (toggle) toggle.checked = !currentSound;
+  
+  savePersistedSettings();
+  showToast(!currentSound ? 'Sound Muted' : 'Sound Enabled', 'info');
 }
 
 // ─── Wallet Connection (v8 API) ───
