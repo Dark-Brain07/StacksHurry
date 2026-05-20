@@ -3,7 +3,7 @@
  * HTML5 Canvas rocket shooter with progressive difficulty
  */
 
-import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio, playShieldHit, playWaveClear, playHeavyHit } from './audio.js';
+import { playShoot, playExplosion, playHit, playGameOver, playLevelUp, playCollect, playWarning, playShockwave, initAudio, playShieldHit, playWaveClear, playHeavyHit, updateSpeedHum } from './audio.js';
 import { 
   COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
   LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
@@ -446,10 +446,15 @@ function update() {
   if (player.y < topBound) { player.y = topBound; player.kickbackY = 3.0; }
   else if (player.y > bottomBound) { player.y = bottomBound; player.kickbackY = -3.0; }
 
+  const vx = player.x - oldX;
+  const vy = player.y - oldY;
+  const speed = Math.sqrt(vx * vx + vy * vy);
+  const maxHumSpeed = 12; // approximate max speed per frame
+  const speedRatio = Math.min(speed / maxHumSpeed, 1.0);
+  updateSpeedHum(speedRatio);
+
   // Spawn exhaust trail particles
   if (frameCount % 2 === 0 && !lowGraphics) {
-    const vx = player.x - oldX;
-    const vy = player.y - oldY;
     const exhaustColor = player.shieldActive ? '#60a5fa' : '#38bdf8';
     spawnPlayerExhaust(player.x, player.y, vx, vy, exhaustColor);
   }
