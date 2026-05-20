@@ -1368,3 +1368,18 @@ function drawIndicator(x, y, percent, color) {
 export function resetGameStateHelpers() {
   return { isResetting: true };
 }
+
+/** Spawn real-time floating quest progress notifications inside the active run */
+export function showQuestNotificationInGame(text, color = '#38bdf8') {
+  if (!canvas) return;
+  // Spawn a nice long-lived floating notification at the top middle of the screen
+  floatingTexts.push({
+    x: canvas.width / 2,
+    y: 120,
+    text: text,
+    color: color,
+    life: 150, // 2.5 seconds
+    maxLife: 150
+  });
+}
+

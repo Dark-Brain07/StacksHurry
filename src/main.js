@@ -12,7 +12,7 @@ import {
   getHallOfFameScore,
   getPlayerCount,
 } from './contracts.js';
-import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setSettings } from './game.js';
+import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setSettings, showQuestNotificationInGame } from './game.js';
 import {
   initUI,
   showScreen,
@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     showAchievement('QUEST COMPLETED', q.title, '🎯');
     playQuestComplete();
     updateQuestsUI();
+    showQuestNotificationInGame(`🏆 QUEST COMPLETE: ${q.title}!`, '#10b981');
+  }, (q, percent) => {
+    showToast(`QUEST PROGRESS: ${q.title} (${percent}%)`, 'info');
+    showQuestNotificationInGame(`🎯 ${q.title}: ${percent}%`, '#38bdf8');
   });
 
   updateQuestsUI();  loadPersistedSettings();

@@ -300,6 +300,9 @@ export function getQuests() {
   return questState.quests;
 }
 
+let questCompletedCallback = null;
+let questMilestoneCallback = null;
+
 /**
  * Update progress on a specific quest type
  */
@@ -309,6 +312,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
 
   questState.quests.forEach(q => {
     if (q.type === type && !q.completed) {
+      const prevProgress = q.progress;
       if (isAbsolute) {
         q.progress = Math.max(q.progress, amount);
       } else {
@@ -319,6 +323,11 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
         q.progress = q.target;
         q.completed = true;
         newlyCompleted.push(q);
+      } else if (!q.milestone50Triggered && q.progress >= q.target / 2) {
+        q.milestone50Triggered = true;
+        if (questMilestoneCallback) {
+          questMilestoneCallback(q, 50);
+        }
       }
       changed = true;
     }
@@ -383,7 +392,10 @@ export const QuestsEventDispatcher = {
 /**
  * Initialize core listeners to map game actions to quest types
  */
-export function initQuestListeners(onQuestCompletedCallback) {
+export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCallback) {
+  questCompletedCallback = onQuestCompletedCallback;
+  questMilestoneCallback = onQuestMilestoneCallback;
+
   // Clear any existing subscriptions (important if re-initialized)
   listeners['asteroidSmashed'] = [];
   listeners['gameFinished'] = [];
@@ -394,36 +406,36 @@ export function initQuestListeners(onQuestCompletedCallback) {
 
   QuestsEventDispatcher.subscribe('asteroidSmashed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
-    if (completed && completed.length > 0 && onQuestCompletedCallback) {
-      completed.forEach(q => onQuestCompletedCallback(q));
+    if (completed && completed.length > 0 && questCompletedCallback) {
+      completed.forEach(q => questCompletedCallback(q));
     }
   });
 
   QuestsEventDispatcher.subscribe('enemyDestroyed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.DESTROY_ENEMIES, 1);
-    if (completed && completed.length > 0 && onQuestCompletedCallback) {
-      completed.forEach(q => onQuestCompletedCallback(q));
+    if (completed && completed.length > 0 && questCompletedCallback) {
+      completed.forEach(q => questCompletedCallback(q));
     }
   });
 
   QuestsEventDispatcher.subscribe('waveCleared', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
-    if (completed && completed.length > 0 && onQuestCompletedCallback) {
-      completed.forEach(q => onQuestCompletedCallback(q));
+    if (completed && completed.length > 0 && questCompletedCallback) {
+      completed.forEach(q => questCompletedCallback(q));
     }
   });
 
   QuestsEventDispatcher.subscribe('shockwaveDeflected', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SHOCKWAVE_DEFLECT, 1);
-    if (completed && completed.length > 0 && onQuestCompletedCallback) {
-      completed.forEach(q => onQuestCompletedCallback(q));
+    if (completed && completed.length > 0 && questCompletedCallback) {
+      completed.forEach(q => questCompletedCallback(q));
     }
   });
 
   QuestsEventDispatcher.subscribe('shieldAbsorbed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SHIELD_ABSORB, 1);
-    if (completed && completed.length > 0 && onQuestCompletedCallback) {
-      completed.forEach(q => onQuestCompletedCallback(q));
+    if (completed && completed.length > 0 && questCompletedCallback) {
+      completed.forEach(q => questCompletedCallback(q));
     }
   });
 
@@ -436,8 +448,8 @@ export function initQuestListeners(onQuestCompletedCallback) {
     if (data && typeof data.score === 'number') {
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, data.score, true));
     }
-    if (completedList.length > 0 && onQuestCompletedCallback) {
-      completedList.forEach(q => onQuestCompletedCallback(q));
+    if (completedList.length > 0 && questCompletedCallback) {
+      completedList.forEach(q => questCompletedCallback(q));
     }
   });
 }
@@ -461,9 +473,11 @@ export function devResetAllQuests() {
     q.progress = 0;
     q.completed = false;
     q.claimed = false;
+    q.milestone50Triggered = false;
   });
   saveQuests();
 }
+
 
 export function formatQuestProgressText(prog, tgt) {
   return prog + '/' + tgt;
