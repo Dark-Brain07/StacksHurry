@@ -76,6 +76,8 @@ function loadPersistedSettings() {
       const autofireToggle = document.getElementById('toggle-autofire');
       const shakeSlider = document.getElementById('slider-shake');
       const shakeVal = document.getElementById('shake-val');
+      const joystickSlider = document.getElementById('slider-joystick-scale');
+      const joystickVal = document.getElementById('joystick-scale-val');
       
       if (parsed.soundEnabled !== undefined && soundToggle) {
         soundToggle.checked = parsed.soundEnabled;
@@ -97,6 +99,11 @@ function loadPersistedSettings() {
         const pct = Math.round(parsed.shakeMultiplier * 100);
         shakeSlider.value = pct;
         shakeVal.textContent = `${pct}%`;
+      }
+      if (parsed.joystickScale !== undefined && joystickSlider && joystickVal) {
+        const pct = Math.round(parsed.joystickScale * 100);
+        joystickSlider.value = pct;
+        joystickVal.textContent = `${pct}%`;
       }
     }
   } catch (e) {
@@ -122,13 +129,15 @@ function savePersistedSettings() {
     const scanlinesToggle = document.getElementById('toggle-scanlines');
     const autofireToggle = document.getElementById('toggle-autofire');
     const shakeSlider = document.getElementById('slider-shake');
+    const joystickSlider = document.getElementById('slider-joystick-scale');
     
     const settingsObj = {
       soundEnabled: soundToggle ? soundToggle.checked : true,
       lowGraphics: graphicsToggle ? graphicsToggle.checked : false,
       scanlinesEnabled: scanlinesToggle ? scanlinesToggle.checked : true,
       autoFire: autofireToggle ? autofireToggle.checked : true,
-      shakeMultiplier: shakeSlider ? parseInt(shakeSlider.value) / 100 : 1.0
+      shakeMultiplier: shakeSlider ? parseInt(shakeSlider.value) / 100 : 1.0,
+      joystickScale: joystickSlider ? parseInt(joystickSlider.value) / 100 : 1.0
     };
     localStorage.setItem('stacks_hurry_settings', JSON.stringify(settingsObj));
     if (scanlinesToggle) {
@@ -255,6 +264,17 @@ function bindEvents() {
     setSettings({ shakeMultiplier: val / 100 });
     savePersistedSettings();
   });
+
+  const joystickSlider = document.getElementById('slider-joystick-scale');
+  if (joystickSlider) {
+    joystickSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      const joystickVal = document.getElementById('joystick-scale-val');
+      if (joystickVal) joystickVal.textContent = `${val}%`;
+      setSettings({ joystickScale: val / 100 });
+      savePersistedSettings();
+    });
+  }
 
   // Developer reviewer helper controls
   document.getElementById('btn-dev-complete-quests').addEventListener('click', () => {

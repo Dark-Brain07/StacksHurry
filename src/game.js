@@ -90,6 +90,7 @@ let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: n
 let lowGraphics = false;
 let autoFire = true;
 let shakeMultiplier = 1.0;
+let joystickScale = 1.0;
 const keys = { w: false, a: false, s: false, d: false, Space: false };
 let keyboardActive = false;
 
@@ -97,6 +98,7 @@ export function setSettings(settings) {
   if (settings.lowGraphics !== undefined) lowGraphics = settings.lowGraphics;
   if (settings.autoFire !== undefined) autoFire = settings.autoFire;
   if (settings.shakeMultiplier !== undefined) shakeMultiplier = settings.shakeMultiplier;
+  if (settings.joystickScale !== undefined) joystickScale = settings.joystickScale;
 }
 let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
@@ -409,8 +411,8 @@ function update() {
     mouseX = player.x;
     mouseY = player.y;
   } else if (joystick.active) {
-    player.x += (joystick.dx * 0.15) + player.kickbackX;
-    player.y += (joystick.dy * 0.15) + player.kickbackY;
+    player.x += (joystick.dx * 0.15 * joystickScale) + player.kickbackX;
+    player.y += (joystick.dy * 0.15 * joystickScale) + player.kickbackY;
     mouseX = player.x; // Sync mouse
     mouseY = player.y;
   } else {
