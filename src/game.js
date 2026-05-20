@@ -8,7 +8,8 @@ import {
   COLORS, PLAYER_SIZE, BULLET_SPEED, BULLET_RADIUS, SHOOT_COOLDOWN, 
   LEVEL_THRESHOLD, COMBO_TIMEOUT, POWERUP_DURATION, POWERUP_CHANCE,
   INITIAL_SPAWN_RATE, MIN_SPAWN_RATE, INITIAL_ASTEROID_SPEED,
-  SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS, SHIP_THEMES, DEFAULT_SHIP_THEME
+  SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS, SHIP_THEMES, DEFAULT_SHIP_THEME,
+  BOUNCE_LIMIT
 } from './constants.js';
 import { updateParticles, renderParticles, spawnExplosion, resetParticles, spawnPlayerExhaust } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
@@ -318,6 +319,7 @@ export function startGame() {
     shieldActive: false,
     multiShotActive: 0,
     speedActive: 0,
+    bounceActive: 0,
     kickbackX: 0,
     kickbackY: 0,
   };
@@ -480,6 +482,14 @@ function update() {
     }
   }
 
+  // Bounce timer
+  if (player.bounceActive > 0) {
+    player.bounceActive--;
+    if (player.bounceActive === 120 || player.bounceActive === 60 || player.bounceActive === 30) {
+      playWarning();
+    }
+  }
+
   // Multiplier timer
   if (multiplierTimer > 0) {
     multiplierTimer--;
@@ -553,7 +563,35 @@ function update() {
     
     b.x += b.vx;
     b.y += b.vy;
-    const active = b.y > -10 && b.x > -10 && b.x < canvas.width + 10;
+
+    // Bounce physics
+    if (b.bounceCount > 0) {
+      let bounced = false;
+      if (b.x < 5) {
+        b.x = 5;
+        b.vx = -b.vx;
+        bounced = true;
+      } else if (b.x > canvas.width - 5) {
+        b.x = canvas.width - 5;
+        b.vx = -b.vx;
+        bounced = true;
+      }
+      if (b.y < 5) {
+        b.y = 5;
+        b.vy = -b.vy;
+        bounced = true;
+      } else if (b.y > canvas.height - 5) {
+        b.y = canvas.height - 5;
+        b.vy = -b.vy;
+        bounced = true;
+      }
+      if (bounced) {
+        b.bounceCount--;
+        playCollect(); // Reuse playCollect as nice futuristic blip sound
+      }
+    }
+
+    const active = b.y > -10 && b.y < canvas.height + 10 && b.x > -10 && b.x < canvas.width + 10;
     if (!active) bulletPool.release(b);
     return active;
   });
@@ -720,6 +758,9 @@ function update() {
           lives++;
           if (onLivesUpdate) onLivesUpdate(lives);
         }
+      } else if (p.type === 'bounce') {
+        player.bounceActive = Math.min(1200, (player.bounceActive || 0) + 600);
+        spawnFloatingText(player.x, player.y - 20, "BOUNCING BULLETS!", "#fb7185");
       }
       playCollect();
       if (onVibrate) onVibrate(30);
@@ -834,6 +875,7 @@ function createBullet(x, y, vx, vy, isHoming = false) {
   b.active = true;
   b.isHoming = isHoming;
   b.target = isHoming ? findNearestTarget(x, y) : null;
+  b.bounceCount = player.bounceActive > 0 ? BOUNCE_LIMIT : 0;
   return b;
 }
 
@@ -908,9 +950,10 @@ function generateAsteroidShape(radius) {
 function spawnPowerup(x, y) {
   const rand = Math.random();
   let type = 'shield';
-  if (rand < 0.25) type = 'shield';
-  else if (rand < 0.5) type = 'multishot';
-  else if (rand < 0.75) type = 'speed';
+  if (rand < 0.2) type = 'shield';
+  else if (rand < 0.4) type = 'multishot';
+  else if (rand < 0.6) type = 'speed';
+  else if (rand < 0.8) type = 'bounce';
   else type = 'health';
 
   powerups.push({
@@ -1151,6 +1194,20 @@ function render() {
       ctx.shadowColor = '#fca5a5';
       ctx.shadowBlur = 10;
       ctx.stroke();
+    } else if (p.type === 'bounce') {
+      // Bounce Icon (Double Circle representing rebounding energy)
+      ctx.beginPath();
+      ctx.arc(-4, 0, 8, 0, Math.PI * 2);
+      ctx.arc(4, 0, 8, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(244, 63, 94, 0.8)'; // Pink for bounce
+      ctx.fill();
+      ctx.strokeStyle = '#fda4af';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.shadowColor = '#fda4af';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
     }
 
     ctx.restore();
@@ -1286,6 +1343,10 @@ function drawPlayer() {
   }
   if (player.speedActive > 0) {
     drawIndicator(x, indicatorY, player.speedActive / 600, '#22c55e');
+    indicatorY += 8;
+  }
+  if (player.bounceActive > 0) {
+    drawIndicator(x, indicatorY, player.bounceActive / 600, '#fb7185');
     indicatorY += 8;
   }
 }
