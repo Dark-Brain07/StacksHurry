@@ -35,6 +35,22 @@ The game is built for universal accessibility:
 - **Keyboard Steering**: Standard `W`/`A`/`S`/`D` and Arrow pilot steering featuring diagonal velocity normalization to prevent double-speed drift.
 - **Automatic Sensing**: Organically swaps between mouse and keyboard inputs upon detecting pointer movements or keyboard press actions.
 
+### 6. Procedural Synthesizer & Audio Architecture (`src/audio.js`)
+Rather than downloading large static assets, Stacks Hurry generates 100% of its soundtracks and sound effects procedurally in real-time using the **Web Audio API**.
+- **Dynamic Speed Hum**: A persistent low-frequency drone oscillator (55Hz–120Hz) changes pitch dynamically based on the ship's current velocity ratio. As the pilot accelerates or stacks speed multipliers, the synthesizer's frequency shifts smoothly using `setTargetAtTime` to prevent click and pop artifacts.
+- **Synth Arpeggiation**: Wave clear alerts use mathematical arpeggiations, scheduling a sequence of sine and triangle waves to play a C-Major chord arpeggio with custom ADSR envelopes.
+
+### 7. Zero-Garbage-Collection Object Pools (`src/particles.js`, `src/game.js`)
+At 60 frames per second, creating and deleting hundreds of bullet and particle objects causes frequent garbage collection sweeps, resulting in noticeable frame drops (micro-stutter). 
+- **Bullet & Particle Pools**: The engine pre-allocates arrays of inactive object structures. When a new bullet is fired or a thrust particle is emitted, an object is retrieved from the pool, marked as active, and updated.
+- **Deactivation**: Once the object goes off-screen or its lifetime expires, it is returned to the pool for reuse, achieving a **0-GC footprint** in standard game loops.
+
+### 8. Web3 Smart Contract Integration (`src/contracts.js`)
+Interaction with Stacks Mainnet smart contracts is managed asynchronously.
+- **State Queries**: Read-only functions query player data, high scores, and NFT balances.
+- **Fail-safe Transactions**: Writes incorporate a resilient retry wrapper with **exponential backoff** and descriptive diagnostics, ensuring transactions are executed cleanly even during high network activity.
+- **Themes & Skin accent shaders**: The game reads theme variables (`SHIP_THEMES`) to apply vibrant neon dropshadow glows and custom accent color palettes based on active visual profiles, creating premium dynamic themes.
+
 ---
 
 ## 📅 Chronological Development Sprint Logs
@@ -144,6 +160,41 @@ Our second development sprint focused on zero-Garbage-Collection graphics poolin
     - Refactored `QuestsEventDispatcher` to support modular `unsubscribe` handles and full memory flushes.
 15. **`docs(refactor): Document visual particles pool architecture and modular quests design patterns`**
     - Added comprehensive documentation detail maps in README.md describing the full sprint stack.
+
+## 🛠️ Sprint 3: Elite Web3 Gameplay Mechanics & Offline Stats Engine
+
+Our third sprint integrated 15 modular, high-impact commits focusing on tactile UI physics, procedural audio arpeggiations, decentralized event integrations, localized offline analytics, and extensive codebase architectures:
+
+1. **`feat(audio): Implement quick HUD mute button indicator and audio-toggle keyboard shortcut`**
+   - Implemented dynamic mute button toggles mapped to HUD hotkeys and visual indicator icons.
+2. **`feat(ui): Add vibrant dynamic bounce animations to score and lives changes`**
+   - Designed spring-physics bounce animations on core gameplay HUD labels to reinforce arcade impact.
+3. **`feat(physics): Add custom particle exhaust to ship base when moving`**
+   - Engineered reactive engine exhaust particle flows emitting dynamically based on vector thruster velocity.
+4. **`feat(quests): Support new "Deflection Mastery" and "Shield Survival" daily quests`**
+   - Added unique daily combat challenges checking shields and physics vector deflection events.
+5. **`refactor(physics): Enhance Vector2D with clean helper methods for advanced movement`**
+   - Expanded the basic Vector2D class with normalized projections, scalar multiplications, and dot products.
+6. **`feat(game): Implement localized personal best leaderboard panel`**
+   - Built a custom local scoreboard pane rendering players' personal high scores offline.
+7. **`feat(enemies): Introduce a dynamic "Interceptor" enemy cruiser type`**
+   - Designed advanced interceptor cruiser enemies executing homing sweep algorithms towards the player.
+8. **`feat(ui): Enhance settings overlay with fine-tuned mobile joystick scale calibration`**
+   - Engineered user-friendly settings ranges allowing touch joystick resizing and local caching.
+9. **`feat(game): Implement customizable glowing ship themes and color skins`**
+   - Created vibrant dynamic skin overlays (Matrix, Cyberpunk, Stacks, Cosmos) with glowing canvas effects.
+10. **`feat(physics): Implement rebounding bounce power-up bullet mechanics`**
+    - Developed a wall-rebounding bounce bullet modifier resolving diagonal physics boundaries.
+11. **`feat(ui): Introduce interactive glowing Achievements gallery`**
+    - Built a cyberpunk-themed modal interface showcasing completed pilot trophy milestones.
+12. **`feat(audio): Integrate interactive procedural speed hum frequency shift`**
+    - Wired player ship velocity vector magnitudes directly to the procedural speed hum pitch oscillators.
+13. **`feat(quests): Support real-time quest progress gameplay notifications`**
+    - Programmed floating on-screen banners announcing 50% quest milestones and complete actions.
+14. **`feat(game): Add full game statistics metrics panel`**
+    - Implemented extensive local cumulative stats arrays tracking shot accuracy, smash rates, and flight time.
+15. **`docs(refactor): Clean up codebase comments with extensive architectural guide`**
+    - Documented procedural audio, zero-GC object pools, and smart contract backoffs inside the developer guide.
 
 ## 📄 License
 
