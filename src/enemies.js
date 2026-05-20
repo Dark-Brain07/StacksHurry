@@ -41,6 +41,32 @@ export function updateEnemies(canvas, frameCount, player) {
         enemyBullets.push({ x: e.x, y: e.y + 12, vx: 0, vy: 4 });
         enemyBullets.push({ x: e.x, y: e.y + 12, vx: 1.5, vy: 3.5 });
       }
+    } else if (e.type === 'interceptor') {
+      // Lock X onto the player, with smooth steering velocity
+      const targetX = player.x;
+      const dx = targetX - e.x;
+      
+      e.vx = e.vx * 0.92 + (dx * 0.06);
+      
+      // Limit speed
+      const maxVx = 4.8;
+      if (e.vx > maxVx) e.vx = maxVx;
+      if (e.vx < -maxVx) e.vx = -maxVx;
+
+      // Bob vertically
+      e.y += Math.sin(frameCount * 0.05) * 0.6 + e.vy;
+
+      // Fire targeted single rapid projectile towards player
+      if (frameCount % 100 === 0) {
+        const angle = Math.atan2(player.y - e.y, player.x - e.x);
+        const bulletSpeed = 5.2;
+        enemyBullets.push({
+          x: e.x,
+          y: e.y + 12,
+          vx: Math.cos(angle) * bulletSpeed,
+          vy: Math.sin(angle) * bulletSpeed
+        });
+      }
     } else {
       // Boundary bounce for UFOs
       if (e.x < 25 || e.x > canvas.width - 25) e.vx *= -1;
@@ -126,6 +152,40 @@ export function renderEnemies(ctx) {
         ctx.fillStyle = '#ef4444';
         ctx.fillRect(-barW/2, -26, barW * (e.hp / e.maxHp), 4);
       }
+    } else if (e.type === 'interceptor') {
+      ctx.translate(e.x, e.y);
+      // Draw Interceptor (Arrow/diamond cruiser style)
+      ctx.beginPath();
+      ctx.moveTo(0, 16);      // Nose pointing down
+      ctx.lineTo(16, -6);     // Right wing tip
+      ctx.lineTo(6, -14);     // Right engine body
+      ctx.lineTo(-6, -14);    // Left engine body
+      ctx.lineTo(-16, -6);    // Left wing tip
+      ctx.closePath();
+      
+      ctx.fillStyle = 'rgba(168, 85, 247, 0.25)'; // Purple aura
+      ctx.fill();
+      
+      // Flashing engine indicators
+      const glow = (Math.floor(Date.now() / 100) % 2 === 0);
+      ctx.strokeStyle = glow ? '#a855f7' : '#f472b6'; // Purple / Pink
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Glowing thruster core
+      ctx.fillStyle = glow ? '#f472b6' : '#a855f7';
+      ctx.beginPath();
+      ctx.arc(0, -10, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // HP Bar above cruiser
+      if (e.hp < e.maxHp) {
+        const barW = 24;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(-barW/2, -22, barW, 4);
+        ctx.fillStyle = '#a855f7';
+        ctx.fillRect(-barW/2, -22, barW * (e.hp / e.maxHp), 4);
+      }
     } else {
       ctx.translate(e.x, e.y);
       // Draw UFO
@@ -167,13 +227,17 @@ export function spawnEnemy(canvas) {
   let radius = 20;
   let hp = 1;
 
-  if (rand < 0.25) {
+  if (rand < 0.22) {
     type = 'kamikaze';
     radius = 15;
-  } else if (rand < 0.45) {
+  } else if (rand < 0.38) {
     type = 'elite';
     radius = 28;
     hp = 3;
+  } else if (rand < 0.55) {
+    type = 'interceptor';
+    radius = 18;
+    hp = 2;
   }
 
   const isLeft = Math.random() > 0.5;
@@ -181,8 +245,12 @@ export function spawnEnemy(canvas) {
   enemies.push({
     x: isLeft ? -40 : canvas.width + 40,
     y: Math.random() * 120 + 60,
-    vx: isLeft ? (type === 'kamikaze' ? 3.5 : (type === 'elite' ? 1.2 : 2.2)) : (type === 'kamikaze' ? -3.5 : (type === 'elite' ? -1.2 : -2.2)),
-    vy: type === 'kamikaze' ? (1.2 + Math.random() * 0.3) : (type === 'elite' ? 0.25 : (0.5 + Math.random() * 0.2)),
+    vx: isLeft 
+      ? (type === 'kamikaze' ? 3.5 : (type === 'elite' ? 1.2 : (type === 'interceptor' ? 2.5 : 2.2))) 
+      : (type === 'kamikaze' ? -3.5 : (type === 'elite' ? -1.2 : (type === 'interceptor' ? -2.5 : -2.2))),
+    vy: type === 'kamikaze' 
+      ? (1.2 + Math.random() * 0.3) 
+      : (type === 'elite' ? 0.25 : (type === 'interceptor' ? 0.35 : (0.5 + Math.random() * 0.2))),
     radius,
     type,
     hp,
@@ -201,19 +269,20 @@ export function checkEnemyCollisions(player, bullets, onEnemyHit, lowGraphics) {
       if (dist < e.radius + BULLET_RADIUS) {
         bullets.splice(i, 1);
         
-        // Handle Elite Cruiser multi-hit logic
-        if (e.type === 'elite') {
+        // Handle Multi-hit enemies
+        if (e.type === 'elite' || e.type === 'interceptor') {
           e.hp--;
-          spawnExplosion(b.x, b.y, 8, lowGraphics, '#fb923c');
+          const expColor = e.type === 'elite' ? '#fb923c' : '#a855f7';
+          spawnExplosion(b.x, b.y, e.type === 'elite' ? 8 : 6, lowGraphics, expColor);
           playHit();
           if (e.hp > 0) return null; // Don't destroy yet
         }
         
         enemies.splice(j, 1);
-        const expColor = e.type === 'kamikaze' ? '#f87171' : (e.type === 'elite' ? '#fb923c' : '#94a3b8');
+        const expColor = e.type === 'kamikaze' ? '#f87171' : (e.type === 'elite' ? '#fb923c' : (e.type === 'interceptor' ? '#a855f7' : '#94a3b8'));
         spawnExplosion(e.x, e.y, e.radius, lowGraphics, expColor);
         playExplosion();
-        const scoreAward = e.type === 'elite' ? 400 : 150;
+        const scoreAward = e.type === 'elite' ? 400 : (e.type === 'interceptor' ? 250 : 150);
         onEnemyHit(e.x, e.y, scoreAward);
         QuestsEventDispatcher.dispatchEvent('enemyDestroyed');
         return null; 
