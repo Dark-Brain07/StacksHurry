@@ -66,7 +66,9 @@ export function seek(entity, target, maxSpeed, force) {
 }
 
 /**
- * Lunge behavior: charges towards target at high speed
+ * Lunge behavior: charges towards target at high speed.
+ * @param {Object} entity - The entity performing the lunge.
+ * @param {Object} target - The target entity to lunge towards.
  */
 function processLunge(entity, target) {
     if (!entity.lunging) {
