@@ -17,8 +17,13 @@ export const AI_STATES = {
 /**
  * State-based AI Update
  * Processes the entity behavior based on its current state
+ * @param {Object} entity - The AI entity
+ * @param {Object} target - The target entity (usually the player)
+ * @param {number} dt - Delta time
  */
 export function updateAI(entity, target, dt) {
+    if (!entity || !target) return;
+
     if (!entity.aiState) entity.aiState = AI_STATES.IDLE;
     
     switch (entity.aiState) {
