@@ -3,7 +3,7 @@
  * Provides advanced movement logic for non-linear enemy types
  * Includes a modular State Machine for complex entity behavior
  */
-import { AI_LUNGE_DURATION, AI_LUNGE_SPEED_MULTIPLIER } from './constants.js';
+import { AI_LUNGE_DURATION, AI_LUNGE_SPEED_MULTIPLIER, AI_ORBIT_RADIUS, AI_ORBIT_SPEED } from './constants.js';
 
 
 export const AI_STATES = {
@@ -36,7 +36,7 @@ export function updateAI(entity, target, dt) {
             break;
             
         case AI_STATES.ORBIT:
-            orbit(entity, target, entity.orbitRadius || 150, entity.orbitSpeed || 0.02);
+            orbit(entity, target, entity.orbitRadius || AI_ORBIT_RADIUS, entity.orbitSpeed || AI_ORBIT_SPEED);
             break;
             
         case AI_STATES.RETREAT:
