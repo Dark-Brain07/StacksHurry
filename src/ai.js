@@ -3,6 +3,8 @@
  * Provides advanced movement logic for non-linear enemy types
  * Includes a modular State Machine for complex entity behavior
  */
+import { AI_LUNGE_DURATION, AI_LUNGE_SPEED_MULTIPLIER } from './constants.js';
+
 
 export const AI_STATES = {
     IDLE: 'idle',
@@ -72,7 +74,7 @@ function processLunge(entity, target) {
         const dy = target.y - entity.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         
-        const speed = (entity.speed || 2) * 4;
+        const speed = (entity.speed || 2) * AI_LUNGE_SPEED_MULTIPLIER;
         entity.vx = (dx / dist) * speed;
         entity.vy = (dy / dist) * speed;
         entity.lunging = true;
@@ -81,7 +83,7 @@ function processLunge(entity, target) {
         setTimeout(() => {
             entity.lunging = false;
             entity.aiState = AI_STATES.SEEK; // Go back to seeking
-        }, 1000);
+        }, AI_LUNGE_DURATION);
     }
     
     entity.x += entity.vx;
