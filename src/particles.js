@@ -122,11 +122,11 @@ export function resetParticles() {
 
 export const BASE_PARTICLE_DECAY = 0.05;
 
-export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff') {
+export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14) {
   const angle = Math.atan2(vy, vx) + Math.PI + (Math.random() - 0.5) * 0.4;
   const speed = Math.hypot(vx, vy) * 0.3 + Math.random() * 1.2 + 0.6;
   const px = x + (Math.random() - 0.5) * 6;
-  const py = y + 14; // Base of the player ship
+  const py = y + yOffset; // Base of the player ship
   const life = Math.floor(Math.random() * 12) + 8;
   const radius = Math.random() * 2.2 + 0.8;
   
