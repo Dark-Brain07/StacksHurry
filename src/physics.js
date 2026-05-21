@@ -133,6 +133,17 @@ export class Vector2D {
   }
 }
 
+/**
+ * Checks for a collision between two circles.
+ * Can be called with (x1, y1, r1, x2, y2, r2) or with Vector2D for coordinates (v1, r1, v2, r2).
+ * @param {number|Vector2D} x1 X coordinate of circle 1 or Vector2D position.
+ * @param {number|Vector2D} y1 Y coordinate of circle 1 or Vector2D position (if x1 is a vector, this is r1).
+ * @param {number} r1 Radius of circle 1 (if x1 is a vector, this is v2).
+ * @param {number} x2 X coordinate of circle 2 (if x1 is a vector, this is r2).
+ * @param {number} y2 Y coordinate of circle 2.
+ * @param {number} r2 Radius of circle 2.
+ * @returns {boolean} True if the circles are colliding.
+ */
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   // Overload to support Vector2D parameters: checkCircleCollision(vec1, r1, vec2, r2)
   if (x1 instanceof Vector2D && x2 instanceof Vector2D) {
