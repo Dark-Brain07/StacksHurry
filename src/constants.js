@@ -105,4 +105,6 @@ export const SHIELD_COLORS = {
 export const AI_DETECTION_RADIUS = 300;
 export const AI_LUNGE_DURATION = 1000;
 export const AI_LUNGE_SPEED_MULTIPLIER = 4;
+export const AI_ORBIT_RADIUS = 150;
+export const AI_ORBIT_SPEED = 0.02;
 export const DEFAULT_GAME_VOLUME = 0.5;
