@@ -350,6 +350,11 @@ export function playHeavyHit() {
 }
 
 
+/**
+ * Placeholder for spatial audio initialization.
+ * Reserved for future implementation.
+ * @returns {null} Always returns null in current version.
+ */
 export function initSpatialAudioPlaceholder() {
   return null;
 }
