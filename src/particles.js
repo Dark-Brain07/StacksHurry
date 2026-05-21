@@ -57,7 +57,10 @@ export class Particle {
   }
 }
 
-// Streamlined Particle Pool for zero GC allocations
+/**
+ * Streamlined Particle Pool for zero GC allocations.
+ * Reuses inactive particles instead of instantiating new ones.
+ */
 class ParticlePool {
   constructor(size = 800) {
     this.pool = Array.from({ length: size }, () => new Particle());
