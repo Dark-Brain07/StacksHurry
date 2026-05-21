@@ -3,11 +3,12 @@
  * Web Audio API sound effects — no external files needed
  */
 
+const CACHE_KEY = 'stacks_hurry_audio_pref';
 let audioCtx = null;
 let soundEnabled = true;
 try {
   if (typeof localStorage !== 'undefined') {
-    const cached = localStorage.getItem('stacks_hurry_audio_pref');
+    const cached = localStorage.getItem(CACHE_KEY);
     if (cached !== null) {
       soundEnabled = cached === 'true';
     }
@@ -24,7 +25,7 @@ export function toggleSound(enabled) {
   soundEnabled = enabled;
   try {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('stacks_hurry_audio_pref', enabled ? 'true' : 'false');
+      localStorage.setItem(CACHE_KEY, enabled ? 'true' : 'false');
     }
   } catch (e) {}
   if (bgmGain && audioCtx) {
