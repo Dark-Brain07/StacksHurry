@@ -87,6 +87,7 @@ export function updateParticles() {
 }
 
 export function renderParticles(ctx) {
+  if (!ctx) return;
   particles.forEach(p => p.render(ctx));
 }
 
