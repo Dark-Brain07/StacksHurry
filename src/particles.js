@@ -3,6 +3,10 @@
  * Manages explosions and visual feedback effects using high-performance object pooling
  */
 
+/**
+ * Represents a single visual particle effect element.
+ * Utilizes an object pooling pattern to avoid garbage collection during gameplay.
+ */
 export class Particle {
   constructor() {
     this.x = 0;
