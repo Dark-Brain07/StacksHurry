@@ -113,6 +113,24 @@ export class Vector2D {
     this.y = (1 - amt) * this.y + amt * v.y;
     return this;
   }
+
+  /**
+   * Create a new Vector2D from an angle
+   * @param {number} angle The angle in radians
+   * @param {number} length The length of the vector
+   * @returns {Vector2D} A new vector
+   */
+  static fromAngle(angle, length = 1) {
+    return new Vector2D(length * Math.cos(angle), length * Math.sin(angle));
+  }
+
+  /**
+   * Create a new random unit Vector2D
+   * @returns {Vector2D} A new random vector
+   */
+  static random2D() {
+    return this.fromAngle(Math.random() * Math.PI * 2);
+  }
 }
 
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
