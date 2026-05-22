@@ -1653,3 +1653,7 @@ input:checked + .slider:before {
   -webkit-text-fill-color: transparent !important;
   text-shadow: 0 0 15px rgba(0, 240, 255, 0.4) !important;
 }
+
+/* --- OVERRIDES TO INCREASE SIZES --- */
+.anime-layout { gap: 60px !important; max-width: 1400px !important; padding: 40px !important; transform: scale(1.2); transform-origin: top center; margin-top: 5vh; }
+@media (max-width: 900px) { .anime-layout { transform: scale(1.0); padding: 20px !important; margin-top: 0; } }
