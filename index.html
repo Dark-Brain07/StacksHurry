@@ -22,75 +22,81 @@
 
     <!-- Main Menu Screen -->
     <div id="screen-menu" class="screen active">
-        <div class="menu-container">
-            <div class="logo-section">
-                <div class="logo-icon">🚀</div>
-                <h1 class="game-title">STACKS<span class="title-accent">HURRY</span></h1>
-                <p class="game-subtitle">Blockchain Rocket Shooter on Stacks</p>
-            </div>
+        <div class="menu-container anime-layout">
+            <div class="menu-left">
+                <div class="logo-section">
+                    <div class="logo-icon">🚀</div>
+                    <h1 class="game-title">STACKS<span class="title-accent">HURRY</span></h1>
+                    <p class="game-subtitle">Blockchain Rocket Shooter on Stacks</p>
+                </div>
 
-            <div class="wallet-section" id="wallet-section">
-                <button id="btn-connect-wallet" class="btn btn-primary btn-glow">
-                    <span class="btn-icon">⚡</span> Connect Wallet
-                </button>
-                <div id="wallet-info" class="wallet-info hidden" aria-live="polite">
-                    <div class="wallet-address" id="wallet-address"></div>
-                    <div class="wallet-balance" id="wallet-balance"></div>
+                <div class="wallet-section" id="wallet-section">
+                    <button id="btn-connect-wallet" class="btn btn-primary anime-btn">
+                        <span class="btn-icon">⚡</span> Connect Wallet
+                    </button>
+                    <div id="wallet-info" class="wallet-info hidden anime-glass" aria-live="polite">
+                        <div class="wallet-address" id="wallet-address"></div>
+                        <div class="wallet-balance" id="wallet-balance"></div>
+                    </div>
+                </div>
+
+                <div class="menu-buttons">
+                    <button id="btn-play" class="btn btn-large btn-play anime-btn-main" disabled>
+                        <span class="btn-icon">🎮</span> START GAME
+                    </button>
+                    <div class="menu-buttons-grid">
+                        <button id="btn-mint-nft" class="btn btn-secondary anime-btn-outline" disabled>
+                            <span class="btn-icon">🎨</span> Mint NFT
+                        </button>
+                        <button id="btn-leaderboard" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">🏆</span> Leaderboard
+                        </button>
+                        <button id="btn-achievements" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">🏅</span> Achievements
+                        </button>
+                        <button id="btn-my-stats" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">📊</span> My Stats
+                        </button>
+                        <button id="btn-settings" class="btn btn-secondary anime-btn-outline" aria-haspopup="dialog" aria-expanded="false">
+                            <span class="btn-icon">⚙️</span> Settings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="contracts-badge">
+                    <span class="badge-dot"></span>
+                    <span>4 Smart Contracts Live on Stacks Mainnet</span>
                 </div>
             </div>
 
-            <div class="menu-buttons">
-                <button id="btn-play" class="btn btn-large btn-play" disabled>
-                    <span class="btn-icon">🎮</span> START GAME
-                </button>
-                <button id="btn-mint-nft" class="btn btn-secondary" disabled>
-                    <span class="btn-icon">🎨</span> Mint NFT
-                </button>
-                <button id="btn-leaderboard" class="btn btn-secondary">
-                    <span class="btn-icon">🏆</span> Leaderboard
-                </button>
-                <button id="btn-achievements" class="btn btn-secondary">
-                    <span class="btn-icon">🏅</span> Achievements
-                </button>
-                <button id="btn-my-stats" class="btn btn-secondary">
-                    <span class="btn-icon">📊</span> My Stats
-                </button>
-                <button id="btn-settings" class="btn btn-secondary" aria-haspopup="dialog" aria-expanded="false">
-                    <span class="btn-icon">⚙️</span> Settings
-                </button>
-            </div>
-
-            <div class="contracts-badge">
-                <span class="badge-dot"></span>
-                <span>4 Smart Contracts Live on Stacks Mainnet</span>
-            </div>
-
-            <div class="daily-quests-panel">
-                <div class="panel-header">
-                    <span class="panel-icon">📅</span>
-                    <span class="panel-title">DAILY CHALLENGES</span>
-                    <span id="streak-badge" class="streak-badge">0 Day Streak 🔥</span>
-                    <span id="total-points-badge" class="streak-badge" style="background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.2); margin-left: 8px;">🏆 0 PTS</span>
+            <div class="menu-right">
+                <div class="daily-quests-panel anime-panel">
+                    <div class="panel-header">
+                        <span class="panel-icon">📅</span>
+                        <span class="panel-title">DAILY CHALLENGES</span>
+                        <span id="streak-badge" class="streak-badge">0 Day Streak 🔥</span>
+                        <span id="total-points-badge" class="streak-badge" style="background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.2); margin-left: 8px;">🏆 0 PTS</span>
+                    </div>
+                    <div id="daily-quests-list" class="quests-list">
+                        <!-- Loaded dynamically via js -->
+                        <div class="quest-item-placeholder">Connecting to local storage...</div>
+                    </div>
                 </div>
-                <div id="daily-quests-list" class="quests-list">
-                    <!-- Loaded dynamically via js -->
-                    <div class="quest-item-placeholder">Connecting to local storage...</div>
-                </div>
-            </div>
 
-            <div class="menu-footer">
-                <div class="hall-of-fame">
-                    <div class="hof-title">RECENT CHAMPIONS</div>
-                    <div class="hof-list">
-                        <div class="hof-item">
-                            <span class="hof-rank">1</span>
-                            <span class="hof-name">DARK_BRAIN.BTC</span>
-                            <span class="hof-score">54,200</span>
-                        </div>
-                        <div class="hof-item">
-                            <span class="hof-rank">2</span>
-                            <span class="hof-name">TALENT_TEAM.STX</span>
-                            <span class="hof-score">32,150</span>
+                <div class="menu-footer">
+                    <div class="hall-of-fame anime-panel">
+                        <div class="hof-title">RECENT CHAMPIONS</div>
+                        <div class="hof-list">
+                            <div class="hof-item">
+                                <span class="hof-rank">1</span>
+                                <span class="hof-name">DARK_BRAIN.BTC</span>
+                                <span class="hof-score">54,200</span>
+                            </div>
+                            <div class="hof-item">
+                                <span class="hof-rank">2</span>
+                                <span class="hof-name">TALENT_TEAM.STX</span>
+                                <span class="hof-score">32,150</span>
+                            </div>
                         </div>
                     </div>
                 </div>

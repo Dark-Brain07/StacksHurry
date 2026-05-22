@@ -1539,3 +1539,117 @@ input:checked + .slider:before {
   color: rgba(255, 255, 255, 0.4);
 }
 
+/* ---------- Anime Layout & Styling ---------- */
+.anime-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  max-width: 1100px !important;
+  width: 95% !important;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 20px;
+}
+
+@media (max-width: 900px) {
+  .anime-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    height: 90vh;
+    overflow-y: auto;
+    align-items: start;
+    padding-top: 40px;
+  }
+}
+
+.menu-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.menu-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Redesign buttons to be cleaner and anime-styled */
+.anime-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+  backdrop-filter: blur(10px);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  box-shadow: none !important;
+  transition: all 0.3s ease;
+  padding: 14px 28px !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.anime-btn:hover:not(:disabled) {
+  background: rgba(0, 240, 255, 0.2) !important;
+  border-color: #00f0ff !important;
+  transform: translateX(5px);
+}
+
+.anime-btn-main {
+  background: #00f0ff !important;
+  color: #0a0e1a !important;
+  border: none !important;
+  clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+  font-size: 18px !important;
+  font-weight: 900;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+  font-family: var(--font-display);
+}
+
+.anime-btn-main:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.8) !important;
+}
+
+.anime-btn-outline {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  font-family: var(--font-display);
+}
+.anime-btn-outline:hover:not(:disabled) {
+  border-color: #00f0ff !important;
+  background: rgba(0, 240, 255, 0.1) !important;
+  transform: translateX(3px);
+}
+
+.menu-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.anime-panel {
+  background: rgba(10, 14, 26, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+}
+
+.anime-glass {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.logo-section h1 {
+  text-shadow: none !important;
+}
+.logo-section .title-accent {
+  background: #00f0ff !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.4) !important;
+}
