@@ -189,36 +189,62 @@ export function renderEnemies(ctx) {
     } else {
       ctx.translate(e.x, e.y);
       // Draw UFO
+      const ufoGrad = ctx.createLinearGradient(0, -5, 0, 13);
+      ufoGrad.addColorStop(0, '#94a3b8');
+      ufoGrad.addColorStop(1, '#334155');
       ctx.beginPath();
       ctx.ellipse(0, 5, 24, 8, 0, 0, Math.PI * 2);
-      ctx.fillStyle = '#64748b';
+      ctx.fillStyle = ufoGrad;
       ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 1;
+      ctx.stroke();
       
+      const domeGrad = ctx.createRadialGradient(0, -4, 0, 0, 0, 12);
+      domeGrad.addColorStop(0, 'rgba(0, 240, 255, 0.9)');
+      domeGrad.addColorStop(1, 'rgba(0, 100, 200, 0.4)');
       ctx.beginPath();
       ctx.arc(0, 0, 12, Math.PI, 0);
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+      ctx.fillStyle = domeGrad;
       ctx.fill();
       
       // Lights
       const lightColor = (Math.floor(Date.now() / 200) % 2 === 0) ? '#00f0ff' : '#f87171';
-      ctx.fillStyle = lightColor;
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = lightColor;
+      ctx.shadowBlur = 8;
       ctx.beginPath();
       ctx.arc(-12, 6, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
       ctx.arc(0, 7, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
       ctx.arc(12, 6, 2, 0, Math.PI * 2);
       ctx.fill();
+      ctx.shadowBlur = 0;
     }
     
     ctx.restore();
   });
 
-  // Bullets
+  // Enemy Bullets
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
   enemyBullets.forEach(b => {
     ctx.beginPath();
-    ctx.arc(b.x, b.y, BULLET_RADIUS, 0, Math.PI * 2);
-    ctx.fillStyle = '#f87171';
+    ctx.arc(b.x, b.y, BULLET_RADIUS * 1.2, 0, Math.PI * 2);
+    ctx.fillStyle = '#ef4444';
+    ctx.shadowColor = '#f87171';
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, BULLET_RADIUS * 0.6, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowBlur = 0;
     ctx.fill();
   });
+  ctx.restore();
 }
 
 export function spawnEnemy(canvas) {

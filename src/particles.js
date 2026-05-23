@@ -45,15 +45,20 @@ export class Particle {
     return this.active;
   }
 
-  render(ctx) {
+  render(ctx, lowGraphics) {
     if (!this.active) return;
     const alpha = this.life / this.maxLife;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius * alpha, 0, Math.PI * 2);
     ctx.fillStyle = this.color;
     ctx.globalAlpha = alpha;
+    if (!lowGraphics) {
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = this.radius * 2.5;
+    }
     ctx.fill();
     ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
   }
 }
 
@@ -86,9 +91,14 @@ export function updateParticles() {
   particles = particles.filter(p => p.update());
 }
 
-export function renderParticles(ctx) {
+export function renderParticles(ctx, lowGraphics = false) {
   if (!ctx) return;
-  particles.forEach(p => p.render(ctx));
+  ctx.save();
+  if (!lowGraphics) {
+    ctx.globalCompositeOperation = 'lighter';
+  }
+  particles.forEach(p => p.render(ctx, lowGraphics));
+  ctx.restore();
 }
 
 export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {

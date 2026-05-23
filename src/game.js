@@ -197,13 +197,15 @@ function resizeCanvas() {
 
 function generateStars() {
   stars = [];
-  for (let i = 0; i < 120; i++) {
+  const starColors = ['#ffffff', '#e0f2fe', '#fef08a'];
+  for (let i = 0; i < 150; i++) {
     stars.push({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      radius: Math.random() * 1.5 + 0.3,
-      speed: Math.random() * 0.5 + 0.1,
+      radius: Math.random() * 2.0 + 0.2,
+      speed: Math.random() * 0.6 + 0.1,
       brightness: Math.random() * 0.5 + 0.3,
+      color: starColors[Math.floor(Math.random() * starColors.length)]
     });
   }
 }
@@ -1007,8 +1009,12 @@ function spawnFloatingText(x, y, text, color = '#ffffff') {
 // ─── Render ───
 
 function render() {
-  // Clear
-  ctx.fillStyle = '#0a0e1a';
+  // Realistic Deep Space Gradient
+  const bgGrad = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height));
+  bgGrad.addColorStop(0, '#0f172a');
+  bgGrad.addColorStop(0.6, '#020617');
+  bgGrad.addColorStop(1, '#000000');
+  ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.save();
@@ -1023,22 +1029,32 @@ function render() {
     shake.intensity *= 0.92;
   }
 
-  // Stars
+  // Layered glowing stars
+  ctx.save();
   stars.forEach(s => {
     if (warpTime > 0) {
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
-      ctx.lineTo(s.x, s.y + s.radius * 20);
-      ctx.strokeStyle = `rgba(255, 255, 255, ${s.brightness * (warpTime / 60)})`;
-      ctx.lineWidth = s.radius;
+      ctx.lineTo(s.x, s.y + s.radius * 30);
+      ctx.strokeStyle = s.color;
+      ctx.globalAlpha = s.brightness * (warpTime / 60);
+      ctx.lineWidth = s.radius * 0.8;
       ctx.stroke();
     } else {
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.brightness})`;
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.brightness;
+      if (!lowGraphics && s.radius > 1.2) {
+        ctx.shadowColor = s.color;
+        ctx.shadowBlur = s.radius * 3;
+      } else {
+        ctx.shadowBlur = 0;
+      }
       ctx.fill();
     }
   });
+  ctx.restore();
 
   // Shockwave
   if (shockwave.active) {
@@ -1057,31 +1073,45 @@ function render() {
   }
 
   // Particles
-  renderParticles(ctx);
+  renderParticles(ctx, lowGraphics);
 
   // Bullets
+  // Realistic laser energy for bullets
+  ctx.save();
+  if (!lowGraphics) ctx.globalCompositeOperation = 'lighter';
   const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
   bullets.forEach(b => {
-    // Glow
+    // Intense core
     ctx.beginPath();
-    ctx.arc(b.x, b.y, 8, 0, Math.PI * 2);
+    ctx.arc(b.x, b.y, BULLET_RADIUS * 0.8, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    if (!lowGraphics) {
+      ctx.shadowColor = activeTheme.bulletGlow;
+      ctx.shadowBlur = 12;
+    }
+    ctx.fill();
+
+    // Glowing aura
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, BULLET_RADIUS * 2, 0, Math.PI * 2);
     ctx.fillStyle = activeTheme.bulletGlow;
+    ctx.globalAlpha = 0.7;
+    ctx.shadowBlur = 0;
     ctx.fill();
+    ctx.globalAlpha = 1.0;
 
-    // Core
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, BULLET_RADIUS, 0, Math.PI * 2);
-    ctx.fillStyle = activeTheme.bullet;
-    ctx.fill();
-
-    // Trail
-    ctx.beginPath();
-    ctx.moveTo(b.x, b.y);
-    ctx.lineTo(b.x, b.y + 12);
-    ctx.strokeStyle = activeTheme.trail;
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    // Laser trail
+    const trailLen = Math.hypot(b.vx, b.vy) * 2;
+    if (trailLen > 0) {
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(b.x - (b.vx/Math.abs(b.vy)) * trailLen, b.y - Math.sign(b.vy) * trailLen);
+      ctx.strokeStyle = activeTheme.trail;
+      ctx.lineWidth = BULLET_RADIUS * 1.5;
+      ctx.stroke();
+    }
   });
+  ctx.restore();
 
   // Asteroids
   asteroids.forEach(a => {
@@ -1098,19 +1128,35 @@ function render() {
 
     if (a.isShielded) {
       const maxHp = a.maxHp || 3;
-      ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + (a.hp / maxHp) * 0.2})`;
+      const shieldPcnt = a.hp / maxHp;
+      ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + shieldPcnt * 0.2})`;
       ctx.fill();
-      ctx.strokeStyle = '#00f0ff';
+      ctx.strokeStyle = `rgba(0, 240, 255, ${0.4 + shieldPcnt * 0.6})`;
       ctx.lineWidth = 3;
-      ctx.shadowColor = '#00f0ff';
-      ctx.shadowBlur = 10;
+      if (!lowGraphics) {
+        ctx.shadowColor = '#00f0ff';
+        ctx.shadowBlur = 12 + Math.random() * 6;
+      }
+      ctx.stroke();
     } else {
-      ctx.fillStyle = 'rgba(100,116,139,0.6)';
+      // 3D-like realistic rock gradient
+      const rockGrad = ctx.createLinearGradient(-a.radius, -a.radius, a.radius, a.radius);
+      rockGrad.addColorStop(0, '#475569');
+      rockGrad.addColorStop(0.7, '#1e293b');
+      rockGrad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = rockGrad;
       ctx.fill();
-      ctx.strokeStyle = COLORS.asteroidStroke;
-      ctx.lineWidth = 2;
+      
+      // Depth and crater illusion outlines
+      ctx.strokeStyle = '#020617';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      
+      // Top lighting edge highlight
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
-    ctx.stroke();
 
     ctx.restore();
 
