@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stacks Hurry - Blockchain Rocket Shooter Game</title>
+    <meta name="description" content="Stacks Hurry is a fast-paced rocket shooter game built on Stacks blockchain. Shoot asteroids, earn on-chain scores, mint NFTs, and climb the leaderboard." />
+    <meta name="keywords" content="Stacks, blockchain game, NFT, rocket shooter, Web3 gaming" />
+    <meta property="og:title" content="Stacks Hurry - Blockchain Rocket Shooter" />
+    <meta property="og:description" content="Play, score, and mint NFTs on the Stacks blockchain." />
+    <meta property="og:type" content="website" />
+    <meta name="talentapp:project_verification" content="4f563c01ad0450f68a2c2f1ac44a724880977d17181b97d85bed5e7067d3ca709e65114950f3630c2243fa158321a2bc45b52704b0e825ee43f41e85177abd5c">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <!-- Stars background -->
+    <div id="stars-bg" aria-hidden="true"></div>
+
+    <!-- Main Menu Screen -->
+    <div id="screen-menu" class="screen active">
+        <div class="menu-container anime-layout">
+            <div class="menu-left">
+                <div class="logo-section">
+                    <div class="logo-icon">🚀</div>
+                    <h1 class="game-title">STACKS<span class="title-accent">HURRY</span></h1>
+                    <p class="game-subtitle">Blockchain Rocket Shooter on Stacks</p>
+                </div>
+
+                <div class="wallet-section" id="wallet-section">
+                    <button id="btn-connect-wallet" class="btn btn-primary anime-btn">
+                        <span class="btn-icon">⚡</span> Connect Wallet
+                    </button>
+                    <div id="wallet-info" class="wallet-info hidden anime-glass" aria-live="polite">
+                        <div class="wallet-address" id="wallet-address"></div>
+                        <div class="wallet-balance" id="wallet-balance"></div>
+                    </div>
+                </div>
+
+                <div class="menu-buttons">
+                    <button id="btn-play" class="btn btn-large btn-play anime-btn-main" disabled>
+                        <span class="btn-icon">🎮</span> START GAME
+                    </button>
+                    <div class="menu-buttons-grid">
+                        <button id="btn-mint-nft" class="btn btn-secondary anime-btn-outline" disabled>
+                            <span class="btn-icon">🎨</span> Mint NFT
+                        </button>
+                        <button id="btn-leaderboard" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">🏆</span> Leaderboard
+                        </button>
+                        <button id="btn-achievements" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">🏅</span> Achievements
+                        </button>
+                        <button id="btn-my-stats" class="btn btn-secondary anime-btn-outline">
+                            <span class="btn-icon">📊</span> My Stats
+                        </button>
+                        <button id="btn-settings" class="btn btn-secondary anime-btn-outline" aria-haspopup="dialog" aria-expanded="false">
+                            <span class="btn-icon">⚙️</span> Settings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="contracts-badge">
+                    <span class="badge-dot"></span>
+                    <span>4 Smart Contracts Live on Stacks Mainnet</span>
+                </div>
+            </div>
+
+            <div class="menu-right">
+                <div class="daily-quests-panel anime-panel">
+                    <div class="panel-header">
+                        <span class="panel-icon">📅</span>
+                        <span class="panel-title">DAILY CHALLENGES</span>
+                        <span id="streak-badge" class="streak-badge">0 Day Streak 🔥</span>
+                        <span id="total-points-badge" class="streak-badge" style="background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.2); margin-left: 8px;">🏆 0 PTS</span>
+                    </div>
+                    <div id="daily-quests-list" class="quests-list">
+                        <!-- Loaded dynamically via js -->
+                        <div class="quest-item-placeholder">Connecting to local storage...</div>
+                    </div>
+                </div>
+
+                <div class="menu-footer">
+                    <div class="hall-of-fame anime-panel">
+                        <div class="hof-title">RECENT CHAMPIONS</div>
+                        <div class="hof-list">
+                            <div class="hof-item">
+                                <span class="hof-rank">1</span>
+                                <span class="hof-name">DARK_BRAIN.BTC</span>
+                                <span class="hof-score">54,200</span>
+                            </div>
+                            <div class="hof-item">
+                                <span class="hof-rank">2</span>
+                                <span class="hof-name">TALENT_TEAM.STX</span>
+                                <span class="hof-score">32,150</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="screen-game" class="screen">
+        <div class="crt-overlay"></div>
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="hud-item">
+                    <span class="hud-label">SCORE</span>
+                    <span class="hud-value" id="hud-score">0</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <span class="hud-game-title">STACKS HURRY</span>
+                <div class="level-progress-container">
+                    <div id="level-progress-bar" class="level-progress-bar"></div>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="hud-item">
+                    <span class="hud-label">LIVES</span>
+                    <span class="hud-value" id="hud-lives">❤️❤️❤️</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">LEVEL</span>
+                    <span class="hud-value" id="hud-level">1</span>
+                </div>
+                <div class="hud-item">
+                    <button id="btn-hud-mute" class="btn btn-ghost btn-sm" style="font-size: 20px; padding: 4px;" aria-label="Mute Sound">🔊</button>
+                </div>
+                <div class="hud-item">
+                    <button id="btn-pause-game" class="btn btn-ghost btn-sm" style="font-size: 20px; padding: 4px;" aria-label="Pause Game">⏸️</button>
+                </div>
+            </div>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <div id="game-start-overlay" class="game-overlay">
+            <div class="overlay-content">
+                <h2>🚀 GET READY!</h2>
+                <p>Move: Mouse / Touch</p>
+                <p>Shoot: Click / Tap</p>
+                <p class="countdown" id="countdown">3</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="screen-gameover" class="screen">
+        <div class="gameover-container">
+            <div class="gameover-header">
+                <h2 class="gameover-title">GAME OVER</h2>
+                <div class="gameover-score">
+                    <span class="score-label">Final Score</span>
+                    <span class="score-value" id="final-score">0</span>
+                </div>
+                <div class="gameover-stats">
+                    <div class="stat">
+                        <span class="stat-label">Level</span>
+                        <span class="stat-value" id="final-level">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Asteroids</span>
+                        <span class="stat-value" id="final-asteroids">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gameover-actions">
+                <button id="btn-submit-score" class="btn btn-primary btn-glow">
+                    <span class="btn-icon">⛓️</span> Submit Score On-Chain
+                </button>
+                <button id="btn-submit-highscore" class="btn btn-secondary">
+                    <span class="btn-icon">🏅</span> Submit to Hall of Fame (5000 uSTX)
+                </button>
+                <button id="btn-play-again" class="btn btn-large btn-play">
+                    <span class="btn-icon">🔄</span> PLAY AGAIN
+                </button>
+                <button id="btn-back-menu" class="btn btn-ghost">
+                    ← Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="screen-leaderboard" class="screen">
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <button id="btn-lb-back" class="btn btn-ghost btn-sm">← Back</button>
+                <h2 class="leaderboard-title">🏆 LEADERBOARD</h2>
+                <div class="leaderboard-stats">
+                    <span id="lb-player-count">0 Players</span>
+                    <span style="margin-left: 12px; opacity: 0.6;">|</span>
+                    <span style="margin-left: 12px;">Your Rank: <strong id="user-global-rank" style="color: var(--primary);">Unranked</strong></span>
+                </div>
+            </div>
+            <div class="leaderboard-tabs">
+                <button id="btn-lb-tab-chain" class="leaderboard-tab active">On-Chain</button>
+                <button id="btn-lb-tab-local" class="leaderboard-tab">Local Bests</button>
+            </div>
+            <div class="leaderboard-content">
+                <div id="leaderboard-list" class="leaderboard-list">
+                    <div class="leaderboard-loading">
+                        <div class="spinner"></div>
+                        <p>Loading scores from Stacks blockchain...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Screen -->
+    <div id="screen-stats" class="screen">
+        <div class="stats-container">
+            <div class="stats-header">
+                <button id="btn-stats-back" class="btn btn-ghost btn-sm">← Back</button>
+                <h2 class="stats-title">📊 MY STATS</h2>
+            </div>
+            <div class="stats-content">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🏅</div>
+                        <div class="stats-card-value" id="stat-highscore">0</div>
+                        <div class="stats-card-label">High Score</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🎮</div>
+                        <div class="stats-card-value" id="stat-games">0</div>
+                        <div class="stats-card-label">Games Played</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">📅</div>
+                        <div class="stats-card-value" id="stat-lastplayed">N/A</div>
+                        <div class="stats-card-label">Last Played</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🏆</div>
+                        <div class="stats-card-value" id="stat-halloffame">0</div>
+                        <div class="stats-card-label">Hall of Fame Score</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">☄️</div>
+                        <div class="stats-card-value" id="stat-total-asteroids">0</div>
+                        <div class="stats-card-label">Asteroids Smashed</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🛸</div>
+                        <div class="stats-card-value" id="stat-total-enemies">0</div>
+                        <div class="stats-card-label">UFOs Destroyed</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">⏱️</div>
+                        <div class="stats-card-value" id="stat-total-duration">0s</div>
+                        <div class="stats-card-label">Time Flew</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-card-icon">🎯</div>
+                        <div class="stats-card-value" id="stat-accuracy">0%</div>
+                        <div class="stats-card-label">Shot Accuracy</div>
+                    </div>
+                </div>
+                <div class="local-scores-panel" style="margin-top: 24px; padding: 20px; background: var(--bg-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-lg);">
+                    <h3 style="font-family: var(--font-display); font-size: 14px; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; text-align: center;">🏆 LOCAL PERSONAL BESTS</h3>
+                    <div id="local-scores-list" style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="text-align: center; color: var(--text-secondary); font-size: 13px;">No local scores yet. Start playing!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Menu Overlay -->
+    <div id="modal-pause" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content" style="text-align: center;">
+            <h3 class="modal-title">⏸️ GAME PAUSED</h3>
+            <p class="modal-desc">Take a breath, pilot.</p>
+            <div class="gameover-actions" style="margin-top: 24px;">
+                <button id="btn-resume" class="btn btn-primary btn-glow btn-full">
+                    <span class="btn-icon">▶️</span> RESUME
+                </button>
+                <button id="btn-pause-settings" class="btn btn-secondary btn-full">
+                    <span class="btn-icon">⚙️</span> SETTINGS
+                </button>
+                <button id="btn-quit" class="btn btn-ghost btn-full">
+                    Quit to Main Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Overlay -->
+    <div id="modal-settings" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="btn-close-settings" class="modal-close">✕</button>
+            <h3 class="modal-title">⚙️ SETTINGS</h3>
+            <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <span style="font-weight: 500;">Sound Effects</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-sound" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div>
+                        <span style="font-weight: 500; display: block;">Auto-fire</span>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Automatically fire bullets</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-autofire" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div style="padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-weight: 500;">Screen Shake Intensity</span>
+                        <span id="shake-val" style="color: var(--primary); font-weight: bold;">100%</span>
+                    </div>
+                    <input type="range" id="slider-shake" min="0" max="200" value="100" style="width: 100%; accent-color: var(--primary);">
+                </div>
+
+                <div style="padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-weight: 500;">Mobile Joystick Scale</span>
+                        <span id="joystick-scale-val" style="color: var(--primary); font-weight: bold;">100%</span>
+                    </div>
+                    <input type="range" id="slider-joystick-scale" min="50" max="200" value="100" style="width: 100%; accent-color: var(--primary);">
+                </div>
+
+                <div style="padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-weight: 500;">Ship Theme Accent Skin</span>
+                    </div>
+                    <select id="select-ship-theme" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; color: var(--text-primary); font-size: 14px; font-weight: 500; outline: none; cursor: pointer;">
+                        <option value="vanguard">Vanguard Neon (Cyan)</option>
+                        <option value="solar">Solar Flare (Amber)</option>
+                        <option value="stardust">Stardust Void (Magenta)</option>
+                        <option value="matrix">Matrix Aura (Lime)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div>
+                        <span style="font-weight: 500; display: block;">Low Graphics Mode</span>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Reduces particles to improve performance</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-graphics">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                    <div>
+                        <span style="font-weight: 500; display: block;">Retro CRT Scanlines</span>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Enable pixel scanline overlay in game</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-scanlines" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div style="padding: 16px; background: var(--bg-tertiary); border-radius: var(--radius-md); margin-top: 8px;">
+                    <span style="font-weight: 600; display: block; margin-bottom: 12px; font-size: 13px; color: var(--primary); letter-spacing: 0.05em;">⌨️ KEYBOARD SHORTCUTS</span>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center; font-size: 12px;">
+                        <kbd style="background: rgba(255,255,255,0.15); padding: 3px 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-family: monospace; font-weight: bold; text-align: center; color: #00f0ff; box-shadow: 0 2px 0 rgba(0,0,0,0.5);">W/A/S/D</kbd>
+                        <span>Move Ship / Steer</span>
+                        <kbd style="background: rgba(255,255,255,0.15); padding: 3px 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-family: monospace; font-weight: bold; text-align: center; color: #00f0ff; box-shadow: 0 2px 0 rgba(0,0,0,0.5);">Spacebar</kbd>
+                        <span>Fire Weapons</span>
+                        <kbd style="background: rgba(255,255,255,0.15); padding: 3px 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; font-family: monospace; font-weight: bold; text-align: center; color: #00f0ff; box-shadow: 0 2px 0 rgba(0,0,0,0.5);">P / Esc</kbd>
+                        <span>Pause Game</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div style="font-size: 0.7rem; font-weight: 900; color: #64748b; letter-spacing: 0.1em; margin-bottom: 8px;">REVIEWER DEV TOOLS</div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="btn-dev-complete-quests" class="btn btn-secondary" style="flex: 1; font-size: 0.75rem; padding: 8px;"><span style="color:#00f0ff;">⚡</span> Complete Quests</button>
+                        <button id="btn-dev-reset-quests" class="btn btn-secondary" style="flex: 1; font-size: 0.75rem; padding: 8px; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2);"><span style="color:#ef4444;">🔄</span> Reset Quests</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="modal-achievements" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content" style="max-width: 500px; width: 95%;">
+            <button id="btn-close-achievements" class="modal-close">✕</button>
+            <h3 class="modal-title">🏅 ACHIEVEMENTS</h3>
+            <p class="modal-desc">Unlock badges by completing milestones during your space runs!</p>
+            <div id="achievements-gallery-list" class="achievements-grid">
+                <!-- Injected dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mint NFT Modal -->
+    <div id="modal-mint" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="btn-close-mint" class="modal-close">✕</button>
+            <h3 class="modal-title">🎨 Mint Your NFT</h3>
+            <p class="modal-desc">Mint a Stacks Hurry collectible NFT on the blockchain. This is an open mint — anyone can mint!</p>
+            <div class="nft-preview">
+                <div class="nft-card">
+                    <div class="nft-art">🚀</div>
+                    <div class="nft-name">Stacks Hurry Runner</div>
+                    <div class="nft-collection">Open Edition</div>
+                </div>
+            </div>
+            <button id="btn-do-mint" class="btn btn-primary btn-glow btn-full">
+                <span class="btn-icon">⚡</span> Mint Now
+            </button>
+        </div>
+    </div>
+
+
+    <script type="module" src="./src/main.js"></script>
+    <!-- Achievement Toasts -->
+    <div id="toast-container" class="toast-container"></div>
+</body>
+</html>

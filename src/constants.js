@@ -1,0 +1,110 @@
+export const PLAYER_SIZE = 28;
+export const BULLET_SPEED = 10;
+export const BULLET_RADIUS = 3;
+export const SHOOT_COOLDOWN = 10;
+// Game Progression Constants
+export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
+export const COMBO_TIMEOUT = 300; // 5 seconds in frames
+export const POWERUP_DURATION = 600; // 10 seconds in frames
+export const POWERUP_CHANCE = 0.08;
+export const BOUNCE_LIMIT = 4;
+
+// Ship Upgrades & Tiers Config
+export const SHIP_TIERS = {
+  BASIC: { name: 'Vanguard Alpha', speedMult: 1.0, cooldownMult: 1.0, maxShieldHits: 1 },
+  ELITE: { name: 'Stardust Interceptor', speedMult: 1.25, cooldownMult: 0.85, maxShieldHits: 2 },
+  APEX:  { name: 'Hyperion Devastator', speedMult: 1.5, cooldownMult: 0.7, maxShieldHits: 3 }
+};
+export const DEFAULT_SHIP_TIER = 'BASIC';
+
+// Initial Balancing
+export const INITIAL_SPAWN_RATE = 90;
+export const MIN_SPAWN_RATE = 20;
+export const INITIAL_ASTEROID_SPEED = 2;
+export const SHOCKWAVE_COOLDOWN = 300;
+export const SHOCKWAVE_RADIUS = 250;
+
+// Game Visual Styles
+export const COLORS = {
+  player: '#00f0ff',
+  playerGlow: 'rgba(0,240,255,0.3)',
+  bullet: '#00f0ff',
+  bulletGlow: 'rgba(0,240,255,0.5)',
+  asteroid: '#94a3b8',
+  asteroidStroke: '#64748b',
+};
+
+// Ship Accent Themes
+export const SHIP_THEMES = {
+  vanguard: {
+    id: 'vanguard',
+    name: 'Vanguard Neon',
+    primary: '#00f0ff',
+    glow: 'rgba(0, 240, 255, 0.4)',
+    bullet: '#00f0ff',
+    bulletGlow: 'rgba(0, 240, 255, 0.6)',
+    bodyGradStart: '#00f0ff',
+    bodyGradMiddle: '#0088aa',
+    bodyGradEnd: '#004466',
+    trail: 'rgba(0, 240, 255, 0.4)',
+    stroke: 'rgba(0, 240, 255, 0.6)'
+  },
+  solar: {
+    id: 'solar',
+    name: 'Solar Flare',
+    primary: '#ffaa00',
+    glow: 'rgba(255, 170, 0, 0.4)',
+    bullet: '#ffaa00',
+    bulletGlow: 'rgba(255, 170, 0, 0.6)',
+    bodyGradStart: '#ffaa00',
+    bodyGradMiddle: '#cc5500',
+    bodyGradEnd: '#882200',
+    trail: 'rgba(255, 170, 0, 0.4)',
+    stroke: 'rgba(255, 170, 0, 0.6)'
+  },
+  stardust: {
+    id: 'stardust',
+    name: 'Stardust Void',
+    primary: '#ff00ff',
+    glow: 'rgba(255, 0, 255, 0.4)',
+    bullet: '#ff00ff',
+    bulletGlow: 'rgba(255, 0, 255, 0.6)',
+    bodyGradStart: '#ff00ff',
+    bodyGradMiddle: '#aa00aa',
+    bodyGradEnd: '#660066',
+    trail: 'rgba(255, 0, 255, 0.4)',
+    stroke: 'rgba(255, 0, 255, 0.6)'
+  },
+  matrix: {
+    id: 'matrix',
+    name: 'Matrix Aura',
+    primary: '#39ff14',
+    glow: 'rgba(57, 255, 20, 0.4)',
+    bullet: '#39ff14',
+    bulletGlow: 'rgba(57, 255, 20, 0.6)',
+    bodyGradStart: '#39ff14',
+    bodyGradMiddle: '#1dbb00',
+    bodyGradEnd: '#0d6600',
+    trail: 'rgba(57, 255, 20, 0.4)',
+    stroke: 'rgba(57, 255, 20, 0.6)'
+  }
+};
+export const DEFAULT_SHIP_THEME = 'vanguard';
+
+// UI Overlay Position
+export const OVERLAY_PADDING = 10;
+
+export const JOYSTICK_DEADZONE = 0.15;
+
+export const MAX_PARTICLES = 200;
+export const SHIELD_COLORS = {
+  active: '#3b82f6',
+  depleted: '#ef4444'
+};
+// AI Behavior
+export const AI_DETECTION_RADIUS = 300;
+export const AI_LUNGE_DURATION = 1000;
+export const AI_LUNGE_SPEED_MULTIPLIER = 4;
+export const AI_ORBIT_RADIUS = 150;
+export const AI_ORBIT_SPEED = 0.02;
+export const DEFAULT_GAME_VOLUME = 0.5;

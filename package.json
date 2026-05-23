@@ -1,0 +1,66 @@
+{
+  "name": "stacks-hurry",
+  "version": "1.1.2",
+  "description": "Stacks Hurry - A blockchain-powered rocket shooter game on Stacks chain with on-chain scoring, NFT minting, leaderboard, 2D vector physics, and a reusable arcade game engine",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./physics": "./src/physics.js",
+    "./particles": "./src/particles.js",
+    "./constants": "./src/constants.js",
+    "./ai": "./src/ai.js",
+    "./audio": "./src/audio.js"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "stacks",
+    "blockchain",
+    "game",
+    "nft",
+    "web3",
+    "rocket-shooter",
+    "clarity",
+    "stacks-connect",
+    "canvas-game",
+    "stacks-hurry",
+    "arcade",
+    "html5-game",
+    "game-engine",
+    "2d-physics",
+    "vector-math",
+    "particle-system",
+    "smart-contracts",
+    "decentralized-game"
+  ],
+  "author": "Dark-Brain07",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dark-Brain07/StacksHurry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dark-Brain07/StacksHurry/issues"
+  },
+  "homepage": "https://stackshurry.vercel.app",
+  "files": [
+    "src/",
+    "public/",
+    "index.html",
+    "style.css",
+    "vite.config.js",
+    "README.md"
+  ],
+  "dependencies": {
+    "@stacks/connect": "^8.2.6",
+    "@stacks/network": "^7.3.1",
+    "@stacks/transactions": "^7.4.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
