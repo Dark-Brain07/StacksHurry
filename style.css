@@ -1048,14 +1048,18 @@ input:checked + .slider:before {
 }
 
 .streak-badge {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-family: var(--font-display);
   font-weight: 700;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .quests-list {
