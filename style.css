@@ -1003,24 +1003,33 @@ input:checked + .slider:before {
 
 /* ---------- Daily Challenges ---------- */
 .daily-quests-panel {
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  border-radius: var(--radius-md);
-  padding: 18px;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.8), rgba(10, 14, 26, 0.95));
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   margin-top: 15px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px 0 rgba(0, 240, 255, 0.15), inset 0 0 20px rgba(0, 240, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.daily-quests-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  padding-bottom: 14px;
 }
 
 .panel-icon {
@@ -1030,11 +1039,12 @@ input:checked + .slider:before {
 
 .panel-title {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: #fff;
   letter-spacing: 0.1em;
   flex-grow: 1;
+  text-shadow: 0 0 10px rgba(0,240,255,0.4);
 }
 
 .streak-badge {
@@ -1079,19 +1089,22 @@ input:checked + .slider:before {
 }
 
 .quest-item {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-sm);
-  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  transition: all 0.3s ease;
+  gap: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .quest-item:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(0, 240, 255, 0.2);
+  background: rgba(0, 240, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.4);
+  transform: translateX(4px);
+  box-shadow: -4px 0 0 var(--cyan);
 }
 
 .quest-meta {
@@ -1542,9 +1555,9 @@ input:checked + .slider:before {
 /* ---------- Anime Layout & Styling ---------- */
 .anime-layout {
   display: grid !important;
-  grid-template-columns: 1fr 380px;
-  gap: 40px;
-  max-width: 1100px !important;
+  grid-template-columns: 1fr 440px;
+  gap: 50px;
+  max-width: 1200px !important;
   width: 95% !important;
   align-items: center;
   justify-content: center;
