@@ -40,7 +40,7 @@
     ;; Record quest completion
     (map-set quest-completions
       { player: caller, quest-id: quest-id }
-      { block-height: block-height, score: score }
+      { block-height: stacks-block-height, score: score }
     )
 
     ;; Increment player quest count

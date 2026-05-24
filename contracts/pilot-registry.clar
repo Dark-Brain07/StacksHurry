@@ -58,7 +58,7 @@
     (map-set pilots caller
       {
         name: name,
-        registered-at: block-height,
+        registered-at: stacks-block-height,
         games-played: u0,
         best-score: u0
       }

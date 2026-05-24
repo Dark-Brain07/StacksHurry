@@ -65,7 +65,7 @@
     ;; Record purchase
     (map-set player-powerups
       { player: caller, powerup-id: powerup-id }
-      { purchased-at: block-height }
+      { purchased-at: stacks-block-height }
     )
 
     ;; Emit event

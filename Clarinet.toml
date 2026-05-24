@@ -4,9 +4,15 @@ description = "Smart contracts for Stacks Hurry arcade game"
 
 [contracts.daily-quest-tracker]
 path = "contracts/daily-quest-tracker.clar"
+clarity_version = 3
+epoch = "3.0"
 
 [contracts.powerup-store]
 path = "contracts/powerup-store.clar"
+clarity_version = 3
+epoch = "3.0"
 
 [contracts.pilot-registry]
 path = "contracts/pilot-registry.clar"
+clarity_version = 3
+epoch = "3.0"
