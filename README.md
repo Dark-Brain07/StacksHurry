@@ -202,3 +202,83 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 **Stacks Hurry Live Link**: https://stackshurry.vercel.app/
+
+---
+
+## 📦 SDK Usage (npm package)
+
+Install the SDK to use Stacks Hurry's reusable game engine modules in your own projects:
+
+```bash
+npm install stacks-hurry
+```
+
+### Import and use Vector2D physics
+
+```js
+import { Vector2D, checkCircleCollision, clamp, lerp } from 'stacks-hurry/physics';
+
+const velocity = new Vector2D(3, 4);
+console.log(velocity.mag());        // 5
+console.log(velocity.normalize());  // unit vector
+
+const pos1 = new Vector2D(10, 20);
+const pos2 = new Vector2D(25, 30);
+const hit = checkCircleCollision(pos1, 8, pos2, 12);
+console.log('Collision:', hit);
+```
+
+### Import and use Particle system
+
+```js
+import { Particle, spawnExplosion, updateParticles, renderParticles } from 'stacks-hurry/particles';
+
+// Create a standalone particle for custom VFX
+const p = new Particle();
+p.init(100, 200, 2, -3, 30, '#ff00ff', 3);
+
+// Or use the built-in explosion spawner in a canvas game loop
+spawnExplosion(400, 300, 20);
+updateParticles();
+renderParticles(canvasContext);
+```
+
+### Import and use Stacks contract helpers
+
+```js
+import { CONTRACTS, getPlayerScore, getPlayerCount, submitGameScore } from 'stacks-hurry/contracts';
+
+// Query on-chain player data (read-only)
+const score = await getPlayerScore('SP1YH5...');
+console.log('High score:', score.highScore);
+console.log('Games played:', score.gamesPlayed);
+
+// Get total registered players
+const count = await getPlayerCount();
+console.log('Total players:', count);
+```
+
+### Import game configuration constants
+
+```js
+import { SHIP_TIERS, SHIP_THEMES, COLORS, SHOCKWAVE_RADIUS } from 'stacks-hurry/constants';
+
+console.log(SHIP_TIERS.APEX);
+// { name: 'Hyperion Devastator', speedMult: 1.5, cooldownMult: 0.7, maxShieldHits: 3 }
+
+console.log(Object.keys(SHIP_THEMES));
+// ['vanguard', 'solar', 'stardust', 'matrix']
+```
+
+### Import AI steering behaviors
+
+```js
+import { seek, orbit, evade, AI_STATES } from 'stacks-hurry/ai';
+
+const enemy = { x: 100, y: 100, vx: 0, vy: 0 };
+const player = { x: 400, y: 300 };
+seek(enemy, player, 3, 0.05);
+```
+
+> **Live game demo:** https://stackshurry.vercel.app  
+> **Source:** https://github.com/Dark-Brain07/StacksHurry
