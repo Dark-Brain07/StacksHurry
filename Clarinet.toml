@@ -2,8 +2,8 @@
 name = "stacks-hurry-contracts"
 description = "Smart contracts for Stacks Hurry arcade game"
 
-[contracts.daily-quest-tracker]
-path = "contracts/daily-quest-tracker.clar"
+[contracts.daily-quest-tracker-v2]
+path = "contracts/daily-quest-tracker-v2.clar"
 clarity_version = 3
 epoch = "3.0"
 
