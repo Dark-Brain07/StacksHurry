@@ -1,0 +1,12 @@
+[project]
+name = "stacks-hurry-contracts"
+description = "Smart contracts for Stacks Hurry arcade game"
+
+[contracts.daily-quest-tracker]
+path = "contracts/daily-quest-tracker.clar"
+
+[contracts.powerup-store]
+path = "contracts/powerup-store.clar"
+
+[contracts.pilot-registry]
+path = "contracts/pilot-registry.clar"

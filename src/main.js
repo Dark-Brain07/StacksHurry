@@ -11,6 +11,11 @@ import {
   getPlayerScore,
   getHallOfFameScore,
   getPlayerCount,
+  submitQuestOnChain,
+  recordGameOnChain,
+  buyPowerupOnChain,
+  registerPilotOnChain,
+  getPilotOnChain,
 } from './contracts.js';
 import { initGame, startGame, stopGame, getScore, getLevel, getAsteroidsDestroyed, togglePause, setSettings, showQuestNotificationInGame } from './game.js';
 import {
@@ -60,6 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
     playQuestComplete();
     updateQuestsUI();
     showQuestNotificationInGame(`🏆 QUEST COMPLETE: ${q.title}!`, '#10b981');
+
+    // Fire-and-forget: submit quest completion on-chain (1000 uSTX)
+    if (userAddress) {
+      const questNum = parseInt(q.id.replace(/\D/g, '')) || 1;
+      submitQuestOnChain(questNum, q.reward)
+        .then(() => showToast('Quest submitted on-chain! 🎯', 'success'))
+        .catch(err => console.warn('[On-Chain] Quest submit skipped:', err.message || err));
+    }
   }, (q, percent) => {
     showToast(`QUEST PROGRESS: ${q.title} (${percent}%)`, 'info');
     showQuestNotificationInGame(`🎯 ${q.title}: ${percent}%`, '#38bdf8');
@@ -214,6 +227,20 @@ function bindEvents() {
   document.getElementById('btn-my-stats').addEventListener('click', openStats);
   document.getElementById('btn-settings').addEventListener('click', () => showSettingsModal());
   document.getElementById('btn-achievements').addEventListener('click', () => showAchievementsModal());
+
+  // Powerup Store
+  document.getElementById('btn-powerup-store').addEventListener('click', () => {
+    document.getElementById('modal-powerup-store').classList.remove('hidden');
+  });
+  document.getElementById('btn-close-powerup-store').addEventListener('click', () => {
+    document.getElementById('modal-powerup-store').classList.add('hidden');
+  });
+  document.querySelector('#modal-powerup-store .modal-backdrop')?.addEventListener('click', () => {
+    document.getElementById('modal-powerup-store').classList.add('hidden');
+  });
+  for (let pid = 1; pid <= 4; pid++) {
+    document.getElementById(`btn-buy-powerup-${pid}`).addEventListener('click', () => handleBuyPowerup(pid));
+  }
 
   // HUD
   document.getElementById('btn-pause-game').addEventListener('click', togglePause);
@@ -413,6 +440,19 @@ function handleGameOver(data) {
   lastGameData = data;
   stopGame();
   updateQuestsUI();
+
+  // Fire-and-forget: record game on-chain via pilot-registry (500 uSTX)
+  if (userAddress && data.score > 0) {
+    recordGameOnChain(data.score)
+      .then(result => {
+        console.log('[On-Chain] Game recorded:', result?.txid || 'submitted');
+        showToast('Game recorded on-chain! 🚀', 'success');
+      })
+      .catch(err => {
+        console.warn('[On-Chain] Game record skipped:', err.message || err);
+      });
+  }
+
   setTimeout(() => {
     showGameOver(data);
   }, 600);
@@ -480,6 +520,29 @@ async function handleMintNFT() {
   } catch (err) {
     console.error('Minting error:', err);
     showToast('Minting cancelled or failed', 'info');
+  }
+}
+
+// ─── Buy Powerup (Powerup Store - costs vary, async) ───
+async function handleBuyPowerup(powerupId) {
+  if (!userAddress) {
+    showToast('Connect your wallet first!', 'error');
+    return;
+  }
+
+  const names = { 1: 'Speed Boost', 2: 'Shield Generator', 3: 'Triple Shot', 4: 'Bounce Bullets' };
+  const costs = { 1: '2,000', 2: '3,000', 3: '5,000', 4: '8,000' };
+  const name = names[powerupId] || 'Unknown';
+
+  showToast(`Purchasing ${name} (${costs[powerupId]} uSTX)...`, 'info');
+
+  try {
+    const result = await buyPowerupOnChain(powerupId);
+    showToast(`${name} purchased on-chain! TX: ${result?.txid?.slice(0, 12) || 'pending'}...`, 'success');
+    document.getElementById('modal-powerup-store').classList.add('hidden');
+  } catch (err) {
+    console.error('Powerup purchase error:', err);
+    showToast('Purchase cancelled or failed', 'info');
   }
 }
 

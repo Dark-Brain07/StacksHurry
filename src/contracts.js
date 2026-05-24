@@ -173,3 +173,119 @@ export async function getGamesPlayed(playerAddress) {
   );
   return typeof result === 'number' ? result : (result || 0);
 }
+
+// ══════════════════════════════════════════
+// 5. DAILY QUEST TRACKER CONTRACT
+// ══════════════════════════════════════════
+
+const CONTRACT_DAILY_QUESTS = `${DEPLOYER}.daily-quest-tracker`;
+
+/** Submit a daily quest completion on-chain (1000 uSTX fee) */
+export async function submitQuestOnChain(questId, score) {
+  return writeContract(
+    CONTRACT_DAILY_QUESTS,
+    'complete-quest',
+    [Cl.uint(questId), Cl.uint(score)]
+  );
+}
+
+/** Get quest completion status for a player */
+export async function getQuestStatusOnChain(playerAddress, questId) {
+  return readOnly(
+    CONTRACT_DAILY_QUESTS,
+    'get-quest-status',
+    [Cl.principal(playerAddress), Cl.uint(questId)]
+  );
+}
+
+/** Get total quests completed by a player */
+export async function getPlayerTotalQuests(playerAddress) {
+  const result = await readOnly(
+    CONTRACT_DAILY_QUESTS,
+    'get-player-total-quests',
+    [Cl.principal(playerAddress)]
+  );
+  return typeof result === 'number' ? result : (result || 0);
+}
+
+// ══════════════════════════════════════════
+// 6. POWERUP STORE CONTRACT
+// ══════════════════════════════════════════
+
+const CONTRACT_POWERUP_STORE = `${DEPLOYER}.powerup-store`;
+
+/** Buy a permanent powerup on-chain (cost varies by tier) */
+export async function buyPowerupOnChain(powerupId) {
+  return writeContract(
+    CONTRACT_POWERUP_STORE,
+    'buy-powerup',
+    [Cl.uint(powerupId)]
+  );
+}
+
+/** Check if a player owns a specific powerup */
+export async function hasPowerupOnChain(playerAddress, powerupId) {
+  const result = await readOnly(
+    CONTRACT_POWERUP_STORE,
+    'has-powerup',
+    [Cl.principal(playerAddress), Cl.uint(powerupId)]
+  );
+  return !!result;
+}
+
+/** Get all powerup ownership status for a player */
+export async function getAllPowerupsOnChain(playerAddress) {
+  return readOnly(
+    CONTRACT_POWERUP_STORE,
+    'get-all-powerups',
+    [Cl.principal(playerAddress)]
+  );
+}
+
+// ══════════════════════════════════════════
+// 7. PILOT REGISTRY CONTRACT
+// ══════════════════════════════════════════
+
+const CONTRACT_PILOT_REGISTRY = `${DEPLOYER}.pilot-registry`;
+
+/** Register a pilot name on-chain (5000 uSTX fee) */
+export async function registerPilotOnChain(name) {
+  return writeContract(
+    CONTRACT_PILOT_REGISTRY,
+    'register-pilot',
+    [Cl.stringAscii(name)]
+  );
+}
+
+/** Record a game result on-chain (500 uSTX fee, must be registered pilot) */
+export async function recordGameOnChain(score) {
+  return writeContract(
+    CONTRACT_PILOT_REGISTRY,
+    'record-game',
+    [Cl.uint(score)]
+  );
+}
+
+/** Get full pilot profile */
+export async function getPilotOnChain(playerAddress) {
+  return readOnly(
+    CONTRACT_PILOT_REGISTRY,
+    'get-pilot',
+    [Cl.principal(playerAddress)]
+  );
+}
+
+/** Look up a pilot by name */
+export async function getPilotByNameOnChain(name) {
+  return readOnly(
+    CONTRACT_PILOT_REGISTRY,
+    'get-pilot-by-name',
+    [Cl.stringAscii(name)]
+  );
+}
+
+/** Get total registered pilots */
+export async function getTotalPilots() {
+  const result = await readOnly(CONTRACT_PILOT_REGISTRY, 'get-total-pilots');
+  return typeof result === 'number' ? result : (result || 0);
+}

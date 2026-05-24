@@ -99,7 +99,18 @@ export {
   getPlayerScore,
   getPlayerHighScore,
   getPlayerCount,
-  getGamesPlayed
+  getGamesPlayed,
+  submitQuestOnChain,
+  getQuestStatusOnChain,
+  getPlayerTotalQuests,
+  buyPowerupOnChain,
+  hasPowerupOnChain,
+  getAllPowerupsOnChain,
+  registerPilotOnChain,
+  recordGameOnChain,
+  getPilotOnChain,
+  getPilotByNameOnChain,
+  getTotalPilots
 } from './contracts.js';
 
 // ─── Quest System & Event Dispatcher ───

@@ -57,6 +57,9 @@
                         <button id="btn-my-stats" class="btn btn-secondary anime-btn-outline">
                             <span class="btn-icon">📊</span> My Stats
                         </button>
+                        <button id="btn-powerup-store" class="btn btn-secondary anime-btn-outline" aria-haspopup="dialog" aria-expanded="false">
+                            <span class="btn-icon">⚡</span> Powerup Store
+                        </button>
                         <button id="btn-settings" class="btn btn-secondary anime-btn-outline" aria-haspopup="dialog" aria-expanded="false">
                             <span class="btn-icon">⚙️</span> Settings
                         </button>
@@ -65,7 +68,7 @@
 
                 <div class="contracts-badge">
                     <span class="badge-dot"></span>
-                    <span>4 Smart Contracts Live on Stacks Mainnet</span>
+                    <span>7 Smart Contracts Live on Stacks Mainnet</span>
                 </div>
             </div>
 
@@ -424,6 +427,42 @@
         </div>
     </div>
 
+
+    <!-- Powerup Store Modal -->
+    <div id="modal-powerup-store" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content" style="max-width: 560px; width: 95%;">
+            <button id="btn-close-powerup-store" class="modal-close">&#x2715;</button>
+            <h3 class="modal-title">&#x26A1; POWERUP STORE</h3>
+            <p class="modal-desc">Buy permanent on-chain powerup upgrades for your ship. Each purchase is recorded on Stacks Mainnet.</p>
+            <div id="powerup-store-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
+                <div class="powerup-card" style="padding: 20px; background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(34,197,94,0.03)); border: 1px solid rgba(34,197,94,0.25); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">&#x1F3CE;&#xFE0F;</div>
+                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #22c55e; margin-bottom: 4px;">SPEED BOOST</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Permanently increase ship speed</div>
+                    <button id="btn-buy-powerup-1" class="btn btn-primary" style="width: 100%; font-size: 12px; padding: 8px;">Buy &#x2014; 2,000 uSTX</button>
+                </div>
+                <div class="powerup-card" style="padding: 20px; background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.03)); border: 1px solid rgba(168,85,247,0.25); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">&#x1F6E1;&#xFE0F;</div>
+                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #a855f7; margin-bottom: 4px;">SHIELD GEN</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Permanent shield generator</div>
+                    <button id="btn-buy-powerup-2" class="btn btn-primary" style="width: 100%; font-size: 12px; padding: 8px;">Buy &#x2014; 3,000 uSTX</button>
+                </div>
+                <div class="powerup-card" style="padding: 20px; background: linear-gradient(135deg, rgba(251,146,60,0.12), rgba(251,146,60,0.03)); border: 1px solid rgba(251,146,60,0.25); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">&#x1F531;</div>
+                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fb923c; margin-bottom: 4px;">TRIPLE SHOT</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Fire 3 bullets at once</div>
+                    <button id="btn-buy-powerup-3" class="btn btn-primary" style="width: 100%; font-size: 12px; padding: 8px;">Buy &#x2014; 5,000 uSTX</button>
+                </div>
+                <div class="powerup-card" style="padding: 20px; background: linear-gradient(135deg, rgba(244,63,94,0.12), rgba(244,63,94,0.03)); border: 1px solid rgba(244,63,94,0.25); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">&#x1F3C0;</div>
+                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #f43f5e; margin-bottom: 4px;">BOUNCE BULLETS</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Bullets ricochet off walls</div>
+                    <button id="btn-buy-powerup-4" class="btn btn-primary" style="width: 100%; font-size: 12px; padding: 8px;">Buy &#x2014; 8,000 uSTX</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="./src/main.js"></script>
     <!-- Achievement Toasts -->
