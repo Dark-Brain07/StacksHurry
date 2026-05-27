@@ -22,6 +22,7 @@ import {
   initUI,
   showScreen,
   showWalletConnected,
+  showWalletDisconnected,
   updateHUDScore,
   updateHUDLives,
   updateHUDLevel,
@@ -219,6 +220,8 @@ function checkExistingConnection() {
 function bindEvents() {
   // Wallet
   document.getElementById('btn-connect-wallet').addEventListener('click', connectWallet);
+  document.getElementById('btn-disconnect-wallet').addEventListener('click', disconnectWallet);
+  document.getElementById('btn-switch-wallet').addEventListener('click', switchWallet);
 
   // Menu
   document.getElementById('btn-play').addEventListener('click', startNewGame);
@@ -383,6 +386,39 @@ async function connectWallet() {
   } catch (err) {
     console.error('Wallet connection failed:', err);
     showToast('Wallet connection cancelled or failed', 'info');
+  }
+}
+
+// ─── Disconnect Wallet ───
+async function disconnectWallet() {
+  try {
+    disconnect();
+    userAddress = null;
+    showWalletDisconnected();
+    showToast('Wallet disconnected', 'info');
+  } catch (err) {
+    console.error('Disconnect failed:', err);
+    // Force-clear even on error
+    userAddress = null;
+    showWalletDisconnected();
+    showToast('Wallet disconnected', 'info');
+  }
+}
+
+// ─── Switch Wallet (disconnect then reconnect) ───
+async function switchWallet() {
+  try {
+    disconnect();
+    userAddress = null;
+    showWalletDisconnected();
+    showToast('Switching wallet...', 'info');
+    // Small delay so user sees the UI reset, then prompt new connection
+    setTimeout(() => connectWallet(), 400);
+  } catch (err) {
+    console.error('Switch wallet error:', err);
+    userAddress = null;
+    showWalletDisconnected();
+    setTimeout(() => connectWallet(), 400);
   }
 }
 

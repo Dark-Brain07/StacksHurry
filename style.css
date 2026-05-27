@@ -208,6 +208,51 @@ html, body {
   margin-top: 4px;
 }
 
+.wallet-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-wallet-action {
+  flex: 1;
+  padding: 8px 12px !important;
+  font-size: 10px !important;
+  letter-spacing: 0.8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-disconnect {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  color: var(--red);
+}
+
+.btn-disconnect:hover {
+  background: rgba(248, 113, 113, 0.22);
+  border-color: rgba(248, 113, 113, 0.5);
+  box-shadow: 0 0 16px rgba(248, 113, 113, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-switch {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  color: var(--cyan);
+}
+
+.btn-switch:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
+  transform: translateY(-1px);
+}
+
 .hidden {
   display: none !important;
 }

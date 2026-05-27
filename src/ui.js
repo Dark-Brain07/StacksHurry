@@ -56,6 +56,26 @@ export function showWalletConnected(address) {
   document.getElementById('btn-my-stats').disabled = false;
 }
 
+export function showWalletDisconnected() {
+  const btn = document.getElementById('btn-connect-wallet');
+  const info = document.getElementById('wallet-info');
+  const addrEl = document.getElementById('wallet-address');
+
+  // Reset connect button
+  btn.innerHTML = '<span class="btn-icon">⚡</span> Connect Wallet';
+  btn.style.pointerEvents = '';
+  btn.style.opacity = '';
+
+  // Hide wallet info
+  addrEl.textContent = '';
+  info.classList.add('hidden');
+
+  // Disable wallet-gated buttons
+  document.getElementById('btn-play').disabled = true;
+  document.getElementById('btn-mint-nft').disabled = true;
+  document.getElementById('btn-my-stats').disabled = true;
+}
+
 // ─── HUD Updates ───
 
 export function updateHUDScore(score) {
