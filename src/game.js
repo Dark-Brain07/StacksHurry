@@ -59,6 +59,7 @@ let frameCount = 0;
 let comboCount = 0;
 let multiplierTimer = 0;
 let shake = { duration: 0, intensity: 0 };
+let damageFlash = 0; // Screen-wide red vignette flash timer
 let currentWave = 1;
 let waveEnemiesRemaining = 0;
 let waveInProgress = false;
@@ -349,6 +350,7 @@ export function startGame() {
   shootCooldown = 0;
   secondaryCooldown = 0;
   shockwave.active = false;
+  damageFlash = 0;
   warpTime = 0;
   resetParticles();
   resetEnemies();
@@ -767,6 +769,7 @@ function update() {
           lives--;
           player.invincible = 90; // 1.5 sec invincibility
           addShake(15, 20);
+          damageFlash = 20; // Trigger red vignette flash
           spawnExplosion(a.x, a.y, a.radius, lowGraphics);
           playHit();
           if (onVibrate) onVibrate([150, 100, 150]);
@@ -859,6 +862,7 @@ function update() {
       lives--;
       player.invincible = 90;
       addShake(15, 20);
+      damageFlash = 20;
       playHit();
       if (onLivesUpdate) onLivesUpdate(lives);
       if (lives <= 0) {
@@ -879,6 +883,9 @@ function update() {
     ft.life--;
     return ft.life > 0;
   });
+
+  // Damage flash decay
+  if (damageFlash > 0) damageFlash--;
 
   // Update stars
   if (warpTime > 0) warpTime--;
@@ -1291,16 +1298,24 @@ function render() {
   // Enemies
   renderEnemies(ctx);
 
-  // Floating texts
+  // Floating texts with scale-bounce animation
   floatingTexts.forEach(ft => {
     ctx.save();
+    const progress = ft.life / ft.maxLife;
+    ctx.globalAlpha = progress;
+
+    // Scale-bounce: pop in large then settle to normal size
+    const elapsed = ft.maxLife - ft.life;
+    const scaleBounce = elapsed < 8 ? 1.0 + (1.0 - elapsed / 8) * 0.6 : 1.0;
+    ctx.translate(ft.x, ft.y);
+    ctx.scale(scaleBounce, scaleBounce);
+
     ctx.fillStyle = ft.color;
-    ctx.globalAlpha = ft.life / ft.maxLife;
     ctx.font = 'bold 16px Inter, sans-serif';
     ctx.textAlign = 'center';
-    ctx.shadowColor = 'rgba(0, 240, 255, 0.5)';
-    ctx.shadowBlur = 5;
-    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.shadowColor = ft.color;
+    ctx.shadowBlur = 8;
+    ctx.fillText(ft.text, 0, 0);
     ctx.globalAlpha = 1.0;
     ctx.restore();
   });
@@ -1430,6 +1445,21 @@ function render() {
     ctx.shadowBlur = 15;
     ctx.fillText('2X MULTIPLIER', canvas.width / 2, 80);
     ctx.restore();
+  }
+
+  // Damage flash vignette overlay
+  if (damageFlash > 0) {
+    const flashAlpha = (damageFlash / 20) * 0.45;
+    // Edge vignette gradient for cinematic damage feedback
+    const vignetteGrad = ctx.createRadialGradient(
+      canvas.width / 2, canvas.height / 2, canvas.width * 0.25,
+      canvas.width / 2, canvas.height / 2, canvas.width * 0.75
+    );
+    vignetteGrad.addColorStop(0, 'transparent');
+    vignetteGrad.addColorStop(0.6, `rgba(220, 38, 38, ${flashAlpha * 0.3})`);
+    vignetteGrad.addColorStop(1, `rgba(185, 28, 28, ${flashAlpha})`);
+    ctx.fillStyle = vignetteGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   ctx.restore(); // Restore shake transform
