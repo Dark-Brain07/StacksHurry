@@ -17,7 +17,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "stacks",
@@ -59,10 +61,13 @@
   ],
   "dependencies": {
     "@stacks/connect": "^8.2.6",
-    "@stacks/network": "^7.3.1",
-    "@stacks/transactions": "^7.4.0"
+    "@stacks/network": "^7.3.1"
   },
   "devDependencies": {
-    "vite": "^5.4.0"
+    "@hirosystems/clarinet-sdk": "^3.8.1",
+    "@stacks/transactions": "^7.4.0",
+    "vite": "^5.4.0",
+    "vitest": "^4.1.7",
+    "vitest-environment-clarinet": "^3.0.2"
   }
 }
