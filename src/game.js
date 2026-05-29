@@ -46,6 +46,7 @@ let player = {};
 let bullets = [];
 let asteroids = [];
 let stars = [];
+let nebulaClouds = [];
 let powerups = [];
 let floatingTexts = [];
 
@@ -197,15 +198,51 @@ function resizeCanvas() {
 
 function generateStars() {
   stars = [];
-  const starColors = ['#ffffff', '#e0f2fe', '#fef08a'];
-  for (let i = 0; i < 150; i++) {
-    stars.push({
+  nebulaClouds = [];
+  const starColors = ['#ffffff', '#e0f2fe', '#fef08a', '#c4b5fd', '#93c5fd'];
+
+  // 3-layer parallax depth system: far (slow/small), mid, near (fast/bright)
+  const layers = [
+    { count: 80, speedRange: [0.05, 0.2], radiusRange: [0.2, 0.8], brightnessRange: [0.15, 0.35], depthLabel: 'far' },
+    { count: 50, speedRange: [0.2, 0.5], radiusRange: [0.5, 1.4], brightnessRange: [0.3, 0.55], depthLabel: 'mid' },
+    { count: 30, speedRange: [0.5, 0.9], radiusRange: [1.2, 2.5], brightnessRange: [0.5, 0.8], depthLabel: 'near' }
+  ];
+
+  layers.forEach(layer => {
+    for (let i = 0; i < layer.count; i++) {
+      stars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * (layer.radiusRange[1] - layer.radiusRange[0]) + layer.radiusRange[0],
+        speed: Math.random() * (layer.speedRange[1] - layer.speedRange[0]) + layer.speedRange[0],
+        brightness: Math.random() * (layer.brightnessRange[1] - layer.brightnessRange[0]) + layer.brightnessRange[0],
+        color: starColors[Math.floor(Math.random() * starColors.length)],
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: Math.random() * 0.03 + 0.01,
+        depth: layer.depthLabel
+      });
+    }
+  });
+
+  // Generate procedural nebula clouds for atmospheric depth
+  const nebulaColors = [
+    { r: 88, g: 28, b: 135 },   // Deep purple
+    { r: 30, g: 58, b: 138 },   // Royal blue
+    { r: 157, g: 23, b: 77 },   // Magenta-pink
+    { r: 20, g: 83, b: 110 },   // Teal depth
+    { r: 76, g: 29, b: 149 }    // Violet
+  ];
+
+  for (let i = 0; i < 5; i++) {
+    const nc = nebulaColors[i % nebulaColors.length];
+    nebulaClouds.push({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      radius: Math.random() * 2.0 + 0.2,
-      speed: Math.random() * 0.6 + 0.1,
-      brightness: Math.random() * 0.5 + 0.3,
-      color: starColors[Math.floor(Math.random() * starColors.length)]
+      radius: Math.random() * 250 + 150,
+      color: nc,
+      alpha: Math.random() * 0.06 + 0.02,
+      driftX: (Math.random() - 0.5) * 0.15,
+      driftY: Math.random() * 0.08 + 0.02
     });
   }
 }
@@ -1029,22 +1066,45 @@ function render() {
     shake.intensity *= 0.92;
   }
 
-  // Layered glowing stars
+  // Nebula cloud atmosphere layer
+  if (!lowGraphics) {
+    ctx.save();
+    nebulaClouds.forEach(nc => {
+      nc.x += nc.driftX;
+      nc.y += nc.driftY;
+      if (nc.y > canvas.height + nc.radius) { nc.y = -nc.radius; nc.x = Math.random() * canvas.width; }
+      if (nc.x < -nc.radius || nc.x > canvas.width + nc.radius) { nc.x = Math.random() * canvas.width; }
+      const grad = ctx.createRadialGradient(nc.x, nc.y, 0, nc.x, nc.y, nc.radius);
+      grad.addColorStop(0, `rgba(${nc.color.r}, ${nc.color.g}, ${nc.color.b}, ${nc.alpha})`);
+      grad.addColorStop(0.5, `rgba(${nc.color.r}, ${nc.color.g}, ${nc.color.b}, ${nc.alpha * 0.4})`);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.fillRect(nc.x - nc.radius, nc.y - nc.radius, nc.radius * 2, nc.radius * 2);
+    });
+    ctx.restore();
+  }
+
+  // Layered glowing stars with twinkle effect
   ctx.save();
   stars.forEach(s => {
+    // Twinkle brightness modulation
+    s.twinklePhase += s.twinkleSpeed;
+    const twinkle = 0.7 + 0.3 * Math.sin(s.twinklePhase);
+    const finalBrightness = s.brightness * twinkle;
+
     if (warpTime > 0) {
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
       ctx.lineTo(s.x, s.y + s.radius * 30);
       ctx.strokeStyle = s.color;
-      ctx.globalAlpha = s.brightness * (warpTime / 60);
+      ctx.globalAlpha = finalBrightness * (warpTime / 60);
       ctx.lineWidth = s.radius * 0.8;
       ctx.stroke();
     } else {
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
       ctx.fillStyle = s.color;
-      ctx.globalAlpha = s.brightness;
+      ctx.globalAlpha = finalBrightness;
       if (!lowGraphics && s.radius > 1.2) {
         ctx.shadowColor = s.color;
         ctx.shadowBlur = s.radius * 3;
