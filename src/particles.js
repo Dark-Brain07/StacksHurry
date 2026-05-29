@@ -109,11 +109,14 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   if (colorOverride) {
     palette = [colorOverride];
   } else if (radius > 25) {
-    palette = ['#f87171', '#fb923c', '#fbbf24', '#b91c1c', '#ea580c'];
+    // Large asteroid: fiery destruction with ember sparks
+    palette = ['#f87171', '#fb923c', '#fbbf24', '#b91c1c', '#ea580c', '#fef3c7'];
   } else if (radius > 15) {
-    palette = ['#00f0ff', '#a855f7', '#f472b6', '#3b82f6', '#8b5cf6'];
+    // Medium: energy burst with neon accents
+    palette = ['#00f0ff', '#a855f7', '#f472b6', '#3b82f6', '#8b5cf6', '#e0e7ff'];
   } else {
-    palette = ['#e0e7ff', '#f0f4ff', '#00f0ff', '#fbbf24'];
+    // Small: sharp crystalline shatter
+    palette = ['#e0e7ff', '#f0f4ff', '#00f0ff', '#fbbf24', '#c4b5fd'];
   }
   
   const TWO_PI = Math.PI * 2;
@@ -131,6 +134,22 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
       palette[Math.floor(Math.random() * palette.length)],
       Math.random() * 4 + 1.5
     ));
+  }
+
+  // Spawn white-hot flash core for large explosions
+  if (!lowGraphics && radius > 20) {
+    for (let i = 0; i < 4; i++) {
+      const angle = Math.random() * TWO_PI;
+      const speed = Math.random() * 2 + 0.5;
+      particles.push(poolInstance.get(
+        x, y,
+        Math.cos(angle) * speed,
+        Math.sin(angle) * speed,
+        8 + Math.floor(Math.random() * 6),
+        '#ffffff',
+        Math.random() * 3 + 2
+      ));
+    }
   }
 }
 
@@ -158,4 +177,51 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
     color,
     radius
   ));
+}
+
+/**
+ * Spawn sparkling trail particles behind a falling powerup item.
+ * Creates a gentle upward-drifting sparkle effect matching the powerup type color.
+ * @param {number} x - Powerup X position
+ * @param {number} y - Powerup Y position
+ * @param {string} color - Trail color matching powerup type
+ */
+export function spawnPowerupTrail(x, y, color = '#a855f7') {
+  const px = x + (Math.random() - 0.5) * 14;
+  const py = y + (Math.random() - 0.5) * 8;
+  const vx = (Math.random() - 0.5) * 0.8;
+  const vy = -(Math.random() * 0.6 + 0.3); // Drift upward against gravity
+  const life = Math.floor(Math.random() * 15) + 10;
+  const radius = Math.random() * 1.8 + 0.5;
+
+  particles.push(poolInstance.get(px, py, vx, vy, life, color, radius));
+}
+
+/**
+ * Spawn a radial ring burst of particles at a specific impact point.
+ * Used for heavy-hit feedback, shockwave origins, or boss defeat moments.
+ * @param {number} x - Center X of the impact ring
+ * @param {number} y - Center Y of the impact ring
+ * @param {number} ringRadius - Approximate radius of the ring burst
+ * @param {string} color - Color of the ring particles
+ * @param {number} count - Number of particles in the ring
+ */
+export function spawnImpactRing(x, y, ringRadius = 40, color = '#00f0ff', count = 16) {
+  const TWO_PI = Math.PI * 2;
+  const angleStep = TWO_PI / count;
+  for (let i = 0; i < count; i++) {
+    const angle = angleStep * i + (Math.random() - 0.5) * 0.2;
+    const speed = ringRadius * 0.12 + Math.random() * 1.5;
+    const life = Math.floor(Math.random() * 12) + 14;
+    const radius = Math.random() * 2.5 + 1;
+    particles.push(poolInstance.get(
+      x + Math.cos(angle) * 4,
+      y + Math.sin(angle) * 4,
+      Math.cos(angle) * speed,
+      Math.sin(angle) * speed,
+      life,
+      color,
+      radius
+    ));
+  }
 }

@@ -11,7 +11,7 @@ import {
   SHOCKWAVE_COOLDOWN, SHOCKWAVE_RADIUS, SHIP_THEMES, DEFAULT_SHIP_THEME,
   BOUNCE_LIMIT
 } from './constants.js';
-import { updateParticles, renderParticles, spawnExplosion, resetParticles, spawnPlayerExhaust } from './particles.js';
+import { updateParticles, renderParticles, spawnExplosion, resetParticles, spawnPlayerExhaust, spawnPowerupTrail, spawnImpactRing } from './particles.js';
 import { updateEnemies, renderEnemies, spawnEnemy, checkEnemyCollisions, resetEnemies, clearEnemyProjectiles } from './enemies.js';
 import { checkCircleCollision, calculateShockwavePush } from './physics.js';
 import { QuestsEventDispatcher } from './quests.js';
@@ -415,6 +415,7 @@ function triggerSecondary() {
     secondaryCooldown = SHOCKWAVE_COOLDOWN;
     playShockwave();
     addShake(10, 15);
+    spawnImpactRing(player.x, player.y, 50, '#00f0ff', 20);
     asteroids.forEach(a => { a.pushedByShockwave = false; });
   }
 }
@@ -801,6 +802,12 @@ function update() {
   powerups = powerups.filter(p => {
     p.y += p.speed;
     p.rotation += 0.05;
+
+    // Spawn sparkling trail particles behind falling powerups
+    if (!lowGraphics && frameCount % 3 === 0) {
+      const trailColors = { shield: '#d8b4fe', multishot: '#fdba74', speed: '#86efac', health: '#fca5a5', bounce: '#fda4af' };
+      spawnPowerupTrail(p.x, p.y, trailColors[p.type] || '#a855f7');
+    }
 
     if (p.y > canvas.height + 30) return false;
 

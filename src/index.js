@@ -30,6 +30,8 @@ export {
   spawnExplosion,
   resetParticles,
   spawnPlayerExhaust,
+  spawnPowerupTrail,
+  spawnImpactRing,
   BASE_PARTICLE_DECAY
 } from './particles.js';
 
