@@ -1444,31 +1444,65 @@ function drawPlayer() {
   ctx.save();
   ctx.translate(x, y);
 
-  // Engine glow
-  const glowGrad = ctx.createRadialGradient(0, PLAYER_SIZE * 0.5, 2, 0, PLAYER_SIZE * 0.5, PLAYER_SIZE);
+  const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
+
+  // Heat distortion shimmer behind engines (subtle wavering)
+  if (!lowGraphics) {
+    ctx.save();
+    ctx.globalAlpha = 0.04;
+    const shimmerOffset = Math.sin(frameCount * 0.5) * 3;
+    const heatGrad = ctx.createLinearGradient(0, PLAYER_SIZE * 0.5, 0, PLAYER_SIZE * 2.5);
+    heatGrad.addColorStop(0, 'rgba(251, 146, 60, 0.6)');
+    heatGrad.addColorStop(0.5, 'rgba(251, 191, 36, 0.3)');
+    heatGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = heatGrad;
+    ctx.fillRect(-10 + shimmerOffset, PLAYER_SIZE * 0.4, 20, PLAYER_SIZE * 2);
+    ctx.restore();
+  }
+
+  // Engine glow with enhanced radial bloom
+  const glowGrad = ctx.createRadialGradient(0, PLAYER_SIZE * 0.5, 2, 0, PLAYER_SIZE * 0.5, PLAYER_SIZE * 1.2);
   glowGrad.addColorStop(0, 'rgba(251,146,60,0.8)');
-  glowGrad.addColorStop(0.5, 'rgba(251,146,60,0.3)');
+  glowGrad.addColorStop(0.4, 'rgba(251,146,60,0.35)');
+  glowGrad.addColorStop(0.7, 'rgba(251,100,20,0.1)');
   glowGrad.addColorStop(1, 'transparent');
   ctx.fillStyle = glowGrad;
   ctx.fillRect(-PLAYER_SIZE, 0, PLAYER_SIZE * 2, PLAYER_SIZE * 1.5);
 
-  // Engine flame
+  // Dual engine flames (left and right thrusters)
   const flameHeight = PLAYER_SIZE * 0.5 + Math.sin(frameCount * 0.3) * 6;
+  const flameFlicker = Math.sin(frameCount * 0.7) * 2;
+
+  // Left thruster flame
   ctx.beginPath();
-  ctx.moveTo(-6, PLAYER_SIZE * 0.3);
-  ctx.lineTo(0, PLAYER_SIZE * 0.3 + flameHeight);
-  ctx.lineTo(6, PLAYER_SIZE * 0.3);
+  ctx.moveTo(-7, PLAYER_SIZE * 0.3);
+  ctx.lineTo(-4, PLAYER_SIZE * 0.3 + flameHeight + flameFlicker);
+  ctx.lineTo(-1, PLAYER_SIZE * 0.3);
   ctx.fillStyle = '#fb923c';
   ctx.fill();
 
+  // Right thruster flame
   ctx.beginPath();
-  ctx.moveTo(-3, PLAYER_SIZE * 0.3);
-  ctx.lineTo(0, PLAYER_SIZE * 0.3 + flameHeight * 0.6);
-  ctx.lineTo(3, PLAYER_SIZE * 0.3);
-  ctx.fillStyle = '#fbbf24';
+  ctx.moveTo(1, PLAYER_SIZE * 0.3);
+  ctx.lineTo(4, PLAYER_SIZE * 0.3 + flameHeight - flameFlicker);
+  ctx.lineTo(7, PLAYER_SIZE * 0.3);
+  ctx.fillStyle = '#fb923c';
   ctx.fill();
 
-  const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
+  // Inner flame cores (white-hot center)
+  ctx.beginPath();
+  ctx.moveTo(-5, PLAYER_SIZE * 0.3);
+  ctx.lineTo(-4, PLAYER_SIZE * 0.3 + flameHeight * 0.5);
+  ctx.lineTo(-3, PLAYER_SIZE * 0.3);
+  ctx.fillStyle = '#fef3c7';
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(3, PLAYER_SIZE * 0.3);
+  ctx.lineTo(4, PLAYER_SIZE * 0.3 + flameHeight * 0.5);
+  ctx.lineTo(5, PLAYER_SIZE * 0.3);
+  ctx.fillStyle = '#fef3c7';
+  ctx.fill();
 
   // Ship body
   ctx.beginPath();
@@ -1490,16 +1524,42 @@ function drawPlayer() {
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // Cockpit
+  // Wing tip navigation lights (aviation convention: green port, red starboard)
+  if (!lowGraphics) {
+    const navPulse = 0.5 + 0.5 * Math.sin(frameCount * 0.08);
+    // Left wing tip — green
+    ctx.beginPath();
+    ctx.arc(-PLAYER_SIZE * 0.65, PLAYER_SIZE * 0.25, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(34, 197, 94, ${0.5 + navPulse * 0.5})`;
+    ctx.shadowColor = '#22c55e';
+    ctx.shadowBlur = 6 + navPulse * 4;
+    ctx.fill();
+    // Right wing tip — red
+    ctx.beginPath();
+    ctx.arc(PLAYER_SIZE * 0.65, PLAYER_SIZE * 0.25, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(239, 68, 68, ${0.5 + navPulse * 0.5})`;
+    ctx.shadowColor = '#ef4444';
+    ctx.shadowBlur = 6 + navPulse * 4;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Cockpit canopy with reflection gradient
   ctx.beginPath();
   ctx.ellipse(0, -PLAYER_SIZE * 0.3, 5, 8, 0, 0, Math.PI * 2);
-  ctx.fillStyle = '#a855f7';
+  const canopyGrad = ctx.createLinearGradient(-4, -PLAYER_SIZE * 0.45, 4, -PLAYER_SIZE * 0.15);
+  canopyGrad.addColorStop(0, '#c084fc');
+  canopyGrad.addColorStop(0.4, '#a855f7');
+  canopyGrad.addColorStop(1, '#7c3aed');
+  ctx.fillStyle = canopyGrad;
   ctx.fill();
-  ctx.strokeStyle = 'rgba(168,85,247,0.6)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
+  // Canopy specular reflection
+  ctx.beginPath();
+  ctx.ellipse(-1.5, -PLAYER_SIZE * 0.35, 2, 3, -0.3, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+  ctx.fill();
 
-  // Ship glow
+  // Ship ambient glow
   ctx.shadowColor = activeTheme.glow;
   ctx.shadowBlur = 20;
 
@@ -1507,15 +1567,18 @@ function drawPlayer() {
   if (player.shieldActive) {
     ctx.beginPath();
     ctx.arc(0, 0, PLAYER_SIZE * 1.5, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(168, 85, 247, 0.2)'; // Transparent purple
+    ctx.fillStyle = 'rgba(168, 85, 247, 0.15)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(216, 180, 254, 0.8)';
-    ctx.lineWidth = 2;
+
+    // Animated hexagonal shield segments
+    const shieldPulse = 0.6 + 0.4 * Math.sin(frameCount * 0.1);
+    ctx.strokeStyle = `rgba(216, 180, 254, ${shieldPulse})`;
+    ctx.lineWidth = 1.5 + Math.sin(frameCount * 0.15) * 0.5;
     ctx.stroke();
 
-    // Pulse effect
+    // Shield energy glow
     ctx.shadowColor = '#d8b4fe';
-    ctx.shadowBlur = 15 + Math.sin(frameCount * 0.1) * 10;
+    ctx.shadowBlur = 12 + Math.sin(frameCount * 0.1) * 10;
     ctx.stroke();
   }
 
