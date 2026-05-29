@@ -966,6 +966,19 @@ function spawnAsteroid() {
   const isShielded = level > 2 && Math.random() < (0.1 + (level * 0.02));
   const eliteHp = isShielded ? Math.min(6, 2 + Math.floor(level / 2)) : 1;
   
+  // Generate procedural crater positions for visual detail
+  const craterCount = Math.floor(Math.random() * 3) + 1;
+  const craters = [];
+  for (let c = 0; c < craterCount; c++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.random() * radius * 0.5;
+    craters.push({
+      cx: Math.cos(angle) * dist,
+      cy: Math.sin(angle) * dist,
+      cr: Math.random() * (radius * 0.2) + radius * 0.08
+    });
+  }
+
   asteroids.push({
     x: Math.random() * (canvas.width - 60) + 30,
     y: -50,
@@ -974,6 +987,7 @@ function spawnAsteroid() {
     rotation: 0,
     rotationSpeed: (Math.random() - 0.5) * (0.06 + level * 0.005),
     vertices: generateAsteroidShape(radius),
+    craters: craters,
     hp: eliteHp,
     maxHp: eliteHp,
     isShielded: isShielded
@@ -1191,17 +1205,30 @@ function render() {
       const shieldPcnt = a.hp / maxHp;
       ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + shieldPcnt * 0.2})`;
       ctx.fill();
-      ctx.strokeStyle = `rgba(0, 240, 255, ${0.4 + shieldPcnt * 0.6})`;
-      ctx.lineWidth = 3;
+
+      // Pulsing energy field outline
+      const pulseAlpha = 0.4 + shieldPcnt * 0.6 + Math.sin(frameCount * 0.08) * 0.15;
+      ctx.strokeStyle = `rgba(0, 240, 255, ${Math.min(1, pulseAlpha)})`;
+      ctx.lineWidth = 2 + shieldPcnt;
       if (!lowGraphics) {
         ctx.shadowColor = '#00f0ff';
-        ctx.shadowBlur = 12 + Math.random() * 6;
+        ctx.shadowBlur = 15 + Math.sin(frameCount * 0.12) * 8;
       }
       ctx.stroke();
+
+      // Inner energy core glow
+      if (!lowGraphics) {
+        const coreGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, a.radius * 0.6);
+        coreGrad.addColorStop(0, `rgba(0, 240, 255, ${0.15 * shieldPcnt})`);
+        coreGrad.addColorStop(1, 'transparent');
+        ctx.fillStyle = coreGrad;
+        ctx.fill();
+      }
     } else {
-      // 3D-like realistic rock gradient
+      // 3D-like realistic rock gradient with directional lighting
       const rockGrad = ctx.createLinearGradient(-a.radius, -a.radius, a.radius, a.radius);
-      rockGrad.addColorStop(0, '#475569');
+      rockGrad.addColorStop(0, '#546478');
+      rockGrad.addColorStop(0.4, '#475569');
       rockGrad.addColorStop(0.7, '#1e293b');
       rockGrad.addColorStop(1, '#0f172a');
       ctx.fillStyle = rockGrad;
@@ -1211,9 +1238,37 @@ function render() {
       ctx.strokeStyle = '#020617';
       ctx.lineWidth = 3;
       ctx.stroke();
+
+      // Procedural crater detail rendering
+      if (!lowGraphics && a.craters) {
+        a.craters.forEach(cr => {
+          ctx.beginPath();
+          ctx.arc(cr.cx, cr.cy, cr.cr, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
+          ctx.fill();
+          // Crater rim highlight
+          ctx.beginPath();
+          ctx.arc(cr.cx - cr.cr * 0.2, cr.cy - cr.cr * 0.2, cr.cr * 0.7, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(100, 116, 139, 0.3)';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        });
+      }
+
+      // Specular highlight reflection (top-left light source)
+      if (!lowGraphics) {
+        const specGrad = ctx.createRadialGradient(
+          -a.radius * 0.3, -a.radius * 0.3, 0,
+          -a.radius * 0.3, -a.radius * 0.3, a.radius * 0.6
+        );
+        specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+        specGrad.addColorStop(1, 'transparent');
+        ctx.fillStyle = specGrad;
+        ctx.fill();
+      }
       
       // Top lighting edge highlight
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
       ctx.lineWidth = 1;
       ctx.stroke();
     }
