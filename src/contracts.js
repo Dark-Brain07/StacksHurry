@@ -95,6 +95,15 @@ export async function getCharacterCount() {
   return result?.value || 0;
 }
 
+/** Mint a character NFT */
+export async function mintCharacterNFT(recipientAddress) {
+  return writeContract(
+    CONTRACTS.CHARACTER_NFT,
+    'mint',
+    [Cl.principal(recipientAddress)]
+  );
+}
+
 // ══════════════════════════════════════════
 // 3. SCORE CONTRACT (Hall of Fame - costs 5000 uSTX)
 // ══════════════════════════════════════════

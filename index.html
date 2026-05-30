@@ -422,16 +422,24 @@
             <button id="btn-close-mint" class="modal-close">✕</button>
             <h3 class="modal-title">🎨 Mint Your NFT</h3>
             <p class="modal-desc">Mint a Stacks Hurry collectible NFT on the blockchain. This is an open mint — anyone can mint!</p>
-            <div class="nft-preview">
-                <div class="nft-card">
+            <div class="nft-preview" style="display: flex; gap: 16px;">
+                <div class="nft-card" style="flex: 1;">
                     <div class="nft-art">🚀</div>
                     <div class="nft-name">Stacks Hurry Runner</div>
                     <div class="nft-collection">Open Edition</div>
+                    <button id="btn-do-mint" class="btn btn-primary btn-glow btn-full" style="margin-top: 12px;">
+                        <span class="btn-icon">⚡</span> Mint Open
+                    </button>
+                </div>
+                <div class="nft-card" style="flex: 1;">
+                    <div class="nft-art">👾</div>
+                    <div class="nft-name">Character Pilot</div>
+                    <div class="nft-collection">Exclusive NFT</div>
+                    <button id="btn-mint-character" class="btn btn-secondary btn-glow btn-full" style="margin-top: 12px;">
+                        <span class="btn-icon">⚡</span> Mint Character
+                    </button>
                 </div>
             </div>
-            <button id="btn-do-mint" class="btn btn-primary btn-glow btn-full">
-                <span class="btn-icon">⚡</span> Mint Now
-            </button>
         </div>
     </div>
 

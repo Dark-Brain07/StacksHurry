@@ -6,6 +6,7 @@
 import { connect, getLocalStorage, disconnect, isConnected } from '@stacks/connect';
 import {
   mintOpenNFT,
+  mintCharacterNFT,
   submitGameScore,
   submitHighScore,
   getPlayerScore,
@@ -275,6 +276,7 @@ function bindEvents() {
   // Mint Modal
   document.getElementById('btn-close-mint').addEventListener('click', () => hideMintModal());
   document.getElementById('btn-do-mint').addEventListener('click', handleMintNFT);
+  document.getElementById('btn-mint-character')?.addEventListener('click', handleMintCharacterNFT);
   document.querySelector('#modal-mint .modal-backdrop')?.addEventListener('click', () => hideMintModal());
 
   // Settings Modal
@@ -553,6 +555,24 @@ async function handleMintNFT() {
   try {
     const result = await mintOpenNFT(userAddress);
     showToast(`NFT Minted! TX: ${result.txid?.slice(0, 12) || 'pending'}...`, 'success');
+  } catch (err) {
+    console.error('Minting error:', err);
+    showToast('Minting cancelled or failed', 'info');
+  }
+}
+
+async function handleMintCharacterNFT() {
+  if (!userAddress) {
+    showToast('Connect your wallet first!', 'error');
+    return;
+  }
+
+  showToast('Minting your Character NFT...', 'info');
+  hideMintModal();
+
+  try {
+    const result = await mintCharacterNFT(userAddress);
+    showToast(`Character NFT Minted! TX: ${result.txid?.slice(0, 12) || 'pending'}...`, 'success');
   } catch (err) {
     console.error('Minting error:', err);
     showToast('Minting cancelled or failed', 'info');
