@@ -734,6 +734,10 @@ html, body {
   font-family: var(--font-display);
   font-size: 24px;
   flex: 1;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(251,191,36,0.3);
 }
 
 .leaderboard-stats {
