@@ -338,10 +338,11 @@ html, body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
   color: white;
-  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
 }
 
 .btn-primary:hover:not(:disabled) {
