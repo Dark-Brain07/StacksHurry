@@ -3,9 +3,11 @@
 Stacks Hurry is a fast-paced, high-fidelity HTML5 Canvas space shooter built on the **Stacks blockchain**. This project combines pixel-perfect arcade physics, high-performance object pooling, decoupled event-driven architectures, and resilient Web3 transactions into a seamless desktop and mobile-friendly dApp.
 
 ![Stacks](https://img.shields.io/badge/Stacks-Mainnet-blue?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![NPM Version](https://img.shields.io/badge/npm-v1.2.2-cb3837?style=for-the-badge&logo=npm)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge)
 ![Vite](https://img.shields.io/badge/Framework-Vite-blueviolet?style=for-the-badge)
 ![Physics](https://img.shields.io/badge/Math-2D--Vector--Physics-ff69b4?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
