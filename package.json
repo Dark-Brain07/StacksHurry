@@ -1,6 +1,6 @@
 {
   "name": "stacks-hurry",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Stacks Hurry - A blockchain-powered rocket shooter game on Stacks chain with on-chain scoring, NFT minting, leaderboard, 2D vector physics, and a reusable arcade game engine",
   "type": "module",
   "main": "src/index.js",
