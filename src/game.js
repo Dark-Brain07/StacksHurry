@@ -485,6 +485,7 @@ function update() {
     if (keys.d) moveX += 1;
     
     // Normalize diagonal movement speed
+/** @param {any} param */
     if (moveX !== 0 && moveY !== 0) {
       moveX *= 0.7071;
       moveY *= 0.7071;
