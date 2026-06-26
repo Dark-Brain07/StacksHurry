@@ -260,6 +260,7 @@ function generateStars() {
 
 // ─── Input Handlers ───
 
+/** @param {any} param */
 function handleMouseMove(e) {
   mouseX = e.clientX;
   mouseY = e.clientY;
