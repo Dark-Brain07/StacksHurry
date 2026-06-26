@@ -403,6 +403,7 @@ export const QuestsEventDispatcher = {
   
 /** @param {any} param */
   dispatchEvent(event, data) {
+/** @param {any} param */
     if (listeners[event]) {
       listeners[event].forEach(cb => cb(data));
     }
