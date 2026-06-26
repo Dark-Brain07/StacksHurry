@@ -8,6 +8,7 @@
  * Utilizes an object pooling pattern to avoid garbage collection during gameplay.
  */
 export class Particle {
+/** @param {any} param */
   constructor() {
     this.x = 0;
     this.y = 0;
