@@ -78,6 +78,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   dot(v) {
     return this.x * v.x + this.y * v.y;
   }
