@@ -59,6 +59,7 @@ export function showWalletConnected(address) {
   document.getElementById('btn-my-stats').disabled = false;
 }
 
+/** JSDoc for exported member */
 export function showWalletDisconnected() {
   const btn = document.getElementById('btn-connect-wallet');
   const info = document.getElementById('wallet-info');
