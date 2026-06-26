@@ -37,6 +37,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   mult(n) {
     this.x *= n;
     this.y *= n;
