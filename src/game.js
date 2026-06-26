@@ -289,6 +289,7 @@ function handleTouchMove(e) {
       joystick.dy = touch.clientY - joystick.startY;
       const maxDist = 45; // Increased joystick radius for better mobile feel
       const dist = Math.hypot(joystick.dx, joystick.dy);
+/** @param {any} param */
       if (dist > maxDist) {
         joystick.dx = (joystick.dx / dist) * maxDist;
         joystick.dy = (joystick.dy / dist) * maxDist;
