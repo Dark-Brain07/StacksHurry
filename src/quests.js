@@ -376,6 +376,7 @@ export function claimQuestReward(questId) {
 const listeners = {};
 
 export const QuestsEventDispatcher = {
+/** @param {any} param */
   unsubscribe(event, callback) {
     if (listeners[event]) {
       listeners[event] = listeners[event].filter(cb => cb !== callback);
