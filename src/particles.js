@@ -34,6 +34,7 @@ export class Particle {
     this.active = true;
   }
 
+/** @param {any} param */
   update() {
     if (!this.active) return false;
     this.x += this.vx;
