@@ -427,6 +427,7 @@ export function hideAchievementsModal() {
   document.getElementById('modal-achievements').classList.add('hidden');
 }
 
+/** JSDoc for exported member */
 export function showAchievement(title, message, icon = '🏆') {
   // Persist the achievement automatically when it's shown as a toast
   const ach = ACHIEVEMENT_DEFINITIONS.find(a => a.title.toLowerCase() === title.toLowerCase());
