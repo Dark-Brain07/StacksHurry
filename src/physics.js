@@ -30,6 +30,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   sub(v) {
     this.x -= v.x;
     this.y -= v.y;
