@@ -57,6 +57,7 @@ export class Particle {
     ctx.arc(this.x, this.y, this.radius * alpha, 0, Math.PI * 2);
     ctx.fillStyle = this.color;
     ctx.globalAlpha = alpha;
+/** @param {any} param */
     if (!lowGraphics) {
       ctx.shadowColor = this.color;
       ctx.shadowBlur = this.radius * 2.5;
