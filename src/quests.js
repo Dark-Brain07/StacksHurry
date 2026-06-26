@@ -443,6 +443,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 
   QuestsEventDispatcher.subscribe('waveCleared', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
+/** @param {any} param */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
