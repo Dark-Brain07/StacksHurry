@@ -235,6 +235,7 @@ export function loadQuests() {
   const today = getTodayString();
   try {
     const raw = localStorage.getItem('stacks_hurry_quests');
+/** @param {any} param */
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && parsed.quests && parsed.quests.length > 0) {
