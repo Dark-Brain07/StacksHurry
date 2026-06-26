@@ -37,6 +37,7 @@ export const MIN_SPAWN_RATE = 20;
 export const INITIAL_ASTEROID_SPEED = 2;
 /** JSDoc for exported member */
 export const SHOCKWAVE_COOLDOWN = 300;
+/** JSDoc for exported member */
 export const SHOCKWAVE_RADIUS = 250;
 
 // Game Visual Styles
