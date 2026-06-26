@@ -10,6 +10,7 @@
  * Robust 2D Vector utility class for high-performance physics computations
  */
 export class Vector2D {
+/** @param {any} param */
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
