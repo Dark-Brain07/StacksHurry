@@ -218,6 +218,7 @@ function generateStars() {
   ];
 
   layers.forEach(layer => {
+/** @param {any} param */
     for (let i = 0; i < layer.count; i++) {
       stars.push({
         x: Math.random() * window.innerWidth,
