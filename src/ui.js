@@ -330,6 +330,7 @@ export function showSettingsModal() {
   document.getElementById('modal-settings').classList.remove('hidden');
 }
 
+/** JSDoc for exported member */
 export function hideSettingsModal() {
   document.getElementById('modal-settings').classList.add('hidden');
 }
