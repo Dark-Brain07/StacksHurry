@@ -41,6 +41,7 @@ export const SHOCKWAVE_COOLDOWN = 300;
 export const SHOCKWAVE_RADIUS = 250;
 
 // Game Visual Styles
+/** JSDoc for exported member */
 export const COLORS = {
   player: '#00f0ff',
   playerGlow: 'rgba(0,240,255,0.3)',
