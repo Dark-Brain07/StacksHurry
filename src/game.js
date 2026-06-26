@@ -433,6 +433,7 @@ export function togglePause() {
 
 /** @param {any} param */
 function triggerSecondary() {
+/** @param {any} param */
   if (secondaryCooldown <= 0 && gameRunning && !gamePaused) {
     shockwave.active = true;
     shockwave.x = player.x;
