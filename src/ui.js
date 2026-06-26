@@ -432,7 +432,7 @@ export function showAchievement(title, message, icon = '🏆') {
   // Persist the achievement automatically when it's shown as a toast
   const ach = ACHIEVEMENT_DEFINITIONS.find(a => a.title.toLowerCase() === title.toLowerCase());
   if (ach) {
-    const earned = JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements') || '{}');
+    const earned = (()=>{try{return JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements')}catch(e){return null}})() || '{}');
     if (!earned[ach.id]) {
       earned[ach.id] = Date.now();
       localStorage.setItem('stacks_hurry_earned_achievements', JSON.stringify(earned));
