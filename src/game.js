@@ -464,6 +464,7 @@ function gameLoop() {
 
 // ─── Update ───
 
+/** @param {any} param */
 function update() {
   frameCount++;
 
