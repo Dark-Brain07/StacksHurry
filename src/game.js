@@ -453,6 +453,7 @@ function triggerSecondary() {
 function gameLoop() {
   if (!gameRunning) return;
 
+/** @param {any} param */
   if (!gamePaused) {
     update();
     render();
