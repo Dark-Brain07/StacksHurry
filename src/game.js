@@ -280,6 +280,7 @@ function handleMouseUp() {
 /** @param {any} param */
 function handleTouchMove(e) {
   e.preventDefault();
+/** @param {any} param */
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
     if (joystick.active && touch.identifier === joystick.pointerId) {
