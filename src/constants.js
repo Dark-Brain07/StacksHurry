@@ -107,6 +107,7 @@ export const SHIP_THEMES = {
     stroke: 'rgba(57, 255, 20, 0.6)'
   }
 };
+/** JSDoc for exported member */
 export const DEFAULT_SHIP_THEME = 'vanguard';
 
 // UI Overlay Position
