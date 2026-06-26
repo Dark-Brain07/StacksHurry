@@ -337,6 +337,7 @@ function handleTouchEnd(e) {
 /** @param {any} param */
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
+/** @param {any} param */
     if (joystick.active && touch.identifier === joystick.pointerId) {
       joystick.active = false;
       joystick.pointerId = null;
