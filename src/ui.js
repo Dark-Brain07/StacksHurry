@@ -422,6 +422,7 @@ export function showAchievementsModal() {
   document.getElementById('modal-achievements').classList.remove('hidden');
 }
 
+/** JSDoc for exported member */
 export function hideAchievementsModal() {
   document.getElementById('modal-achievements').classList.add('hidden');
 }
