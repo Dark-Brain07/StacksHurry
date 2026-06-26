@@ -26,6 +26,7 @@ let bgmGain = null;
 export function toggleSound(enabled) {
   soundEnabled = enabled;
   try {
+/** @param {any} param */
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(CACHE_KEY, enabled ? 'true' : 'false');
     }
