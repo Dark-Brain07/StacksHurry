@@ -204,6 +204,7 @@ function resizeCanvas() {
   canvas.height = window.innerHeight;
 }
 
+/** @param {any} param */
 function generateStars() {
   stars = [];
   nebulaClouds = [];
