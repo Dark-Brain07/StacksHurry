@@ -272,6 +272,7 @@ function handleMouseDown(e) {
   shooting = true;
 }
 
+/** @param {any} param */
 function handleMouseUp() {
   shooting = false;
 }
