@@ -116,6 +116,7 @@ export function updateHUDLevelProgress(percentage) {
   if (el) el.style.width = `${percentage}%`;
 }
 
+/** JSDoc for exported member */
 export function updateMuteButtonUI(isMuted) {
   const el = document.getElementById('btn-hud-mute');
   if (el) {
