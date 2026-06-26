@@ -527,6 +527,7 @@ function update() {
   else if (player.x > rightBound) { player.x = rightBound; player.kickbackX = -3.0; }
   const topBound = PLAYER_SIZE * 2;
   const bottomBound = canvas.height - PLAYER_SIZE;
+/** @param {any} param */
   if (player.y < topBound) { player.y = topBound; player.kickbackY = 3.0; }
   else if (player.y > bottomBound) { player.y = bottomBound; player.kickbackY = -3.0; }
 
