@@ -80,6 +80,7 @@ let enemiesDestroyedThisGame = 0;
  */
 export function addShake(duration, intensity) {
   const actualIntensity = intensity * shakeMultiplier;
+/** @param {any} param */
   if (shake.duration <= 0) {
     shake.duration = duration;
     shake.intensity = actualIntensity;
