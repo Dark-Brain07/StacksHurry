@@ -15,6 +15,7 @@ export const COMBO_TIMEOUT = 300; // 5 seconds in frames
 export const POWERUP_DURATION = 600; // 10 seconds in frames
 /** JSDoc for exported member */
 export const POWERUP_CHANCE = 0.08;
+/** JSDoc for exported member */
 export const BOUNCE_LIMIT = 4;
 
 // Ship Upgrades & Tiers Config
