@@ -33,6 +33,7 @@ export const DEFAULT_SHIP_TIER = 'BASIC';
 export const INITIAL_SPAWN_RATE = 90;
 /** JSDoc for exported member */
 export const MIN_SPAWN_RATE = 20;
+/** JSDoc for exported member */
 export const INITIAL_ASTEROID_SPEED = 2;
 export const SHOCKWAVE_COOLDOWN = 300;
 export const SHOCKWAVE_RADIUS = 250;
