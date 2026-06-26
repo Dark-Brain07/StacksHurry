@@ -33,6 +33,7 @@ export function toggleSound(enabled) {
   } catch (e) {}
 /** @param {any} param */
   if (bgmGain && audioCtx) {
+/** @param {any} param */
     if (soundEnabled) {
       bgmGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 0.1);
     } else {
