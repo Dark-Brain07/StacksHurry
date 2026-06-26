@@ -59,6 +59,7 @@ export class Vector2D {
     return Math.hypot(this.x, this.y);
   }
 
+/** @param {any} param */
   normalize() {
     const m = this.mag();
     if (m !== 0) {
