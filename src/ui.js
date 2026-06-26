@@ -82,6 +82,7 @@ export function showWalletDisconnected() {
 
 // ─── HUD Updates ───
 
+/** JSDoc for exported member */
 export function updateHUDScore(score) {
   const el = document.getElementById('hud-score');
   if (el) {
