@@ -195,7 +195,7 @@ function getQuestsForDate(dateStr) {
   const seed = Math.abs(hash);
 
   const selected = [];
-  const pool = JSON.parse(JSON.stringify(MASTER_QUEST_POOL));
+  const pool = (()=>{try{return JSON.parse(JSON.stringify(MASTER_QUEST_POOL)}catch(e){return null}})());
 
 /** @param {any} param */
   for (let i = 0; i < 3; i++) {
