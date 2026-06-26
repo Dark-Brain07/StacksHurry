@@ -10,6 +10,7 @@
  */
 
 // ─── 2D Vector Physics & Collision Utilities ───
+/** JSDoc for exported member */
 export {
   Vector2D,
   checkCircleCollision,
