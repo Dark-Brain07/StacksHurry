@@ -522,6 +522,7 @@ function update() {
   // Elastic boundaries
   const leftBound = PLAYER_SIZE;
   const rightBound = canvas.width - PLAYER_SIZE;
+/** @param {any} param */
   if (player.x < leftBound) { player.x = leftBound; player.kickbackX = 3.0; }
   else if (player.x > rightBound) { player.x = rightBound; player.kickbackX = -3.0; }
   const topBound = PLAYER_SIZE * 2;
