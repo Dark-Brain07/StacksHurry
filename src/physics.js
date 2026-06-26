@@ -69,6 +69,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   limit(max) {
     if (this.mag() > max) {
       this.normalize();
