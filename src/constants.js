@@ -2,6 +2,7 @@
 export const PLAYER_SIZE = 28;
 /** JSDoc for exported member */
 export const BULLET_SPEED = 10;
+/** JSDoc for exported member */
 export const BULLET_RADIUS = 3;
 export const SHOOT_COOLDOWN = 10;
 // Game Progression Constants
