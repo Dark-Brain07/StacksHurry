@@ -300,6 +300,7 @@ function resetDailyQuests(dateString) {
  * Get all current quests
  */
 export function getQuests() {
+/** @param {any} param */
   if (questState.quests.length === 0) {
     loadQuests();
   }
