@@ -73,6 +73,7 @@ export class Particle {
  * Reuses inactive particles instead of instantiating new ones.
  */
 class ParticlePool {
+/** @param {any} param */
   constructor(size = 800) {
     this.pool = Array.from({ length: size }, () => new Particle());
   }
