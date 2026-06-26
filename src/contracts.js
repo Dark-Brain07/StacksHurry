@@ -59,6 +59,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
       return result;
     } catch (error) {
       console.error(`[TX Error] Attempt ${attempt} failed for ${functionName}:`, error);
+/** @param {any} param */
       if (attempt === retries) {
         throw new Error(`Transaction failed after ${retries} attempts. Reason: ${error.message || error}`);
       }
