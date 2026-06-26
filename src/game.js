@@ -308,6 +308,7 @@ function handleTouchStart(e) {
   
   // Double tap detection
   const now = Date.now();
+/** @param {any} param */
   if (now - lastTouchTime < 300) {
     triggerSecondary();
   }
