@@ -93,6 +93,7 @@ export function updateHUDScore(score) {
   }
 }
 
+/** JSDoc for exported member */
 export function updateHUDLives(lives) {
   const el = document.getElementById('hud-lives');
   if (el) {
