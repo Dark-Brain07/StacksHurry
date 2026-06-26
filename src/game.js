@@ -314,6 +314,7 @@ function handleTouchStart(e) {
   }
   lastTouchTime = now;
 
+/** @param {any} param */
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
     if (touch.clientX < window.innerWidth / 2) {
