@@ -303,6 +303,7 @@ export function renderStats(data) {
 
 // ─── Mint Modal ───
 
+/** JSDoc for exported member */
 export function showMintModal() {
   document.getElementById('modal-mint').classList.remove('hidden');
 }
