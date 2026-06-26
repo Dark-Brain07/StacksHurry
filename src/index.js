@@ -23,6 +23,7 @@ export {
 } from './physics.js';
 
 // ─── Particle System (object-pooled VFX) ───
+/** JSDoc for exported member */
 export {
   Particle,
   getParticleCount,
