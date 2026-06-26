@@ -401,6 +401,7 @@ export const QuestsEventDispatcher = {
     listeners[event].push(callback);
   },
   
+/** @param {any} param */
   dispatchEvent(event, data) {
     if (listeners[event]) {
       listeners[event].forEach(cb => cb(data));
