@@ -198,6 +198,7 @@ export function clamp(val, min, max) {
   return Math.max(min, Math.min(max, val));
 }
 
+/** JSDoc for exported member */
 export const DEFAULT_COLLISION_RADIUS = 15;
 
 /**
