@@ -416,6 +416,7 @@ export function renderAchievementsGallery() {
   }).join('');
 }
 
+/** JSDoc for exported member */
 export function showAchievementsModal() {
   renderAchievementsGallery();
   document.getElementById('modal-achievements').classList.remove('hidden');
