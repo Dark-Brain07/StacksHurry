@@ -383,6 +383,7 @@ function processToastQueue() {
   }, item.duration || 3000);
 }
 
+/** JSDoc for exported member */
 export const ACHIEVEMENT_DEFINITIONS = [
   { id: 'score1k', title: 'SCORE MASTER', desc: 'Reach 1,000 points', icon: '💎' },
   { id: 'score5k', title: 'GRAND MASTER', desc: 'Reach 5,000 points', icon: '🏆' },
