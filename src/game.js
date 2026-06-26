@@ -331,6 +331,7 @@ function handleTouchStart(e) {
   }
 }
 
+/** @param {any} param */
 function handleTouchEnd(e) {
   e.preventDefault();
   for (let i = 0; i < e.changedTouches.length; i++) {
