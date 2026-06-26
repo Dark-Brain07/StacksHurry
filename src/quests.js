@@ -472,6 +472,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
     if (data && typeof data.timeSurvived === 'number') {
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.SURVIVE_TIME, data.timeSurvived, true));
     }
+/** @param {any} param */
     if (data && typeof data.score === 'number') {
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, data.score, true));
     }
