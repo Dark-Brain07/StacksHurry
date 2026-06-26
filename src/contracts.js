@@ -152,6 +152,7 @@ export async function getPlayerScore(playerAddress) {
     'get-score',
     [Cl.principal(playerAddress)]
   );
+/** @param {any} param */
   if (result) {
     return {
       highScore: result['high-score'] || 0,
