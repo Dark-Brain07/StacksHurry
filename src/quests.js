@@ -243,6 +243,7 @@ export function loadQuests() {
         questState = parsed;
         
         // Reset daily quests if date changed
+/** @param {any} param */
         if (questState.lastUpdatedDate !== today) {
           const oldQuests = questState.quests || [];
           const allCompleted = oldQuests.length > 0 && oldQuests.every(q => q.completed);
