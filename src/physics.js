@@ -16,6 +16,7 @@ export class Vector2D {
     this.y = y;
   }
 
+/** @param {any} param */
   set(x, y) {
     this.x = x;
     this.y = y;
