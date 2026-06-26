@@ -301,6 +301,7 @@ function handleTouchMove(e) {
   }
 }
 
+/** @param {any} param */
 function handleTouchStart(e) {
   e.preventDefault();
   initAudio();
