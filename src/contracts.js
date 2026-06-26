@@ -45,6 +45,7 @@ async function readOnly(contractId, functionName, args = []) {
 async function writeContract(contractId, functionName, functionArgs, retries = 3, delay = 1000) {
   const hexArgs = functionArgs.map(arg => Cl.serialize(arg));
 
+/** @param {any} param */
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       console.log(`[TX Attempt ${attempt}/${retries}] calling ${functionName} on ${contractId}...`);
