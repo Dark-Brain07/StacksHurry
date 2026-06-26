@@ -125,6 +125,7 @@ export const SHIELD_COLORS = {
   depleted: '#ef4444'
 };
 // AI Behavior
+/** JSDoc for exported member */
 export const AI_DETECTION_RADIUS = 300;
 export const AI_LUNGE_DURATION = 1000;
 export const AI_LUNGE_SPEED_MULTIPLIER = 4;
