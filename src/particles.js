@@ -149,6 +149,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   }
 
   // Spawn white-hot flash core for large explosions
+/** @param {any} param */
   if (!lowGraphics && radius > 20) {
     for (let i = 0; i < 4; i++) {
       const angle = Math.random() * TWO_PI;
