@@ -449,6 +449,7 @@ function triggerSecondary() {
 
 // ─── Main Loop ───
 
+/** @param {any} param */
 function gameLoop() {
   if (!gameRunning) return;
 
