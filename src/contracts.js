@@ -22,6 +22,7 @@ export const CONTRACTS = {
 };
 
 // ─── Helper: Read-only contract call ───
+/** @param {any} param */
 async function readOnly(contractId, functionName, args = []) {
   try {
     const [contractAddress, contractName] = contractId.split('.');
