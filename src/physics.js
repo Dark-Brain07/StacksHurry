@@ -54,6 +54,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   mag() {
     return Math.hypot(this.x, this.y);
   }
