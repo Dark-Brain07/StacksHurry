@@ -344,6 +344,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
     }
   });
 
+/** @param {any} param */
   if (changed) {
     saveQuests();
   }
