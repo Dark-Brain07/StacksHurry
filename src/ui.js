@@ -127,6 +127,7 @@ export function updateMuteButtonUI(isMuted) {
 
 // ─── Game Over UI ───
 
+/** JSDoc for exported member */
 export function showGameOver(data) {
   document.getElementById('final-score').textContent = data.score.toLocaleString();
   document.getElementById('final-level').textContent = data.level;
