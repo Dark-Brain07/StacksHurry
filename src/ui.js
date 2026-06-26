@@ -217,7 +217,7 @@ export function renderStats(data) {
     if (listEl) {
       try {
         const raw = localStorage.getItem('stacks_hurry_local_scores') || '[]';
-        const list = JSON.parse(raw);
+        const list = (()=>{try{return JSON.parse(raw)}catch(e){return null}})();
         if (list.length === 0) {
           listEl.innerHTML = '<div style="text-align: center; color: var(--text-secondary); font-size: 13px;">No local scores yet. Start playing!</div>';
         } else {
