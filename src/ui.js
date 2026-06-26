@@ -29,6 +29,7 @@ export function initUI() {
   });
 }
 
+/** JSDoc for exported member */
 export function showScreen(name) {
   Object.values(screens).forEach(s => s.classList.remove('active'));
   if (screens[name]) {
