@@ -539,6 +539,7 @@ function update() {
   updateSpeedHum(speedRatio);
 
   // Spawn exhaust trail particles
+/** @param {any} param */
   if (frameCount % 2 === 0 && !lowGraphics) {
     const exhaustColor = player.shieldActive ? '#60a5fa' : '#38bdf8';
     spawnPlayerExhaust(player.x, player.y, vx, vy, exhaustColor);
