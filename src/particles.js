@@ -21,6 +21,7 @@ export class Particle {
     this.active = false;
   }
 
+/** @param {any} param */
   init(x, y, vx, vy, life, color, radius) {
     this.x = x;
     this.y = y;
