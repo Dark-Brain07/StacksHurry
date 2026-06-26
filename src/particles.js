@@ -49,6 +49,7 @@ export class Particle {
     return this.active;
   }
 
+/** @param {any} param */
   render(ctx, lowGraphics) {
     if (!this.active) return;
     const alpha = this.life / this.maxLife;
