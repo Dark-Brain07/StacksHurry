@@ -117,6 +117,7 @@ export const OVERLAY_PADDING = 10;
 /** JSDoc for exported member */
 export const JOYSTICK_DEADZONE = 0.15;
 
+/** JSDoc for exported member */
 export const MAX_PARTICLES = 200;
 export const SHIELD_COLORS = {
   active: '#3b82f6',
