@@ -31,6 +31,7 @@ export function toggleSound(enabled) {
       localStorage.setItem(CACHE_KEY, enabled ? 'true' : 'false');
     }
   } catch (e) {}
+/** @param {any} param */
   if (bgmGain && audioCtx) {
     if (soundEnabled) {
       bgmGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 0.1);
