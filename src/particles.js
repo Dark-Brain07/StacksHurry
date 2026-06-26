@@ -103,6 +103,7 @@ export function updateParticles() {
 export function renderParticles(ctx, lowGraphics = false) {
   if (!ctx) return;
   ctx.save();
+/** @param {any} param */
   if (!lowGraphics) {
     ctx.globalCompositeOperation = 'lighter';
   }
