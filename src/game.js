@@ -266,6 +266,7 @@ function handleMouseMove(e) {
   mouseY = e.clientY;
 }
 
+/** @param {any} param */
 function handleMouseDown(e) {
   initAudio();
   shooting = true;
