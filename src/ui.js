@@ -308,6 +308,7 @@ export function showMintModal() {
   document.getElementById('modal-mint').classList.remove('hidden');
 }
 
+/** JSDoc for exported member */
 export function hideMintModal() {
   document.getElementById('modal-mint').classList.add('hidden');
 }
