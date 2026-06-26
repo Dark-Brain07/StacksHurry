@@ -111,6 +111,7 @@ export const SHIP_THEMES = {
 export const DEFAULT_SHIP_THEME = 'vanguard';
 
 // UI Overlay Position
+/** JSDoc for exported member */
 export const OVERLAY_PADDING = 10;
 
 export const JOYSTICK_DEADZONE = 0.15;
