@@ -197,6 +197,7 @@ export function renderLeaderboard(entries, isLocal = false) {
   }).join('');
 }
 
+/** JSDoc for exported member */
 export function showLeaderboardLoading() {
   const list = document.getElementById('leaderboard-list');
   list.innerHTML = `
