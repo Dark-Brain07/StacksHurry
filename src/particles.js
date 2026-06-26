@@ -42,6 +42,7 @@ export class Particle {
     this.life--;
     this.vx *= 0.98;
     this.vy *= 0.98;
+/** @param {any} param */
     if (this.life <= 0) {
       this.active = false;
     }
