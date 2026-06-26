@@ -131,6 +131,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   }
   
   const TWO_PI = Math.PI * 2;
+/** @param {any} param */
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * TWO_PI;
     const speed = Math.random() * 5 + 1.5;
