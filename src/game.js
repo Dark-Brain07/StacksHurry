@@ -414,6 +414,7 @@ export function startGame() {
 
 export function stopGame() {
   gameRunning = false;
+/** @param {any} param */
   if (animFrameId) {
     cancelAnimationFrame(animFrameId);
     animFrameId = null;
