@@ -320,6 +320,7 @@ export function showPauseModal() {
   document.getElementById('modal-pause').classList.remove('hidden');
 }
 
+/** JSDoc for exported member */
 export function hidePauseModal() {
   document.getElementById('modal-pause').classList.add('hidden');
 }
