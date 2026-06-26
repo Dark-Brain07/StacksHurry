@@ -451,6 +451,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 
   QuestsEventDispatcher.subscribe('shockwaveDeflected', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SHOCKWAVE_DEFLECT, 1);
+/** @param {any} param */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
