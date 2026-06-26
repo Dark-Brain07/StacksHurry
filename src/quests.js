@@ -395,6 +395,7 @@ export const QuestsEventDispatcher = {
       });
     }
   },
+/** @param {any} param */
   subscribe(event, callback) {
     if (!listeners[event]) listeners[event] = [];
     listeners[event].push(callback);
