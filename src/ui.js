@@ -252,7 +252,7 @@ export function renderStats(data) {
       localStats = { ...localStats, ...(()=>{try{return JSON.parse(raw)}catch(e){return null}})() };
     }
   } catch (e) {
-    console.error('Failed to load local cumulative stats:', e);
+    /* log removed */
   }
 
   // Load local high score from local scores list as fallback
