@@ -249,6 +249,7 @@ export function loadQuests() {
           const allCompleted = oldQuests.length > 0 && oldQuests.every(q => q.completed);
           const dayDiff = getDayDifference(questState.lastUpdatedDate, today);
           
+/** @param {any} param */
           if (dayDiff === 1 && allCompleted) {
             questState.streak++;
           } else {
