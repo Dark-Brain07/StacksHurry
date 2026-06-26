@@ -249,7 +249,7 @@ export function renderStats(data) {
   try {
     const raw = localStorage.getItem('stacks_hurry_local_stats');
     if (raw) {
-      localStats = { ...localStats, ...JSON.parse(raw) };
+      localStats = { ...localStats, ...(()=>{try{return JSON.parse(raw)}catch(e){return null}})() };
     }
   } catch (e) {
     console.error('Failed to load local cumulative stats:', e);
