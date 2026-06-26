@@ -238,6 +238,7 @@ export function loadQuests() {
 /** @param {any} param */
     if (raw) {
       const parsed = JSON.parse(raw);
+/** @param {any} param */
       if (parsed && parsed.quests && parsed.quests.length > 0) {
         questState = parsed;
         
