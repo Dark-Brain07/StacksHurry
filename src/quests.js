@@ -4,6 +4,7 @@
  */
 
 // Quest types
+/** JSDoc for exported member */
 export const QUEST_TYPES = {
   SMASH_ASTEROIDS: 'smash_asteroids',
   PLAY_GAMES: 'play_games',
