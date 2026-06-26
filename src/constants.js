@@ -29,6 +29,7 @@ export const SHIP_TIERS = {
 export const DEFAULT_SHIP_TIER = 'BASIC';
 
 // Initial Balancing
+/** JSDoc for exported member */
 export const INITIAL_SPAWN_RATE = 90;
 export const MIN_SPAWN_RATE = 20;
 export const INITIAL_ASTEROID_SPEED = 2;
