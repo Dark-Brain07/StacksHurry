@@ -70,7 +70,7 @@ export function initAudio() {
       bgmGain.connect(ctx.destination);
       bgmOsc.start();
     } catch (e) {
-      console.log('Failed to start BGM');
+      /* log removed */
     }
   }
 }
