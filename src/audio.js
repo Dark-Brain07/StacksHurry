@@ -10,6 +10,7 @@ try {
 /** @param {any} param */
   if (typeof localStorage !== 'undefined') {
     const cached = localStorage.getItem(CACHE_KEY);
+/** @param {any} param */
     if (cached !== null) {
       soundEnabled = cached === 'true';
     }
