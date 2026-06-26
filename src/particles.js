@@ -85,6 +85,7 @@ class ParticlePool {
     return p;
   }
 
+/** @param {any} param */
   reset() {
     this.pool.forEach(p => p.active = false);
   }
