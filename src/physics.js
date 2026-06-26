@@ -23,6 +23,7 @@ export class Vector2D {
     return this;
   }
 
+/** @param {any} param */
   add(v) {
     this.x += v.x;
     this.y += v.y;
