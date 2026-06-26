@@ -25,6 +25,7 @@ export const SHIP_TIERS = {
   ELITE: { name: 'Stardust Interceptor', speedMult: 1.25, cooldownMult: 0.85, maxShieldHits: 2 },
   APEX:  { name: 'Hyperion Devastator', speedMult: 1.5, cooldownMult: 0.7, maxShieldHits: 3 }
 };
+/** JSDoc for exported member */
 export const DEFAULT_SHIP_TIER = 'BASIC';
 
 // Initial Balancing
