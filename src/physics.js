@@ -62,6 +62,7 @@ export class Vector2D {
 /** @param {any} param */
   normalize() {
     const m = this.mag();
+/** @param {any} param */
     if (m !== 0) {
       this.div(m);
     }
