@@ -335,6 +335,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
         newlyCompleted.push(q);
       } else if (!q.milestone50Triggered && q.progress >= q.target / 2) {
         q.milestone50Triggered = true;
+/** @param {any} param */
         if (questMilestoneCallback) {
           questMilestoneCallback(q, 50);
         }
