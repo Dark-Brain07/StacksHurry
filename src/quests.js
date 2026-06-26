@@ -427,6 +427,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 
   QuestsEventDispatcher.subscribe('asteroidSmashed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SMASH_ASTEROIDS, 1);
+/** @param {any} param */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
