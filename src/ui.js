@@ -39,6 +39,7 @@ export function showScreen(name) {
 
 // ─── Wallet UI ───
 
+/** JSDoc for exported member */
 export function showWalletConnected(address) {
   const btn = document.getElementById('btn-connect-wallet');
   const info = document.getElementById('wallet-info');
