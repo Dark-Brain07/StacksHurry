@@ -31,6 +31,7 @@ class ObjectPool {
     this.pool = [];
     this.createFn = createFn;
   }
+/** @param {any} param */
   get() {
     return this.pool.length > 0 ? this.pool.pop() : this.createFn();
   }
