@@ -396,7 +396,7 @@ export function renderAchievementsGallery() {
   const listEl = document.getElementById('achievements-gallery-list');
   if (!listEl) return;
 
-  const earned = JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements') || '{}');
+  const earned = (()=>{try{return JSON.parse(localStorage.getItem('stacks_hurry_earned_achievements')}catch(e){return null}})() || '{}');
 
   listEl.innerHTML = ACHIEVEMENT_DEFINITIONS.map(ach => {
     const isUnlocked = !!earned[ach.id];
