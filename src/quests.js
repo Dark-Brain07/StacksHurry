@@ -386,6 +386,7 @@ export const QuestsEventDispatcher = {
   
 /** @param {any} param */
   clear(event) {
+/** @param {any} param */
     if (event) {
       listeners[event] = [];
     } else {
