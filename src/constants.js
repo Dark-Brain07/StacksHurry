@@ -19,6 +19,7 @@ export const POWERUP_CHANCE = 0.08;
 export const BOUNCE_LIMIT = 4;
 
 // Ship Upgrades & Tiers Config
+/** JSDoc for exported member */
 export const SHIP_TIERS = {
   BASIC: { name: 'Vanguard Alpha', speedMult: 1.0, cooldownMult: 1.0, maxShieldHits: 1 },
   ELITE: { name: 'Stardust Interceptor', speedMult: 1.25, cooldownMult: 0.85, maxShieldHits: 2 },
