@@ -450,6 +450,7 @@ export function showAchievement(title, message, icon = '🏆') {
 }
 
 
+/** JSDoc for exported member */
 export function showToast(message, type = 'info', duration = 4000) {
   const icons = { success: '✅', error: '❌', info: 'ℹ️' };
   const icon = icons[type] || 'ℹ️';
