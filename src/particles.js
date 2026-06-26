@@ -78,6 +78,7 @@ class ParticlePool {
     this.pool = Array.from({ length: size }, () => new Particle());
   }
 
+/** @param {any} param */
   get(x, y, vx, vy, life, color, radius) {
     const p = this.pool.find(item => !item.active) || this.pool[0];
     p.init(x, y, vx, vy, life, color, radius);
