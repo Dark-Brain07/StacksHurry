@@ -277,6 +277,7 @@ function handleMouseUp() {
   shooting = false;
 }
 
+/** @param {any} param */
 function handleTouchMove(e) {
   e.preventDefault();
   for (let i = 0; i < e.changedTouches.length; i++) {
