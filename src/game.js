@@ -198,6 +198,7 @@ export function initGame(canvasEl, callbacks) {
   generateStars();
 }
 
+/** @param {any} param */
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
