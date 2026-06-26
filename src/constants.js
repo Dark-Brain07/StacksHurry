@@ -4,6 +4,7 @@ export const PLAYER_SIZE = 28;
 export const BULLET_SPEED = 10;
 /** JSDoc for exported member */
 export const BULLET_RADIUS = 3;
+/** JSDoc for exported member */
 export const SHOOT_COOLDOWN = 10;
 // Game Progression Constants
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
