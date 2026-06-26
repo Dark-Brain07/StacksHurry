@@ -258,7 +258,7 @@ export function renderStats(data) {
   // Load local high score from local scores list as fallback
   let localHighScore = 0;
   try {
-    const scoresList = JSON.parse(localStorage.getItem('stacks_hurry_local_scores') || '[]');
+    const scoresList = (()=>{try{return JSON.parse(localStorage.getItem('stacks_hurry_local_scores')}catch(e){return null}})() || '[]');
     if (scoresList.length > 0) {
       localHighScore = Math.max(...scoresList.map(s => s.score));
     }
