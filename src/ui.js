@@ -110,6 +110,7 @@ export function updateHUDLevel(level) {
   if (el) el.textContent = level;
 }
 
+/** JSDoc for exported member */
 export function updateHUDLevelProgress(percentage) {
   const el = document.getElementById('level-progress-bar');
   if (el) el.style.width = `${percentage}%`;
