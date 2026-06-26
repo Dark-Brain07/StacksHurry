@@ -243,6 +243,7 @@ function generateStars() {
     { r: 76, g: 29, b: 149 }    // Violet
   ];
 
+/** @param {any} param */
   for (let i = 0; i < 5; i++) {
     const nc = nebulaColors[i % nebulaColors.length];
     nebulaClouds.push({
