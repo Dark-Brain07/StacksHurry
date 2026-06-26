@@ -46,6 +46,7 @@ export class Vector2D {
 
 /** @param {any} param */
   div(n) {
+/** @param {any} param */
     if (n !== 0) {
       this.x /= n;
       this.y /= n;
