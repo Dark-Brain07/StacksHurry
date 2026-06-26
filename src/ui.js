@@ -137,6 +137,7 @@ export function showGameOver(data) {
 
 // ─── Countdown ───
 
+/** JSDoc for exported member */
 export function runCountdown(callback) {
   const overlay = document.getElementById('game-start-overlay');
   const countdownEl = document.getElementById('countdown');
