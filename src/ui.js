@@ -391,6 +391,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   { id: 'asteroids50', title: 'DESTROYER', desc: 'Smash 50 asteroids', icon: '💥' }
 ];
 
+/** JSDoc for exported member */
 export function renderAchievementsGallery() {
   const listEl = document.getElementById('achievements-gallery-list');
   if (!listEl) return;
