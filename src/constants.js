@@ -1,3 +1,4 @@
+/** JSDoc for exported member */
 export const PLAYER_SIZE = 28;
 export const BULLET_SPEED = 10;
 export const BULLET_RADIUS = 3;
