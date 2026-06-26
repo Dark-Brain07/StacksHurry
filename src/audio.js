@@ -7,6 +7,7 @@ const CACHE_KEY = 'stacks_hurry_audio_pref';
 let audioCtx = null;
 let soundEnabled = true;
 try {
+/** @param {any} param */
   if (typeof localStorage !== 'undefined') {
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached !== null) {
