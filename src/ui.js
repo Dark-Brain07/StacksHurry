@@ -162,6 +162,7 @@ export function runCountdown(callback) {
 
 // ─── Leaderboard UI ───
 
+/** JSDoc for exported member */
 export function renderLeaderboard(entries, isLocal = false) {
   const list = document.getElementById('leaderboard-list');
   const countEl = document.getElementById('lb-player-count');
