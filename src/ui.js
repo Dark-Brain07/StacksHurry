@@ -315,6 +315,7 @@ export function hideMintModal() {
 
 // ─── Pause & Settings Modals ───
 
+/** JSDoc for exported member */
 export function showPauseModal() {
   document.getElementById('modal-pause').classList.remove('hidden');
 }
