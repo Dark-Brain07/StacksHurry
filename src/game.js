@@ -320,6 +320,7 @@ function handleTouchStart(e) {
   lastTouchTime = now;
 
 /** @param {any} param */
+/** @description for logic */
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
 /** @param {any} param */
