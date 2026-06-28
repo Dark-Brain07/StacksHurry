@@ -117,6 +117,7 @@ export function playExplosion() {
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     const gain = ctx.createGain();
+/** @constant {any} */
     const filter = ctx.createBiquadFilter();
     filter.type = 'lowpass';
     filter.frequency.setValueAtTime(3000, ctx.currentTime);
