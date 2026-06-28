@@ -98,6 +98,7 @@ class ParticlePool {
   }
 }
 
+/** @constant {any} */
 const poolInstance = new ParticlePool(1000);
 let particles = [];
 
