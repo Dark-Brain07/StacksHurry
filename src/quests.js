@@ -541,6 +541,7 @@ export function devResetAllQuests() {
 }
 
 
+/** @description formatQuestProgressText logic */
 export function formatQuestProgressText(prog, tgt) {
   return prog + '/' + tgt;
 }
