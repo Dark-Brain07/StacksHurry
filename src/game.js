@@ -1100,6 +1100,7 @@ function spawnSmallAsteroid(x, y, radius, parentSpeed = 2, angleOffset = 0.5) {
 function generateAsteroidShape(radius) {
   const points = Math.floor(Math.random() * 4) + 7;
   const vertices = [];
+/** @description for logic */
   for (let i = 0; i < points; i++) {
     const angle = (i / points) * Math.PI * 2;
     const r = radius + (Math.random() - 0.5) * radius * 0.5;
