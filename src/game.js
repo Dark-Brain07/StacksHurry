@@ -1214,6 +1214,7 @@ function render() {
   // Realistic laser energy for bullets
   ctx.save();
   if (!lowGraphics) ctx.globalCompositeOperation = 'lighter';
+/** @constant {any} */
   const activeTheme = SHIP_THEMES[shipTheme] || SHIP_THEMES.vanguard;
   bullets.forEach(b => {
     // Intense core
