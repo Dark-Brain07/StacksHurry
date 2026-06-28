@@ -532,6 +532,7 @@ function update() {
   else if (player.y > bottomBound) { player.y = bottomBound; player.kickbackY = -3.0; }
 
   const vx = player.x - oldX;
+/** @constant {any} */
   const vy = player.y - oldY;
   const speed = Math.sqrt(vx * vx + vy * vy);
   const maxHumSpeed = 12; // approximate max speed per frame
