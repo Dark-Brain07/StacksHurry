@@ -220,6 +220,7 @@ export const DEFAULT_COLLISION_RADIUS = 15;
 /**
  * Calculate distance between two points
  */
+/** @description distance logic */
 export function distance(x1, y1, x2, y2) {
   // Overload to support Vector2D parameters: distance(vec1, vec2)
   if (x1 instanceof Vector2D && y1 instanceof Vector2D) {
