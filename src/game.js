@@ -146,6 +146,7 @@ let onLivesUpdate = null;
 let onLevelUpdate = null;
 let onLevelProgress = null;
 let onAchievement = null;
+/** @type {any} */
 let onVibrate = null;
 /** @type {any} */
 let onGameOver = null;
