@@ -51,6 +51,7 @@ export class Particle {
   }
 
 /** @param {any} param */
+/** @description render logic */
   render(ctx, lowGraphics) {
     if (!this.active) return;
 /** @constant {any} */
