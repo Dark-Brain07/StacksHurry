@@ -672,6 +672,7 @@ export function safeShowElement(id) {
 }
 
 
+/** @description triggerConfetti logic */
 export function triggerConfetti() {
 /** @constant {any} */
   const container = document.body;
