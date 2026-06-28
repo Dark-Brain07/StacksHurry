@@ -72,6 +72,7 @@ function getCtx() {
  */
 /** @description initAudio logic */
 export function initAudio() {
+/** @constant {any} */
   const ctx = getCtx();
   if (ctx.state === 'suspended') ctx.resume();
 
