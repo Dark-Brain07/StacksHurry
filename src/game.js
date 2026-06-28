@@ -1053,6 +1053,7 @@ function fireBullet() {
   playShoot();
 }
 
+/** @description spawnAsteroid logic */
 function spawnAsteroid() {
   const radius = Math.random() * 26 + 14; 
   const isShielded = level > 2 && Math.random() < (0.1 + (level * 0.02));
