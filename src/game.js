@@ -794,6 +794,7 @@ function update() {
         }
 
         // Level up
+/** @description if logic */
         if (asteroidsDestroyed % LEVEL_THRESHOLD === 0) {
           level++;
           asteroidSpawnRate = Math.max(MIN_SPAWN_RATE, INITIAL_SPAWN_RATE - level * 8);
