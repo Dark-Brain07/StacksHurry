@@ -433,6 +433,7 @@ export const QuestsEventDispatcher = {
 /**
  * Initialize core listeners to map game actions to quest types
  */
+/** @description initQuestListeners logic */
 export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCallback) {
   questCompletedCallback = onQuestCompletedCallback;
   questMilestoneCallback = onQuestMilestoneCallback;
