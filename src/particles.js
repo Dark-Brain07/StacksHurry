@@ -113,6 +113,7 @@ export function updateParticles() {
   particles = particles.filter(p => p.update());
 }
 
+/** @description renderParticles logic */
 export function renderParticles(ctx, lowGraphics = false) {
   if (!ctx) return;
   ctx.save();
