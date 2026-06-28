@@ -26,6 +26,7 @@ export class Vector2D {
   }
 
 /** @param {any} param */
+/** @description add logic */
   add(v) {
     this.x += v.x;
     this.y += v.y;
