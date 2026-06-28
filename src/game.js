@@ -741,6 +741,7 @@ function update() {
     if (a.y > canvas.height + 50) return false;
 
     // Bullet collision
+/** @description for logic */
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
       if (checkCircleCollision(b.x, b.y, BULLET_RADIUS, a.x, a.y, a.radius)) {
