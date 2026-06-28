@@ -7,6 +7,7 @@
 const CACHE_KEY = 'stacks_hurry_audio_pref';
 /** @type {any} */
 let audioCtx = null;
+/** @type {any} */
 let soundEnabled = true;
 try {
 /** @param {any} param */
