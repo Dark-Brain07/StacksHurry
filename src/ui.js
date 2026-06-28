@@ -573,6 +573,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     `;
     
     barRow.appendChild(progressContainer);
+/** @description if logic */
     if (typeof actionHtml === 'string') {
       const tempSpan = document.createElement('div');
       tempSpan.innerHTML = actionHtml;
