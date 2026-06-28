@@ -97,6 +97,7 @@ export function playShoot() {
     gain.connect(ctx.destination);
     osc.type = 'sawtooth';
     // Add subtle procedural frequency/pitch randomization (between 1050Hz and 1350Hz) for authentic retro feel
+/** @constant {any} */
     const startFreq = 1200 + (Math.random() - 0.5) * 300;
     osc.frequency.setValueAtTime(startFreq, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.12);
