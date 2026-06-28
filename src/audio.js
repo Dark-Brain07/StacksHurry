@@ -33,6 +33,7 @@ export function toggleSound(enabled) {
   soundEnabled = enabled;
   try {
 /** @param {any} param */
+/** @description if logic */
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(CACHE_KEY, enabled ? 'true' : 'false');
     }
