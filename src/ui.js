@@ -551,6 +551,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
       <span class="quest-desc">${q.description}</span>
     `;
     
+/** @constant {any} */
     const rewardSpan = document.createElement('span');
     rewardSpan.className = 'quest-reward';
     rewardSpan.textContent = `+${q.reward} PTS`;
