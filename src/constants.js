@@ -7,6 +7,7 @@ export const BULLET_SPEED = 10;
 /** @constant {any} */
 export const BULLET_RADIUS = 3;
 /** JSDoc for exported member */
+/** @constant {any} */
 export const SHOOT_COOLDOWN = 10;
 // Game Progression Constants
 /** JSDoc for exported member */
