@@ -366,6 +366,7 @@ function processToastQueue() {
   if (isProcessingToast || toastQueue.length === 0) return;
   isProcessingToast = true;
 
+/** @constant {any} */
   const item = toastQueue.shift();
   const container = document.getElementById('toast-container');
   if (!container) {
