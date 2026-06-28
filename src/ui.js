@@ -541,6 +541,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     // Class names based on state
 /** @type {any} */
     let stateClass = '';
+/** @description if logic */
     if (q.claimed) {
       stateClass = 'claimed';
     } else if (q.completed) {
