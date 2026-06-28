@@ -1274,6 +1274,7 @@ function render() {
     ctx.closePath();
 
     if (a.isShielded) {
+/** @constant {any} */
       const maxHp = a.maxHp || 3;
       const shieldPcnt = a.hp / maxHp;
       ctx.fillStyle = `rgba(0, 240, 255, ${0.1 + shieldPcnt * 0.2})`;
