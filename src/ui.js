@@ -526,6 +526,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
 
   listEl.innerHTML = '';
   quests.forEach(q => {
+/** @constant {any} */
     const item = document.createElement('div');
     
     // Class names based on state
