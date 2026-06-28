@@ -95,6 +95,7 @@ export function updateHUDScore(score) {
 
 /** JSDoc for exported member */
 export function updateHUDLives(lives) {
+/** @constant {any} */
   const el = document.getElementById('hud-lives');
   if (el) {
     el.textContent = '❤️'.repeat(Math.max(0, lives));
