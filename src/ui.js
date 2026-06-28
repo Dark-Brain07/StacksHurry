@@ -675,6 +675,7 @@ export function safeShowElement(id) {
 export function triggerConfetti() {
 /** @constant {any} */
   const container = document.body;
+/** @constant {any} */
   const count = 45;
 /** @constant {any} */
   const colors = ['#00f0ff', '#a855f7', '#fbbf24', '#f472b6', '#38bdf8', '#10b981'];
