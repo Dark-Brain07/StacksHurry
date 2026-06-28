@@ -374,6 +374,7 @@ const toastQueue = [];
 /** @type {any} */
 let isProcessingToast = false;
 
+/** @description processToastQueue logic */
 function processToastQueue() {
   if (isProcessingToast || toastQueue.length === 0) return;
   isProcessingToast = true;
