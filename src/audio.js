@@ -67,6 +67,7 @@ export function initAudio() {
   if (ctx.state === 'suspended') ctx.resume();
 
   // Start background drone if not already playing
+/** @description if logic */
   if (!bgmOsc && soundEnabled) {
     try {
       bgmOsc = ctx.createOscillator();
