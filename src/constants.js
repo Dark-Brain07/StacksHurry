@@ -137,6 +137,7 @@ export const JOYSTICK_DEADZONE = 0.15;
 /** @constant {any} */
 export const MAX_PARTICLES = 200;
 /** JSDoc for exported member */
+/** @constant {any} */
 export const SHIELD_COLORS = {
   active: '#3b82f6',
   depleted: '#ef4444'
