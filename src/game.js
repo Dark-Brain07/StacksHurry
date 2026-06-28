@@ -634,6 +634,7 @@ function update() {
     // Push asteroids
     asteroids.forEach(a => {
       const push = calculateShockwavePush(a, shockwave);
+/** @description if logic */
       if (push) {
         a.x += push.x;
         a.y += push.y;
