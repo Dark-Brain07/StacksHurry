@@ -112,6 +112,7 @@ export function orbit(entity, target, radius, speed) {
  * Evade behavior: flee from a target
  */
 export function evade(entity, target, maxSpeed, force) {
+/** @constant {any} */
     const desiredX = entity.x - target.x;
 /** @constant {any} */
     const desiredY = entity.y - target.y;
