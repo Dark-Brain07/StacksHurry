@@ -51,6 +51,7 @@ let player = {};
 let bullets = [];
 let asteroids = [];
 let stars = [];
+/** @type {any} */
 let nebulaClouds = [];
 /** @type {any} */
 let powerups = [];
