@@ -140,6 +140,7 @@ export const SHIELD_COLORS = {
 /** JSDoc for exported member */
 export const AI_DETECTION_RADIUS = 300;
 /** JSDoc for exported member */
+/** @constant {any} */
 export const AI_LUNGE_DURATION = 1000;
 /** JSDoc for exported member */
 /** @constant {any} */
