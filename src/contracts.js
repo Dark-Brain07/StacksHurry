@@ -237,6 +237,7 @@ export async function getPlayerTotalQuests(playerAddress) {
 // 6. POWERUP STORE CONTRACT
 // ══════════════════════════════════════════
 
+/** @constant {any} */
 const CONTRACT_POWERUP_STORE = `${DEPLOYER}.powerup-store`;
 
 /** Buy a permanent powerup on-chain (cost varies by tier) */
