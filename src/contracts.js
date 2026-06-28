@@ -271,6 +271,7 @@ export async function getAllPowerupsOnChain(playerAddress) {
 // 7. PILOT REGISTRY CONTRACT
 // ══════════════════════════════════════════
 
+/** @constant {any} */
 const CONTRACT_PILOT_REGISTRY = `${DEPLOYER}.pilot-registry`;
 
 /** Register a pilot name on-chain (5000 uSTX fee) */
