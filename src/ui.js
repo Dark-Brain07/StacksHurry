@@ -298,6 +298,7 @@ export function renderStats(data) {
   document.getElementById('stat-total-enemies').textContent = localStats.totalEnemies.toLocaleString();
 
   // Format Time Flew (Duration) nicely, e.g., "3m 42s"
+/** @constant {any} */
   const sec = localStats.totalDuration;
 /** @type {any} */
   let durationStr = '0s';
