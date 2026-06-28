@@ -409,6 +409,7 @@ const listeners = {};
 
 export const QuestsEventDispatcher = {
 /** @param {any} param */
+/** @description unsubscribe logic */
   unsubscribe(event, callback) {
 /** @param {any} param */
     if (listeners[event]) {
