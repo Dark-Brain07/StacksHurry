@@ -478,6 +478,7 @@ export function showToast(message, type = 'info', duration = 4000) {
 
 /** JSDoc for exported member */
 export function vibrate(pattern) {
+/** @description if logic */
   if (typeof navigator !== 'undefined' && navigator.vibrate) {
     navigator.vibrate(pattern);
   }
