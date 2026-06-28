@@ -485,6 +485,7 @@ function update() {
   
   if (keyboardActive && (keys.w || keys.a || keys.s || keys.d)) {
     let moveX = 0;
+/** @type {any} */
     let moveY = 0;
     if (keys.w) moveY -= 1;
     if (keys.s) moveY += 1;
