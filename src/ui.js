@@ -301,6 +301,7 @@ export function renderStats(data) {
   let durationStr = '0s';
   if (sec >= 60) {
     const m = Math.floor(sec / 60);
+/** @constant {any} */
     const s = sec % 60;
     durationStr = `${m}m ${s}s`;
   } else {
