@@ -176,6 +176,7 @@ export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   }
   const dx = x1 - x2;
   const dy = y1 - y2;
+/** @constant {any} */
   const sum = r1 + r2;
   if (Math.abs(dx) >= sum || Math.abs(dy) >= sum) return false;
   return Math.hypot(dx, dy) < sum;
