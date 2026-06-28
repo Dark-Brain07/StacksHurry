@@ -53,6 +53,7 @@ export const COLORS = {
 
 // Ship Accent Themes
 /** JSDoc for exported member */
+/** @constant {any} */
 export const SHIP_THEMES = {
   vanguard: {
     id: 'vanguard',
