@@ -868,6 +868,7 @@ function update() {
 
     // Player collects powerup
     if (checkCircleCollision(player.x, player.y, PLAYER_SIZE * 0.6, p.x, p.y, 20)) {
+/** @description if logic */
       if (p.type === 'shield') {
         player.shieldActive = true;
       } else if (p.type === 'multishot') {
