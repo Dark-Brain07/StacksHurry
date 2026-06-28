@@ -348,6 +348,7 @@ export function playQuestComplete() {
       gain.connect(ctx.destination);
       osc.type = 'sine';
       
+/** @constant {any} */
       const startDelay = i * 0.12;
       const t = ctx.currentTime + startDelay;
       
