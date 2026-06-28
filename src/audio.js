@@ -108,6 +108,7 @@ export function playExplosion() {
     const ctx = getCtx();
     const bufferSize = ctx.sampleRate * 0.3;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+/** @constant {any} */
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
       data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
