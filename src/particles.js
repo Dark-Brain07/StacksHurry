@@ -107,6 +107,7 @@ const poolInstance = new ParticlePool(1000);
 let particles = [];
 
 /** JSDoc for exported member */
+/** @description getParticleCount logic */
 export function getParticleCount() { return particles.length; }
 
 /** JSDoc for exported member */
