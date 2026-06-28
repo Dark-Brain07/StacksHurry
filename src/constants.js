@@ -150,6 +150,7 @@ export const AI_ORBIT_SPEED = 0.02;
 export const DEFAULT_GAME_VOLUME = 0.5;
 
 // ─── New Contract Addresses (Mainnet) ───
+/** @constant {any} */
 export const CONTRACT_DAILY_QUESTS = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF.daily-quest-tracker-v2';
 /** @constant {any} */
 export const CONTRACT_POWERUP_STORE = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF.powerup-store';
