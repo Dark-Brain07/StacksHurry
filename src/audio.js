@@ -63,6 +63,7 @@ function getCtx() {
  * Resume audio context (must be called after user gesture) 
  * Also starts the background music drone if enabled.
  */
+/** @description initAudio logic */
 export function initAudio() {
   const ctx = getCtx();
   if (ctx.state === 'suspended') ctx.resume();
