@@ -286,6 +286,7 @@ export function playLevelUp() {
  * Collect / powerup sound
  * Played when player picks up a buff item
  */
+/** @description playCollect logic */
 export function playCollect() {
   if (!soundEnabled) return;
   try {
