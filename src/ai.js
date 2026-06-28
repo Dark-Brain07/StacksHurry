@@ -53,6 +53,7 @@ export function updateAI(entity, target, dt) {
 /**
  * Calculate steering velocity to seek a target position
  */
+/** @description seek logic */
 export function seek(entity, target, maxSpeed, force) {
 /** @constant {any} */
     const desiredX = target.x - entity.x;
