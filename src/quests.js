@@ -331,6 +331,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
   questState.quests.forEach(q => {
 /** @param {any} param */
     if (q.type === type && !q.completed) {
+/** @constant {any} */
       const prevProgress = q.progress;
 /** @param {any} param */
       if (isAbsolute) {
