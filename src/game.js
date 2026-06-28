@@ -1194,6 +1194,7 @@ function render() {
   }
 
   // Nebula cloud atmosphere layer
+/** @description if logic */
   if (!lowGraphics) {
     ctx.save();
     nebulaClouds.forEach(nc => {
