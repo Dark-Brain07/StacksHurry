@@ -9,6 +9,7 @@
  */
 export class Particle {
 /** @param {any} param */
+/** @description constructor logic */
   constructor() {
     this.x = 0;
     this.y = 0;
