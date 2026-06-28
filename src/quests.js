@@ -525,6 +525,7 @@ export function formatQuestProgressText(prog, tgt) {
 /**
  * Format total lifetime completed quests
  */
+/** @description formatTotalQuestsCompleted logic */
 export function formatTotalQuestsCompleted(count) {
   return count > 99 ? '99+' : count.toString();
 }
