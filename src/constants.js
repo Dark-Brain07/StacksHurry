@@ -139,6 +139,7 @@ export const SHIELD_COLORS = {
 };
 // AI Behavior
 /** JSDoc for exported member */
+/** @constant {any} */
 export const AI_DETECTION_RADIUS = 300;
 /** JSDoc for exported member */
 /** @constant {any} */
