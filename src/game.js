@@ -66,6 +66,7 @@ let asteroidsDestroyed = 0;
 let frameCount = 0;
 let comboCount = 0;
 let multiplierTimer = 0;
+/** @type {any} */
 let shake = { duration: 0, intensity: 0 };
 /** @type {any} */
 let damageFlash = 0; // Screen-wide red vignette flash timer
