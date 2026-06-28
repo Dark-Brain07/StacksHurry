@@ -63,6 +63,7 @@ export function seek(entity, target, maxSpeed, force) {
     if (dist === 0) return { x: 0, y: 0 };
     
     // Normalize and scale to max speed
+/** @constant {any} */
     const steerX = (desiredX / dist) * maxSpeed;
     const steerY = (desiredY / dist) * maxSpeed;
     
