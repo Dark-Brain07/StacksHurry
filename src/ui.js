@@ -436,6 +436,7 @@ export function showAchievementsModal() {
 }
 
 /** JSDoc for exported member */
+/** @description hideAchievementsModal logic */
 export function hideAchievementsModal() {
   document.getElementById('modal-achievements').classList.add('hidden');
 }
