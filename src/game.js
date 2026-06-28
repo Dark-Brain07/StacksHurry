@@ -1057,6 +1057,7 @@ function spawnAsteroid() {
   
   // Generate procedural crater positions for visual detail
   const craterCount = Math.floor(Math.random() * 3) + 1;
+/** @constant {any} */
   const craters = [];
   for (let c = 0; c < craterCount; c++) {
     const angle = Math.random() * Math.PI * 2;
