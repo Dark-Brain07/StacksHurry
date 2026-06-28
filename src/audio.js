@@ -217,6 +217,7 @@ export function playGameOver() {
     const ctx = getCtx();
     const notes = [400, 350, 300, 200];
     notes.forEach((freq, i) => {
+/** @constant {any} */
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
