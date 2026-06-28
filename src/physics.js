@@ -45,6 +45,7 @@ export class Vector2D {
   }
 
 /** @param {any} param */
+/** @description div logic */
   div(n) {
 /** @param {any} param */
     if (n !== 0) {
