@@ -23,6 +23,7 @@ export class Particle {
   }
 
 /** @param {any} param */
+/** @description init logic */
   init(x, y, vx, vy, life, color, radius) {
     this.x = x;
     this.y = y;
