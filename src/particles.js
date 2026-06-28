@@ -252,6 +252,7 @@ export function spawnImpactRing(x, y, ringRadius = 40, color = '#00f0ff', count 
     const speed = ringRadius * 0.12 + Math.random() * 1.5;
 /** @constant {any} */
     const life = Math.floor(Math.random() * 12) + 14;
+/** @constant {any} */
     const radius = Math.random() * 2.5 + 1;
     particles.push(poolInstance.get(
       x + Math.cos(angle) * 4,
