@@ -18,6 +18,7 @@ export class Vector2D {
   }
 
 /** @param {any} param */
+/** @description set logic */
   set(x, y) {
     this.x = x;
     this.y = y;
