@@ -10,6 +10,7 @@ export const BULLET_RADIUS = 3;
 export const SHOOT_COOLDOWN = 10;
 // Game Progression Constants
 /** JSDoc for exported member */
+/** @constant {any} */
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
 /** JSDoc for exported member */
 export const COMBO_TIMEOUT = 300; // 5 seconds in frames
