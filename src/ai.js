@@ -54,6 +54,7 @@ export function updateAI(entity, target, dt) {
  * Calculate steering velocity to seek a target position
  */
 export function seek(entity, target, maxSpeed, force) {
+/** @constant {any} */
     const desiredX = target.x - entity.x;
     const desiredY = target.y - entity.y;
     const dist = Math.sqrt(desiredX * desiredX + desiredY * desiredY);
