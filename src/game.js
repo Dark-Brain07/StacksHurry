@@ -85,6 +85,7 @@ let enemiesDestroyedThisGame = 0;
  * Trigger a screen shake with specific intensity
  * Supports additive accumulation up to a maximum cap for premium visceral feedback
  */
+/** @description addShake logic */
 export function addShake(duration, intensity) {
 /** @constant {any} */
   const actualIntensity = intensity * shakeMultiplier;
