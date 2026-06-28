@@ -617,6 +617,7 @@ export function triggerConfetti() {
   const count = 45;
   const colors = ['#00f0ff', '#a855f7', '#fbbf24', '#f472b6', '#38bdf8', '#10b981'];
   
+/** @description for logic */
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
     el.className = 'confetti-particle';
