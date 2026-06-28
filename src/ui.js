@@ -60,6 +60,7 @@ export function showWalletConnected(address) {
 }
 
 /** JSDoc for exported member */
+/** @description showWalletDisconnected logic */
 export function showWalletDisconnected() {
   const btn = document.getElementById('btn-connect-wallet');
   const info = document.getElementById('wallet-info');
