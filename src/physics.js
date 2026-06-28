@@ -235,6 +235,7 @@ export function clamp(val, min, max) {
 }
 
 /** JSDoc for exported member */
+/** @constant {any} */
 export const DEFAULT_COLLISION_RADIUS = 15;
 
 /**
