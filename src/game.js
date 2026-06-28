@@ -725,6 +725,7 @@ function update() {
       }
     }
 
+/** @constant {any} */
     const active = b.y > -10 && b.y < canvas.height + 10 && b.x > -10 && b.x < canvas.width + 10;
     if (!active) bulletPool.release(b);
     return active;
