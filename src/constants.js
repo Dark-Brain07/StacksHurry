@@ -37,6 +37,7 @@ export const DEFAULT_SHIP_TIER = 'BASIC';
 /** JSDoc for exported member */
 export const INITIAL_SPAWN_RATE = 90;
 /** JSDoc for exported member */
+/** @constant {any} */
 export const MIN_SPAWN_RATE = 20;
 /** JSDoc for exported member */
 export const INITIAL_ASTEROID_SPEED = 2;
