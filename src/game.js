@@ -734,6 +734,7 @@ function update() {
         bulletsHitThisGame++;
         
         a.hp--;
+/** @description if logic */
         if (a.hp > 0) {
           if (a.isShielded) playShieldHit();
           else playHit();
