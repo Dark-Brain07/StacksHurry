@@ -134,6 +134,7 @@ export const DEFAULT_SHIP_THEME = 'vanguard';
 export const OVERLAY_PADDING = 10;
 
 /** JSDoc for exported member */
+/** @constant {any} */
 export const JOYSTICK_DEADZONE = 0.15;
 
 /** JSDoc for exported member */
