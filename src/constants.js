@@ -35,6 +35,7 @@ export const SHIP_TIERS = {
   APEX:  { name: 'Hyperion Devastator', speedMult: 1.5, cooldownMult: 0.7, maxShieldHits: 3 }
 };
 /** JSDoc for exported member */
+/** @constant {any} */
 export const DEFAULT_SHIP_TIER = 'BASIC';
 
 // Initial Balancing
