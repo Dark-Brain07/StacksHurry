@@ -149,6 +149,7 @@ export function playShieldHit() {
 }
 
 /** Wave completion fanfare */
+/** @description playWaveClear logic */
 export function playWaveClear() {
   if (!soundEnabled) return;
   try {
