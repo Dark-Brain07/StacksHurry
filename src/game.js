@@ -50,6 +50,7 @@ let bullets = [];
 let asteroids = [];
 let stars = [];
 let nebulaClouds = [];
+/** @type {any} */
 let powerups = [];
 let floatingTexts = [];
 
