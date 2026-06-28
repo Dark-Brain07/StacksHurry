@@ -283,6 +283,7 @@ export function renderStats(data) {
     }
   } catch (e) {}
 
+/** @constant {any} */
   const finalHighScore = data.highScore || localHighScore;
   const finalGamesPlayed = data.gamesPlayed || localStats.gamesPlayed;
 
