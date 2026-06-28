@@ -106,6 +106,7 @@ export function playExplosion() {
   if (!soundEnabled) return;
   try {
     const ctx = getCtx();
+/** @constant {any} */
     const bufferSize = ctx.sampleRate * 0.3;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
 /** @constant {any} */
