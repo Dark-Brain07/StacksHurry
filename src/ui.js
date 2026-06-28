@@ -563,6 +563,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     const percent = Math.min(100, Math.floor((q.progress / q.target) * 100));
 
     // Action element (Claim button, Claimed badge, or Progress text)
+/** @type {any} */
     let actionHtml = '';
     if (q.claimed) {
       actionHtml = '<span class="claimed-badge">Claimed ✓</span>';
