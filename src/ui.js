@@ -584,6 +584,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     progressContainer.className = 'quest-progress-container';
     progressContainer.style.position = 'relative';
     let markersHtml = '';
+/** @description if logic */
     if (q.target > 10) {
       markersHtml = `
         <div style="position: absolute; left: 33.3%; top: 0; bottom: 0; width: 2px; background: rgba(0,0,0,0.3); z-index: 2;"></div>
