@@ -179,6 +179,7 @@ export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   }
 /** @constant {any} */
   const dx = x1 - x2;
+/** @constant {any} */
   const dy = y1 - y2;
 /** @constant {any} */
   const sum = r1 + r2;
