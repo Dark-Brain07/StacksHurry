@@ -60,6 +60,7 @@ let powerups = [];
 let floatingTexts = [];
 
 // Stats
+/** @type {any} */
 let score = 0;
 let lives = 3;
 let level = 1;
