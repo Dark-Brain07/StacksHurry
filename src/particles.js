@@ -156,6 +156,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 
   // Spawn white-hot flash core for large explosions
 /** @param {any} param */
+/** @description if logic */
   if (!lowGraphics && radius > 20) {
 /** @param {any} param */
     for (let i = 0; i < 4; i++) {
