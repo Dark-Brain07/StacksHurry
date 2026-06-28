@@ -1032,6 +1032,7 @@ function fireBullet() {
 function spawnAsteroid() {
   const radius = Math.random() * 26 + 14; 
   const isShielded = level > 2 && Math.random() < (0.1 + (level * 0.02));
+/** @constant {any} */
   const eliteHp = isShielded ? Math.min(6, 2 + Math.floor(level / 2)) : 1;
   
   // Generate procedural crater positions for visual detail
