@@ -108,6 +108,7 @@ export function addShake(duration, intensity) {
 }
 // Difficulty
 let asteroidSpawnRate = 90; // frames between spawns
+/** @type {any} */
 let asteroidSpeed = 2;
 
 // Mouse / touch position
