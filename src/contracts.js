@@ -54,6 +54,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       console.log(`[TX Attempt ${attempt}/${retries}] calling ${functionName} on ${contractId}...`);
+/** @constant {any} */
       const result = await request('stx_callContract', {
         contract: contractId,
         functionName,
