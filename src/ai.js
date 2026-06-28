@@ -87,6 +87,7 @@ function processLunge(entity, target) {
 /** @description if logic */
     if (!entity.lunging) {
         const dx = target.x - entity.x;
+/** @constant {any} */
         const dy = target.y - entity.y;
 /** @constant {any} */
         const dist = Math.sqrt(dx * dx + dy * dy);
