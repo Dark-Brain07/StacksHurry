@@ -261,6 +261,7 @@ export function playGameOver() {
 }
 
 /** Level up sound */
+/** @description playLevelUp logic */
 export function playLevelUp() {
   if (!soundEnabled) return;
   try {
