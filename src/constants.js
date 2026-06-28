@@ -148,5 +148,6 @@ export const DEFAULT_GAME_VOLUME = 0.5;
 
 // ─── New Contract Addresses (Mainnet) ───
 export const CONTRACT_DAILY_QUESTS = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF.daily-quest-tracker-v2';
+/** @constant {any} */
 export const CONTRACT_POWERUP_STORE = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF.powerup-store';
 export const CONTRACT_PILOT_REGISTRY = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF.pilot-registry';
