@@ -50,6 +50,7 @@ const bulletPool = new ObjectPool(() => ({ x: 0, y: 0, vx: 0, vy: 0, active: fal
 let player = {};
 let bullets = [];
 let asteroids = [];
+/** @type {any} */
 let stars = [];
 /** @type {any} */
 let nebulaClouds = [];
