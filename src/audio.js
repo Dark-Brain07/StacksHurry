@@ -343,6 +343,7 @@ export function playQuestComplete() {
       osc.frequency.setValueAtTime(freq, t);
       
       // Dynamic volume progression for build up
+/** @constant {any} */
       const vol = 0.1 + i * 0.02;
       gain.gain.setValueAtTime(vol, t);
       gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
