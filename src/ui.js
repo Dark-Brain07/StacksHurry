@@ -476,6 +476,7 @@ export function showAchievement(title, message, icon = '🏆') {
 
 
 /** JSDoc for exported member */
+/** @description showToast logic */
 export function showToast(message, type = 'info', duration = 4000) {
 /** @constant {any} */
   const icons = { success: '✅', error: '❌', info: 'ℹ️' };
