@@ -308,6 +308,7 @@ function handleTouchMove(e) {
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
 /** @param {any} param */
+/** @description if logic */
     if (joystick.active && touch.identifier === joystick.pointerId) {
       joystick.dx = touch.clientX - joystick.startX;
       joystick.dy = touch.clientY - joystick.startY;
