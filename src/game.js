@@ -330,6 +330,7 @@ function handleTouchStart(e) {
   for (let i = 0; i < e.changedTouches.length; i++) {
     const touch = e.changedTouches[i];
 /** @param {any} param */
+/** @description if logic */
     if (touch.clientX < window.innerWidth / 2) {
       joystick.active = true;
       joystick.startX = touch.clientX;
