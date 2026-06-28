@@ -94,6 +94,7 @@ export class Vector2D {
    * Get the angle of rotation (heading) of this vector
    * @returns {number} The heading angle in radians
    */
+/** @description heading logic */
   heading() {
     return Math.atan2(this.y, this.x);
   }
