@@ -297,6 +297,7 @@ export function loadQuests() {
 /**
  * Save current quests to localStorage
  */
+/** @description saveQuests logic */
 export function saveQuests() {
   try {
     localStorage.setItem('stacks_hurry_quests', JSON.stringify(questState));
