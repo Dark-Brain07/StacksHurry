@@ -404,6 +404,7 @@ export const QuestsEventDispatcher = {
   },
   
 /** @param {any} param */
+/** @description dispatchEvent logic */
   dispatchEvent(event, data) {
 /** @param {any} param */
     if (listeners[event]) {
