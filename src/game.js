@@ -1003,6 +1003,7 @@ function startNextWave() {
 
 function findNearestTarget(x, y, maxDist = 300) {
   let nearest = null;
+/** @type {any} */
   let minDist = maxDist;
 
   // Check asteroids
