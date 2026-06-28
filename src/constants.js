@@ -127,6 +127,7 @@ export const DEFAULT_SHIP_THEME = 'vanguard';
 
 // UI Overlay Position
 /** JSDoc for exported member */
+/** @constant {any} */
 export const OVERLAY_PADDING = 10;
 
 /** JSDoc for exported member */
