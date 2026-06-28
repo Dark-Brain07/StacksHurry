@@ -6,6 +6,7 @@
 import { AI_LUNGE_DURATION, AI_LUNGE_SPEED_MULTIPLIER, AI_ORBIT_RADIUS, AI_ORBIT_SPEED } from './constants.js';
 
 
+/** @constant {any} */
 export const AI_STATES = {
     IDLE: 'idle',
     SEEK: 'seek',
