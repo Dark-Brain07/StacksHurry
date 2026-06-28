@@ -1129,6 +1129,7 @@ function spawnFloatingText(x, y, text, color = '#ffffff') {
 
 // ─── Render ───
 
+/** @description render logic */
 function render() {
   // Realistic Deep Space Gradient
   const bgGrad = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height));
