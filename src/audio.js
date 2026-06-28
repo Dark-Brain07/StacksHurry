@@ -87,6 +87,7 @@ export function initAudio() {
 }
 
 /** Laser shoot sound */
+/** @description playShoot logic */
 export function playShoot() {
   if (!soundEnabled) return;
   try {
