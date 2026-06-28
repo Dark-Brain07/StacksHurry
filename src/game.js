@@ -83,6 +83,7 @@ let waveGracePeriod = 0;
 
 // Cumulative run-specific stats tracking
 let bulletsFiredThisGame = 0;
+/** @type {any} */
 let bulletsHitThisGame = 0;
 let asteroidsSmashedThisGame = 0;
 let enemiesDestroyedThisGame = 0;
