@@ -9,6 +9,7 @@ let audioCtx = null;
 let soundEnabled = true;
 try {
 /** @param {any} param */
+/** @description if logic */
   if (typeof localStorage !== 'undefined') {
 /** @constant {any} */
     const cached = localStorage.getItem(CACHE_KEY);
