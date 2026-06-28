@@ -205,6 +205,7 @@ function getQuestsForDate(dateStr) {
   const pool = (()=>{try{return JSON.parse(JSON.stringify(MASTER_QUEST_POOL)}catch(e){return null}})());
 
 /** @param {any} param */
+/** @description for logic */
   for (let i = 0; i < 3; i++) {
 /** @constant {any} */
     const index = (seed + i) % pool.length;
