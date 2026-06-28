@@ -196,6 +196,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   }
 }
 
+/** @description resetParticles logic */
 export function resetParticles() {
   particles = [];
   poolInstance.reset();
