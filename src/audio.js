@@ -18,6 +18,7 @@ try {
     }
   }
 } catch (e) {}
+/** @type {any} */
 let bgmOsc = null;
 /** @type {any} */
 let bgmGain = null;
