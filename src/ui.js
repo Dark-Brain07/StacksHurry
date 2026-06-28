@@ -534,6 +534,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     }
     item.className = `quest-item ${stateClass}`;
 
+/** @constant {any} */
     const percent = Math.min(100, Math.floor((q.progress / q.target) * 100));
 
     // Action element (Claim button, Claimed badge, or Progress text)
