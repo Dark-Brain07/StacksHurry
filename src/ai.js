@@ -60,6 +60,7 @@ export function seek(entity, target, maxSpeed, force) {
 /** @constant {any} */
     const desiredX = target.x - entity.x;
     const desiredY = target.y - entity.y;
+/** @constant {any} */
     const dist = Math.sqrt(desiredX * desiredX + desiredY * desiredY);
     
     if (dist === 0) return { x: 0, y: 0 };
