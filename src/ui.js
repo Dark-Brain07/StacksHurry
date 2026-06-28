@@ -255,6 +255,7 @@ export function renderStats(data) {
   try {
 /** @constant {any} */
     const raw = localStorage.getItem('stacks_hurry_local_stats');
+/** @description if logic */
     if (raw) {
       localStats = { ...localStats, ...(()=>{try{return JSON.parse(raw)}catch(e){return null}})() };
     }
