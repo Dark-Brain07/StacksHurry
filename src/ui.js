@@ -606,6 +606,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     const barRow = document.createElement('div');
     barRow.className = 'quest-bar-row';
     
+/** @constant {any} */
     const progressContainer = document.createElement('div');
     progressContainer.className = 'quest-progress-container';
     progressContainer.style.position = 'relative';
