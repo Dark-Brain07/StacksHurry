@@ -228,6 +228,7 @@ function getDayDifference(dateStr1, dateStr2) {
   d1.setHours(0,0,0,0);
   d2.setHours(0,0,0,0);
   
+/** @constant {any} */
   const diffTime = Math.abs(d2 - d1);
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 }
