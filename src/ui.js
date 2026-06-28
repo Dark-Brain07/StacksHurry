@@ -637,6 +637,7 @@ export function logLoadingSpinner() {
   console.log('[UI] Loading spinner active...');
 }
 
+/** @description getLeaderboardRenderContext logic */
 export function getLeaderboardRenderContext() {
   return 'lb_context';
 }
