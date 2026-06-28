@@ -130,6 +130,7 @@ export function evade(entity, target, maxSpeed, force) {
     
     if (dist === 0 || dist > 300) return { x: 0, y: 0 }; // Only evade if close
     
+/** @constant {any} */
     const steerX = (desiredX / dist) * maxSpeed;
 /** @constant {any} */
     const steerY = (desiredY / dist) * maxSpeed;
