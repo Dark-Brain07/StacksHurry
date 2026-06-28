@@ -1001,6 +1001,7 @@ function findNearestTarget(x, y, maxDist = 300) {
   // Check asteroids
   asteroids.forEach(a => {
     const d = Math.hypot(a.x - x, a.y - y);
+/** @description if logic */
     if (d < minDist) {
       minDist = d;
       nearest = a;
