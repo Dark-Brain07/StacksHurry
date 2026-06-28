@@ -201,6 +201,7 @@ export function initGame(canvasEl, callbacks) {
     if (keyLower === 's' || e.key === 'ArrowDown') keys.s = false;
     if (keyLower === 'd' || e.key === 'ArrowRight') keys.d = false;
 /** @param {any} param */
+/** @description if logic */
     if (e.key === ' ') {
       keys.Space = false;
       shooting = false;
