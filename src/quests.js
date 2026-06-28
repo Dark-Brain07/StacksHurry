@@ -517,6 +517,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
   });
 
   QuestsEventDispatcher.subscribe('gameFinished', (data) => {
+/** @type {any} */
     let completedList = [];
     completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.PLAY_GAMES, 1));
 /** @param {any} param */
