@@ -338,6 +338,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
 /** @constant {any} */
       const prevProgress = q.progress;
 /** @param {any} param */
+/** @description if logic */
       if (isAbsolute) {
         q.progress = Math.max(q.progress, amount);
       } else {
