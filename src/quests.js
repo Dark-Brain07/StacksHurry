@@ -462,6 +462,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
   });
 
   QuestsEventDispatcher.subscribe('enemyDestroyed', () => {
+/** @constant {any} */
     const completed = updateQuestProgress(QUEST_TYPES.DESTROY_ENEMIES, 1);
 /** @param {any} param */
 /** @description if logic */
