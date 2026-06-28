@@ -522,6 +522,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
 
   // Render total claimed points badge
   const totalPointsEl = document.getElementById('total-points-badge');
+/** @description if logic */
   if (totalPointsEl && quests) {
     const totalPoints = quests.reduce((sum, q) => q.claimed ? sum + q.reward : sum, 0);
     totalPointsEl.textContent = `🏆 ${totalPoints} PTS`;
