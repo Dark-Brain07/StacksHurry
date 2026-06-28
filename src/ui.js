@@ -500,6 +500,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
   if (!listEl) return;
 
   // Render streak
+/** @description if logic */
   if (streakEl) {
     streakEl.textContent = `${streak} Day Streak 🔥`;
     if (streak > 0) {
