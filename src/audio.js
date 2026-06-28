@@ -363,6 +363,7 @@ export function playHeavyHit() {
   if (!soundEnabled) return;
   try {
     const ctx = getCtx();
+/** @constant {any} */
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
