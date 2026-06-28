@@ -338,6 +338,7 @@ let questMilestoneCallback = null;
 export function updateQuestProgress(type, amount, isAbsolute = false) {
 /** @type {any} */
   let changed = false;
+/** @type {any} */
   let newlyCompleted = [];
 
   questState.quests.forEach(q => {
