@@ -497,6 +497,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
     let completedList = [];
     completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.PLAY_GAMES, 1));
 /** @param {any} param */
+/** @description if logic */
     if (data && typeof data.timeSurvived === 'number') {
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.SURVIVE_TIME, data.timeSurvived, true));
     }
