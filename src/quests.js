@@ -494,6 +494,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
   QuestsEventDispatcher.subscribe('shieldAbsorbed', () => {
     const completed = updateQuestProgress(QUEST_TYPES.SHIELD_ABSORB, 1);
 /** @param {any} param */
+/** @description if logic */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
