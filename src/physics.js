@@ -125,6 +125,7 @@ export class Vector2D {
    * @param {number} amt The interpolation amount (usually 0 to 1)
    * @returns {Vector2D} This vector (for chaining)
    */
+/** @description lerp logic */
   lerp(v, amt) {
     this.x = (1 - amt) * this.x + amt * v.x;
     this.y = (1 - amt) * this.y + amt * v.y;
