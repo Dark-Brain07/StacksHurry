@@ -59,6 +59,7 @@ let floatingTexts = [];
 let score = 0;
 let lives = 3;
 let level = 1;
+/** @type {any} */
 let asteroidsDestroyed = 0;
 let frameCount = 0;
 let comboCount = 0;
