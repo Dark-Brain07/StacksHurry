@@ -508,6 +508,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     const item = document.createElement('div');
     
     // Class names based on state
+/** @type {any} */
     let stateClass = '';
     if (q.claimed) {
       stateClass = 'claimed';
