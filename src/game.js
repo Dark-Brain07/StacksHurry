@@ -659,6 +659,7 @@ function update() {
   // Update bullets
   bullets = bullets.filter(b => {
     if (b.isHoming && b.target) {
+/** @description if logic */
       if (b.target.hp <= 0 || b.target.y > canvas.height) {
         b.target = null;
       } else {
