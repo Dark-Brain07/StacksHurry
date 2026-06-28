@@ -141,6 +141,7 @@ let onLevelUpdate = null;
 let onLevelProgress = null;
 let onAchievement = null;
 let onVibrate = null;
+/** @type {any} */
 let onGameOver = null;
 
 // ─── Initialization ───
