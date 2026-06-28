@@ -79,6 +79,7 @@ export class Particle {
  */
 class ParticlePool {
 /** @param {any} param */
+/** @description constructor logic */
   constructor(size = 800) {
     this.pool = Array.from({ length: size }, () => new Particle());
   }
