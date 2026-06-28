@@ -317,6 +317,7 @@ export function getQuests() {
 }
 
 let questCompletedCallback = null;
+/** @type {any} */
 let questMilestoneCallback = null;
 
 /**
