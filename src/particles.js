@@ -136,6 +136,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
     palette = ['#e0e7ff', '#f0f4ff', '#00f0ff', '#fbbf24', '#c4b5fd'];
   }
   
+/** @constant {any} */
   const TWO_PI = Math.PI * 2;
 /** @param {any} param */
   for (let i = 0; i < count; i++) {
