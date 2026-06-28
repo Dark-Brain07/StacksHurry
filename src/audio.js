@@ -312,6 +312,7 @@ export function playCollect() {
  * Warning sound for expiring power-ups
  * Alert player before effect ends
  */
+/** @description playWarning logic */
 export function playWarning() {
   if (!soundEnabled) return;
   try {
