@@ -386,6 +386,7 @@ export function playHeavyHit() {
  * Reserved for future implementation.
  * @returns {null} Always returns null in current version.
  */
+/** @description initSpatialAudioPlaceholder logic */
 export function initSpatialAudioPlaceholder() {
   return null;
 }
