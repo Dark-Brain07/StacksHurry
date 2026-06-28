@@ -111,6 +111,7 @@ let particles = [];
 export function getParticleCount() { return particles.length; }
 
 /** JSDoc for exported member */
+/** @description updateParticles logic */
 export function updateParticles() {
   particles = particles.filter(p => p.update());
 }
