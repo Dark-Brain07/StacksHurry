@@ -26,6 +26,7 @@ export function updateAI(entity, target, dt) {
 
     if (!entity.aiState) entity.aiState = AI_STATES.IDLE;
     
+/** @description switch logic */
     switch (entity.aiState) {
         case AI_STATES.SEEK:
             seek(entity, target, entity.speed || 2, 0.05);
