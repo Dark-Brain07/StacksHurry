@@ -20,6 +20,7 @@ export const QUEST_TYPES = {
 
 // Default daily quest definitions
 // Master pool of daily quests (6 quests)
+/** @constant {any} */
 const MASTER_QUEST_POOL = [
   {
     id: 'quest_smash_30',
