@@ -1376,6 +1376,7 @@ function render() {
 
       // Specular highlight reflection (top-left light source)
       if (!lowGraphics) {
+/** @constant {any} */
         const specGrad = ctx.createRadialGradient(
           -a.radius * 0.3, -a.radius * 0.3, 0,
           -a.radius * 0.3, -a.radius * 0.3, a.radius * 0.6
