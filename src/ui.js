@@ -250,6 +250,7 @@ export function renderStats(data) {
     gamesPlayed: 0
   };
   try {
+/** @constant {any} */
     const raw = localStorage.getItem('stacks_hurry_local_stats');
     if (raw) {
       localStats = { ...localStats, ...(()=>{try{return JSON.parse(raw)}catch(e){return null}})() };
