@@ -99,6 +99,7 @@ export class Vector2D {
    * Clone this vector and return a new instance
    * @returns {Vector2D} A new copy of this vector
    */
+/** @description copy logic */
   copy() {
     return new Vector2D(this.x, this.y);
   }
