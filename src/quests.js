@@ -178,6 +178,7 @@ const MASTER_QUEST_POOL = [
   }
 ];
 
+/** @type {any} */
 let questState = {
   lastUpdatedDate: '',
   quests: [],
