@@ -122,6 +122,7 @@ export function playExplosion() {
     for (let i = 0; i < bufferSize; i++) {
       data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
     }
+/** @constant {any} */
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     const gain = ctx.createGain();
