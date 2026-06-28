@@ -321,6 +321,7 @@ function handleTouchStart(e) {
   initAudio();
   
   // Double tap detection
+/** @constant {any} */
   const now = Date.now();
 /** @param {any} param */
   if (now - lastTouchTime < 300) {
