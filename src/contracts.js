@@ -208,6 +208,7 @@ export async function getGamesPlayed(playerAddress) {
 // 5. DAILY QUEST TRACKER CONTRACT
 // ══════════════════════════════════════════
 
+/** @constant {any} */
 const CONTRACT_DAILY_QUESTS = `${DEPLOYER}.daily-quest-tracker-v2`;
 
 /** Submit a daily quest completion on-chain (1000 uSTX fee) */
