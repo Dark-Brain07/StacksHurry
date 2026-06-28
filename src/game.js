@@ -1029,6 +1029,7 @@ function findNearestTarget(x, y, maxDist = 300) {
 }
 
 function createBullet(x, y, vx, vy, isHoming = false) {
+/** @constant {any} */
   const b = bulletPool.get();
   b.x = x;
   b.y = y;
