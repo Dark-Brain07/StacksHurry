@@ -236,6 +236,7 @@ function getDayDifference(dateStr1, dateStr2) {
  * Load quests from localStorage or initialize defaults
  */
 export function loadQuests() {
+/** @constant {any} */
   const today = getTodayString();
   try {
     const raw = localStorage.getItem('stacks_hurry_quests');
