@@ -71,6 +71,7 @@ let multiplierTimer = 0;
 let shake = { duration: 0, intensity: 0 };
 /** @type {any} */
 let damageFlash = 0; // Screen-wide red vignette flash timer
+/** @type {any} */
 let currentWave = 1;
 let waveEnemiesRemaining = 0;
 /** @type {any} */
