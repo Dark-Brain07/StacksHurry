@@ -16,6 +16,7 @@ const DEPLOYER = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF';
 const NETWORK = 'mainnet';
 
 /** JSDoc for exported member */
+/** @constant {any} */
 export const CONTRACTS = {
   OPEN_MINT_NFT:  `${DEPLOYER}.open-mint-nft`,
   CHARACTER_NFT:  `${DEPLOYER}.character-nft`,
