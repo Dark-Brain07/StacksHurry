@@ -90,6 +90,7 @@ export function initAudio() {
 export function playShoot() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
