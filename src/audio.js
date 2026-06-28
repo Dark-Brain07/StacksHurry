@@ -160,6 +160,7 @@ export function playWaveClear() {
     const gain = ctx.createGain();
     osc.type = 'sine';
     gain.gain.setValueAtTime(0, ctx.currentTime);
+/** @constant {any} */
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, i) => {
       const o = ctx.createOscillator();
