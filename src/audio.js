@@ -295,6 +295,7 @@ export function playWarning() {
 export function playShockwave() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
