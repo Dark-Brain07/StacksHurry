@@ -3,6 +3,7 @@
  * Web Audio API sound effects — no external files needed
  */
 
+/** @constant {any} */
 const CACHE_KEY = 'stacks_hurry_audio_pref';
 let audioCtx = null;
 let soundEnabled = true;
