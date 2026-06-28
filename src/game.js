@@ -993,6 +993,7 @@ function startNextWave() {
   // Compress spawn rate slightly per wave to accelerate intensity
   asteroidSpawnRate = Math.max(20, Math.floor(asteroidSpawnRate * 0.95));
   
+/** @description if logic */
   if (currentWave >= 5) {
     spawnFloatingText(canvas.width / 2, canvas.height / 2 - 20, "DANGER: HIGH ESCALATION", "#ef4444");
     spawnFloatingText(canvas.width / 2, canvas.height / 2 + 10, `WAVE ${currentWave}`, "#fbbf24");
