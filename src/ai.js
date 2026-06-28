@@ -59,6 +59,7 @@ export function updateAI(entity, target, dt) {
 export function seek(entity, target, maxSpeed, force) {
 /** @constant {any} */
     const desiredX = target.x - entity.x;
+/** @constant {any} */
     const desiredY = target.y - entity.y;
 /** @constant {any} */
     const dist = Math.sqrt(desiredX * desiredX + desiredY * desiredY);
