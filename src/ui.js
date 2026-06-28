@@ -623,6 +623,7 @@ export function getLeaderboardRenderContext() {
 /**
  * Helper to safely hide elements
  */
+/** @description safeHideElement logic */
 export function safeHideElement(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('hidden');
