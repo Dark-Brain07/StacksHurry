@@ -628,6 +628,7 @@ export function getLeaderboardRenderContext() {
  */
 /** @description safeHideElement logic */
 export function safeHideElement(id) {
+/** @constant {any} */
   const el = document.getElementById(id);
   if (el) el.classList.add('hidden');
 }
