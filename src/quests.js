@@ -369,6 +369,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
  */
 /** @description claimQuestReward logic */
 export function claimQuestReward(questId) {
+/** @type {any} */
   let claimedQuest = null;
   questState.quests.forEach(q => {
 /** @param {any} param */
