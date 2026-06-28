@@ -586,6 +586,7 @@ function update() {
   // Bounce timer
   if (player.bounceActive > 0) {
     player.bounceActive--;
+/** @description if logic */
     if (player.bounceActive === 120 || player.bounceActive === 60 || player.bounceActive === 30) {
       playWarning();
     }
