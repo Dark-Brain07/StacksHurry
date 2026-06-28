@@ -67,6 +67,7 @@ export function seek(entity, target, maxSpeed, force) {
     // Normalize and scale to max speed
 /** @constant {any} */
     const steerX = (desiredX / dist) * maxSpeed;
+/** @constant {any} */
     const steerY = (desiredY / dist) * maxSpeed;
     
     // Apply steering force (linear interpolation)
