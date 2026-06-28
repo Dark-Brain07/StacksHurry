@@ -1573,6 +1573,7 @@ function drawPlayer() {
   }
 
   // Engine glow with enhanced radial bloom
+/** @constant {any} */
   const glowGrad = ctx.createRadialGradient(0, PLAYER_SIZE * 0.5, 2, 0, PLAYER_SIZE * 0.5, PLAYER_SIZE * 1.2);
   glowGrad.addColorStop(0, 'rgba(251,146,60,0.8)');
   glowGrad.addColorStop(0.4, 'rgba(251,146,60,0.35)');
