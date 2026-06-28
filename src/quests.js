@@ -465,6 +465,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 /** @constant {any} */
     const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
 /** @param {any} param */
+/** @description if logic */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
