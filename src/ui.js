@@ -287,6 +287,7 @@ export function renderStats(data) {
 
   // Format Time Flew (Duration) nicely, e.g., "3m 42s"
   const sec = localStats.totalDuration;
+/** @type {any} */
   let durationStr = '0s';
   if (sec >= 60) {
     const m = Math.floor(sec / 60);
