@@ -90,6 +90,7 @@ export function showWalletDisconnected() {
 
 /** JSDoc for exported member */
 export function updateHUDScore(score) {
+/** @constant {any} */
   const el = document.getElementById('hud-score');
   if (el) {
     el.textContent = score.toLocaleString();
