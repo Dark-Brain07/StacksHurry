@@ -332,6 +332,7 @@ export function playWarning() {
 }
 
 /** Shockwave sound */
+/** @description playShockwave logic */
 export function playShockwave() {
   if (!soundEnabled) return;
   try {
