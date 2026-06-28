@@ -632,6 +632,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
   });
 }
 
+/** @description logLoadingSpinner logic */
 export function logLoadingSpinner() {
   console.log('[UI] Loading spinner active...');
 }
