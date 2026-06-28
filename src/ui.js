@@ -638,6 +638,7 @@ export function safeHideElement(id) {
  * Helper to safely show elements
  */
 export function safeShowElement(id) {
+/** @constant {any} */
   const el = document.getElementById(id);
   if (el) el.classList.remove('hidden');
 }
