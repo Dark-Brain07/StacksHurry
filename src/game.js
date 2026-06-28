@@ -128,6 +128,7 @@ export function setSettings(settings) {
 }
 let secondaryCooldown = 0;
 let shockwave = { active: false, x: 0, y: 0, radius: 0 };
+/** @type {any} */
 let lastTouchTime = 0;
 let warpTime = 0;
 let achievements = { score1k: false, score5k: false, level5: false, asteroids50: false };
