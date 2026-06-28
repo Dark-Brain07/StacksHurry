@@ -52,6 +52,7 @@ export function showWalletConnected(address) {
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.6';
 
+/** @constant {any} */
   const short = address.slice(0, 8) + '...' + address.slice(-6);
   addrEl.textContent = short;
   info.classList.remove('hidden');
