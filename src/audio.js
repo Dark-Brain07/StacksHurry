@@ -237,6 +237,7 @@ export function playGameOver() {
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.type = 'sine';
+/** @constant {any} */
       const t = ctx.currentTime + i * 0.15;
       osc.frequency.setValueAtTime(freq, t);
       gain.gain.setValueAtTime(0.2, t);
