@@ -238,6 +238,7 @@ export function playGameOver() {
   if (!soundEnabled) return;
   try {
     const ctx = getCtx();
+/** @constant {any} */
     const notes = [400, 350, 300, 200];
     notes.forEach((freq, i) => {
 /** @constant {any} */
