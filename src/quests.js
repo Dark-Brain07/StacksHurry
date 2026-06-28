@@ -205,6 +205,7 @@ function getQuestsForDate(dateStr) {
 
 /** @param {any} param */
   for (let i = 0; i < 3; i++) {
+/** @constant {any} */
     const index = (seed + i) % pool.length;
     selected.push(pool.splice(index, 1)[0]);
   }
