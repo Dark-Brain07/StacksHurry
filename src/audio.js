@@ -201,6 +201,7 @@ export function playWaveClear() {
 export function playHit() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
 /** @constant {any} */
     const osc = ctx.createOscillator();
