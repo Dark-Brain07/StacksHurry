@@ -511,6 +511,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
       completedList = completedList.concat(updateQuestProgress(QUEST_TYPES.REACH_SCORE, data.score, true));
     }
 /** @param {any} param */
+/** @description if logic */
     if (completedList.length > 0 && questCompletedCallback) {
       completedList.forEach(q => questCompletedCallback(q));
     }
