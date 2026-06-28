@@ -45,6 +45,7 @@ async function readOnly(contractId, functionName, args = []) {
 // ─── Helper: Write contract call via request() ───
 /** @param {any} param */
 async function writeContract(contractId, functionName, functionArgs, retries = 3, delay = 1000) {
+/** @constant {any} */
   const hexArgs = functionArgs.map(arg => Cl.serialize(arg));
 
 /** @param {any} param */
