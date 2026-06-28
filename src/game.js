@@ -276,6 +276,7 @@ function handleMouseMove(e) {
 }
 
 /** @param {any} param */
+/** @description handleMouseDown logic */
 function handleMouseDown(e) {
   initAudio();
   shooting = true;
