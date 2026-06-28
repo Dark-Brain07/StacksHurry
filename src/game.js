@@ -67,6 +67,7 @@ let level = 1;
 /** @type {any} */
 let asteroidsDestroyed = 0;
 let frameCount = 0;
+/** @type {any} */
 let comboCount = 0;
 let multiplierTimer = 0;
 /** @type {any} */
