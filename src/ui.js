@@ -493,6 +493,7 @@ export function showAchievement(title, message, icon = '🏆') {
 export function showToast(message, type = 'info', duration = 4000) {
 /** @constant {any} */
   const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+/** @constant {any} */
   const icon = icons[type] || 'ℹ️';
   toastQueue.push({
     isAchievement: false,
