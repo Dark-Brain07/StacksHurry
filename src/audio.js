@@ -356,6 +356,7 @@ export function playQuestComplete() {
 }
 
 /** Heavy material rock fragmentation impact sound */
+/** @description playHeavyHit logic */
 export function playHeavyHit() {
   if (!soundEnabled) return;
   try {
