@@ -345,6 +345,7 @@ export function hideSettingsModal() {
 // ─── Toast Notifications ───
 
 const toastQueue = [];
+/** @type {any} */
 let isProcessingToast = false;
 
 function processToastQueue() {
