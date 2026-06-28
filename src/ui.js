@@ -148,6 +148,7 @@ export function runCountdown(callback) {
 
   const interval = setInterval(() => {
     count--;
+/** @description if logic */
     if (count > 0) {
       countdownEl.textContent = count;
     } else if (count === 0) {
