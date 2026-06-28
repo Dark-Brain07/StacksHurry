@@ -18,6 +18,7 @@ export function initUI() {
         hideSettingsModal();
         e.stopPropagation();
       }
+/** @constant {any} */
       const mint = document.getElementById('modal-mint');
       if (mint && !mint.classList.contains('hidden')) {
         hideMintModal();
