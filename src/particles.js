@@ -167,6 +167,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   if (!lowGraphics && radius > 20) {
 /** @param {any} param */
     for (let i = 0; i < 4; i++) {
+/** @constant {any} */
       const angle = Math.random() * TWO_PI;
 /** @constant {any} */
       const speed = Math.random() * 2 + 0.5;
