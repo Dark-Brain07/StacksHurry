@@ -408,6 +408,7 @@ export const QuestsEventDispatcher = {
     }
   },
 /** @param {any} param */
+/** @description subscribe logic */
   subscribe(event, callback) {
     if (!listeners[event]) listeners[event] = [];
     listeners[event].push(callback);
