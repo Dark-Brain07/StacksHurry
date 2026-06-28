@@ -121,6 +121,7 @@ let autoFire = true;
 /** @type {any} */
 let shakeMultiplier = 1.0;
 let joystickScale = 1.0;
+/** @type {any} */
 let shipTheme = DEFAULT_SHIP_THEME;
 const keys = { w: false, a: false, s: false, d: false, Space: false };
 let keyboardActive = false;
