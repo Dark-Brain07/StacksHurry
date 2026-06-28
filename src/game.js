@@ -1347,6 +1347,7 @@ function render() {
     if (a.isShielded && a.hp < (a.maxHp || 3)) {
       const maxHp = a.maxHp || 3;
       const barWidth = a.radius * 1.5;
+/** @constant {any} */
       const barHeight = 4;
       ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
       ctx.fillRect(a.x - barWidth/2, a.y - a.radius - 12, barWidth, barHeight);
