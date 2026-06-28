@@ -28,6 +28,7 @@ export const CONTRACTS = {
 async function readOnly(contractId, functionName, args = []) {
   try {
     const [contractAddress, contractName] = contractId.split('.');
+/** @constant {any} */
     const result = await fetchCallReadOnlyFunction({
       contractAddress,
       contractName,
