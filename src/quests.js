@@ -385,6 +385,7 @@ export function claimQuestReward(questId) {
   });
 
 /** @param {any} param */
+/** @description if logic */
   if (claimedQuest) {
     saveQuests();
   }
