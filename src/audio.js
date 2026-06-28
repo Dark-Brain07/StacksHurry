@@ -391,6 +391,7 @@ export function initSpatialAudioPlaceholder() {
 }
 
 /** Update procedural speed hum frequency based on movement speed */
+/** @description updateSpeedHum logic */
 export function updateSpeedHum(speedRatio) {
   if (!soundEnabled || !bgmOsc || !audioCtx) return;
   try {
