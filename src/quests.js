@@ -238,6 +238,7 @@ function getDayDifference(dateStr1, dateStr2) {
 /**
  * Load quests from localStorage or initialize defaults
  */
+/** @description loadQuests logic */
 export function loadQuests() {
 /** @constant {any} */
   const today = getTodayString();
