@@ -1724,6 +1724,7 @@ export function showQuestNotificationInGame(text, color = '#38bdf8') {
 function saveLocalStats() {
   try {
     const raw = localStorage.getItem('stacks_hurry_local_stats');
+/** @type {any} */
     let stats = {
       totalAsteroids: 0,
       totalEnemies: 0,
