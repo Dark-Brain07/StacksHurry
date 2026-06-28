@@ -169,6 +169,7 @@ export class Vector2D {
  * @param {number} r2 Radius of circle 2.
  * @returns {boolean} True if the circles are colliding.
  */
+/** @description checkCircleCollision logic */
 export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
   // Overload to support Vector2D parameters: checkCircleCollision(vec1, r1, vec2, r2)
 /** @description if logic */
