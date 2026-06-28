@@ -233,6 +233,7 @@ export function showLeaderboardLoading() {
 /** JSDoc for exported member */
 export function renderStats(data) {
   setTimeout(() => {
+/** @constant {any} */
     const listEl = document.getElementById('local-scores-list');
     if (listEl) {
       try {
