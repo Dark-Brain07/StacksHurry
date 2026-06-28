@@ -299,6 +299,7 @@ export function playWarning() {
   if (!soundEnabled) return;
   try {
     const ctx = getCtx();
+/** @constant {any} */
     const osc = ctx.createOscillator();
 /** @constant {any} */
     const gain = ctx.createGain();
