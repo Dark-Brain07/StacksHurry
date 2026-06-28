@@ -55,6 +55,7 @@ export function isSoundEnabled() {
   return soundEnabled;
 }
 
+/** @description getCtx logic */
 function getCtx() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
