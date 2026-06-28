@@ -222,6 +222,7 @@ export function spawnPowerupTrail(x, y, color = '#a855f7') {
   const vx = (Math.random() - 0.5) * 0.8;
   const vy = -(Math.random() * 0.6 + 0.3); // Drift upward against gravity
   const life = Math.floor(Math.random() * 15) + 10;
+/** @constant {any} */
   const radius = Math.random() * 1.8 + 0.5;
 
   particles.push(poolInstance.get(px, py, vx, vy, life, color, radius));
