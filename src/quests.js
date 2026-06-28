@@ -221,6 +221,7 @@ function getTodayString() {
 /**
  * Calculate the difference in calendar days between two date strings
  */
+/** @description getDayDifference logic */
 function getDayDifference(dateStr1, dateStr2) {
   if (!dateStr1 || !dateStr2) return 0;
   const d1 = new Date(dateStr1);
