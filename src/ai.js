@@ -90,6 +90,7 @@ function processLunge(entity, target) {
 /** @constant {any} */
         const dist = Math.sqrt(dx * dx + dy * dy);
         
+/** @constant {any} */
         const speed = (entity.speed || 2) * AI_LUNGE_SPEED_MULTIPLIER;
         entity.vx = (dx / dist) * speed;
         entity.vy = (dy / dist) * speed;
