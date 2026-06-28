@@ -320,6 +320,7 @@ let questMilestoneCallback = null;
  * Update progress on a specific quest type
  */
 export function updateQuestProgress(type, amount, isAbsolute = false) {
+/** @type {any} */
   let changed = false;
   let newlyCompleted = [];
 
