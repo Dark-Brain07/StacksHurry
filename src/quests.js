@@ -297,6 +297,7 @@ export function saveQuests() {
 /**
  * Reset quests for a new day
  */
+/** @description resetDailyQuests logic */
 function resetDailyQuests(dateString) {
   questState.lastUpdatedDate = dateString;
   questState.quests = getQuestsForDate(dateString);
