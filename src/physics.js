@@ -123,6 +123,7 @@ export class Vector2D {
   distSq(v) {
 /** @constant {any} */
     const dx = this.x - v.x;
+/** @constant {any} */
     const dy = this.y - v.y;
     return dx * dx + dy * dy;
   }
