@@ -249,6 +249,7 @@ export function loadQuests() {
   try {
     const raw = localStorage.getItem('stacks_hurry_quests');
 /** @param {any} param */
+/** @description if logic */
     if (raw) {
       const parsed = JSON.parse(raw);
 /** @param {any} param */
