@@ -92,6 +92,7 @@ class ParticlePool {
   }
 
 /** @param {any} param */
+/** @description reset logic */
   reset() {
     this.pool.forEach(p => p.active = false);
   }
