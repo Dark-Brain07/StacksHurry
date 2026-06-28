@@ -131,6 +131,7 @@ export async function submitHighScore(score) {
 
 /** Get a player's hall-of-fame high score */
 export async function getHallOfFameScore(playerAddress) {
+/** @constant {any} */
   const result = await readOnly(
     CONTRACTS.SCORE,
     'get-high-score',
