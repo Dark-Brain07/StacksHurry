@@ -161,6 +161,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 /** @param {any} param */
     for (let i = 0; i < 4; i++) {
       const angle = Math.random() * TWO_PI;
+/** @constant {any} */
       const speed = Math.random() * 2 + 0.5;
       particles.push(poolInstance.get(
         x, y,
