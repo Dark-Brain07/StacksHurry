@@ -818,6 +818,7 @@ function update() {
 
           if (onLivesUpdate) onLivesUpdate(lives);
 
+/** @description if logic */
           if (lives <= 0) {
             gameRunning = false;
             playGameOver();
