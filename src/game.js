@@ -581,6 +581,7 @@ function update() {
   }
 
   // Speed timer
+/** @description if logic */
   if (player.speedActive > 0) {
     player.speedActive--;
 /** @description if logic */
