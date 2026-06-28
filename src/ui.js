@@ -352,6 +352,7 @@ export function hidePauseModal() {
 }
 
 /** JSDoc for exported member */
+/** @description showSettingsModal logic */
 export function showSettingsModal() {
   document.getElementById('modal-settings').classList.remove('hidden');
 }
