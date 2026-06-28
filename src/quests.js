@@ -367,6 +367,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
 /**
  * Claim quest reward and return the quest details if successful
  */
+/** @description claimQuestReward logic */
 export function claimQuestReward(questId) {
   let claimedQuest = null;
   questState.quests.forEach(q => {
