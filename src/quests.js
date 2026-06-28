@@ -440,6 +440,7 @@ export const QuestsEventDispatcher = {
 /** @description dispatchEvent logic */
   dispatchEvent(event, data) {
 /** @param {any} param */
+/** @description if logic */
     if (listeners[event]) {
       listeners[event].forEach(cb => cb(data));
     }
