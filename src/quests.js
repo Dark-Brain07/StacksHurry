@@ -189,6 +189,7 @@ let questState = {
 function getQuestsForDate(dateStr) {
   let hash = 0;
 /** @param {any} param */
+/** @description for logic */
   for (let i = 0; i < dateStr.length; i++) {
     hash = dateStr.charCodeAt(i) + ((hash << 5) - hash);
   }
