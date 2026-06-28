@@ -84,6 +84,7 @@ export class Vector2D {
     return this.x * v.x + this.y * v.y;
   }
 
+/** @description dist logic */
   dist(v) {
     return Math.hypot(this.x - v.x, this.y - v.y);
   }
