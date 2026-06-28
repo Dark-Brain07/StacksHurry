@@ -109,6 +109,7 @@ export function playShoot() {
 }
 
 /** Explosion sound */
+/** @description playExplosion logic */
 export function playExplosion() {
   if (!soundEnabled) return;
   try {
