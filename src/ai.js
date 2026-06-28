@@ -112,6 +112,7 @@ function processLunge(entity, target) {
 /**
  * Orbital behavior: circles around a target at a fixed distance
  */
+/** @description orbit logic */
 export function orbit(entity, target, radius, speed) {
     entity.orbitAngle = (entity.orbitAngle || 0) + speed;
     entity.x = target.x + Math.cos(entity.orbitAngle) * radius;
