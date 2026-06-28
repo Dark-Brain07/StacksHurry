@@ -11,6 +11,7 @@
  */
 export class Vector2D {
 /** @param {any} param */
+/** @description constructor logic */
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
