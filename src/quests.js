@@ -335,6 +335,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
       }
 
 /** @param {any} param */
+/** @description if logic */
       if (q.progress >= q.target) {
         q.progress = q.target;
         q.completed = true;
