@@ -64,6 +64,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
       if (attempt === retries) {
         throw new Error(`Transaction failed after ${retries} attempts. Reason: ${error.message || error}`);
       }
+/** @constant {any} */
       const backoff = delay * Math.pow(2, attempt - 1);
       console.log(`[TX Retry] Backing off for ${backoff}ms before retry...`);
       await new Promise(resolve => setTimeout(resolve, backoff));
