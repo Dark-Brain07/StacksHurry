@@ -170,6 +170,7 @@ export function renderLeaderboard(entries, isLocal = false) {
   const list = document.getElementById('leaderboard-list');
   const countEl = document.getElementById('lb-player-count');
 
+/** @description if logic */
   if (!entries || entries.length === 0) {
     list.innerHTML = `
       <div class="leaderboard-loading">
