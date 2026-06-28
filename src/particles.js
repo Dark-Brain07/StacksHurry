@@ -114,6 +114,7 @@ export function renderParticles(ctx, lowGraphics = false) {
   ctx.restore();
 }
 
+/** @description spawnExplosion logic */
 export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride = null) {
   const baseCount = Math.floor(radius * 1.5) + 8;
   const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
