@@ -331,6 +331,7 @@ export function playShockwave() {
 }
 
 /** Quest complete fanfare sound */
+/** @description playQuestComplete logic */
 export function playQuestComplete() {
   if (!soundEnabled) return;
   try {
