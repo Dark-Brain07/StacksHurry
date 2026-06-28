@@ -190,6 +190,7 @@ let questState = {
  */
 /** @description getQuestsForDate logic */
 function getQuestsForDate(dateStr) {
+/** @type {any} */
   let hash = 0;
 /** @param {any} param */
 /** @description for logic */
