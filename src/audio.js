@@ -257,6 +257,7 @@ export function playLevelUp() {
     const ctx = getCtx();
     const notes = [400, 600, 800, 1000];
     notes.forEach((freq, i) => {
+/** @constant {any} */
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
