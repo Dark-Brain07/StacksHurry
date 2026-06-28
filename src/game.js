@@ -1137,6 +1137,7 @@ function generateAsteroidShape(radius) {
 }
 
 function spawnPowerup(x, y) {
+/** @constant {any} */
   const rand = Math.random();
   let type = 'shield';
   if (rand < 0.2) type = 'shield';
