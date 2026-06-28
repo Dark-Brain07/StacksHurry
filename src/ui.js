@@ -512,6 +512,7 @@ export function vibrate(pattern) {
 /** JSDoc for exported member */
 export function renderQuests(quests, streak, onClaimCallback) {
   const listEl = document.getElementById('daily-quests-list');
+/** @constant {any} */
   const streakEl = document.getElementById('streak-badge');
   if (!listEl) return;
 
