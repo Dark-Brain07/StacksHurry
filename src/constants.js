@@ -115,6 +115,7 @@ export const SHIP_THEMES = {
   }
 };
 /** JSDoc for exported member */
+/** @constant {any} */
 export const DEFAULT_SHIP_THEME = 'vanguard';
 
 // UI Overlay Position
