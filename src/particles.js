@@ -126,6 +126,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 /** @constant {any} */
   const count = lowGraphics ? Math.floor(baseCount / 3) : baseCount;
   
+/** @type {any} */
   let palette;
 /** @param {any} param */
   if (colorOverride) {
