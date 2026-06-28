@@ -789,6 +789,7 @@ function update() {
         QuestsEventDispatcher.dispatchEvent('asteroidSmashed');
 
         if (onScoreUpdate) onScoreUpdate(score);
+/** @description if logic */
         if (onLevelProgress) {
           const progress = (asteroidsDestroyed % LEVEL_THRESHOLD) / LEVEL_THRESHOLD * 100;
           onLevelProgress(progress);
