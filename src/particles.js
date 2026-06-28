@@ -208,6 +208,7 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
  * @param {number} y - Powerup Y position
  * @param {string} color - Trail color matching powerup type
  */
+/** @description spawnPowerupTrail logic */
 export function spawnPowerupTrail(x, y, color = '#a855f7') {
   const px = x + (Math.random() - 0.5) * 14;
   const py = y + (Math.random() - 0.5) * 8;
