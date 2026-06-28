@@ -118,6 +118,7 @@ export class Vector2D {
    * @param {Vector2D} v The target vector
    * @returns {number} The squared distance
    */
+/** @description distSq logic */
   distSq(v) {
 /** @constant {any} */
     const dx = this.x - v.x;
