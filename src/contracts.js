@@ -170,6 +170,7 @@ export async function getPlayerScore(playerAddress) {
 
 /** Get player's high score only */
 export async function getPlayerHighScore(playerAddress) {
+/** @constant {any} */
   const result = await readOnly(
     CONTRACTS.ROCKET_SHOOTER,
     'get-high-score',
