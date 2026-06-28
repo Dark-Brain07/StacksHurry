@@ -192,6 +192,7 @@ export function renderLeaderboard(entries, isLocal = false) {
   list.innerHTML = entries.map((entry, i) => {
     const rank = i + 1;
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+/** @constant {any} */
     const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
     const addr = isLocal ? `Pilot #${rank} (${entry.date || 'Today'})` : (entry.address.slice(0, 8) + '...' + entry.address.slice(-4));
 
