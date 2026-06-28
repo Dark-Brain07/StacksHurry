@@ -117,6 +117,7 @@ export function renderParticles(ctx, lowGraphics = false) {
   if (!ctx) return;
   ctx.save();
 /** @param {any} param */
+/** @description if logic */
   if (!lowGraphics) {
     ctx.globalCompositeOperation = 'lighter';
   }
