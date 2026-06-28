@@ -386,6 +386,7 @@ function processToastQueue() {
   const toast = document.createElement('div');
   toast.className = item.isAchievement ? 'toast achievement' : `toast ${item.type || ''}`;
   
+/** @description if logic */
   if (item.isAchievement) {
     toast.innerHTML = `
       <div class="toast-icon">${item.icon}</div>
