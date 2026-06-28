@@ -277,6 +277,7 @@ export function renderStats(data) {
   document.getElementById('stat-games').textContent = finalGamesPlayed.toLocaleString();
   document.getElementById('stat-halloffame').textContent = (data.hallOfFameScore || 0).toLocaleString();
 
+/** @description if logic */
   if (data.lastPlayed && data.lastPlayed > 0) {
     document.getElementById('stat-lastplayed').textContent = `Block #${data.lastPlayed}`;
   } else {
