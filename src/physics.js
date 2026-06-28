@@ -119,6 +119,7 @@ export class Vector2D {
    * @returns {number} The squared distance
    */
   distSq(v) {
+/** @constant {any} */
     const dx = this.x - v.x;
     const dy = this.y - v.y;
     return dx * dx + dy * dy;
