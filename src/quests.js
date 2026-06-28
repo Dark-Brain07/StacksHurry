@@ -402,6 +402,7 @@ export function claimQuestReward(questId) {
 }
 
 // ─── Event Dispatcher Architecture ───
+/** @constant {any} */
 const listeners = {};
 
 export const QuestsEventDispatcher = {
