@@ -393,6 +393,7 @@ export function updateSpeedHum(speedRatio) {
   if (!soundEnabled || !bgmOsc || !audioCtx) return;
   try {
     // Dynamically modulate background drone frequency between 55Hz and 120Hz for speed feedback
+/** @constant {any} */
     const targetFreq = 55 + (speedRatio * 65);
     bgmOsc.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.15);
   } catch (e) {
