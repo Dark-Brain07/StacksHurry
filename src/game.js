@@ -1367,6 +1367,7 @@ function render() {
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
 
+/** @description if logic */
     if (p.type === 'shield') {
       // Shield Icon (Diamond)
       ctx.beginPath();
