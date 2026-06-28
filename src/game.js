@@ -219,6 +219,7 @@ function generateStars() {
   const starColors = ['#ffffff', '#e0f2fe', '#fef08a', '#c4b5fd', '#93c5fd'];
 
   // 3-layer parallax depth system: far (slow/small), mid, near (fast/bright)
+/** @constant {any} */
   const layers = [
     { count: 80, speedRange: [0.05, 0.2], radiusRange: [0.2, 0.8], brightnessRange: [0.15, 0.35], depthLabel: 'far' },
     { count: 50, speedRange: [0.2, 0.5], radiusRange: [0.5, 1.4], brightnessRange: [0.3, 0.55], depthLabel: 'mid' },
