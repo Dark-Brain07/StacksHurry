@@ -16,6 +16,7 @@ try {
 /** @constant {any} */
     const cached = localStorage.getItem(CACHE_KEY);
 /** @param {any} param */
+/** @description if logic */
     if (cached !== null) {
       soundEnabled = cached === 'true';
     }
