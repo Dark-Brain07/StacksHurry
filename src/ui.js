@@ -438,6 +438,7 @@ export function renderAchievementsGallery() {
 
   listEl.innerHTML = ACHIEVEMENT_DEFINITIONS.map(ach => {
     const isUnlocked = !!earned[ach.id];
+/** @constant {any} */
     const dateStr = isUnlocked ? new Date(earned[ach.id]).toLocaleDateString() : '';
     
     return `
