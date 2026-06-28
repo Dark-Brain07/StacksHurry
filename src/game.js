@@ -76,6 +76,7 @@ let currentWave = 1;
 let waveEnemiesRemaining = 0;
 /** @type {any} */
 let waveInProgress = false;
+/** @type {any} */
 let waveGracePeriod = 0;
 
 // Cumulative run-specific stats tracking
