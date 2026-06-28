@@ -398,6 +398,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
 ];
 
 /** JSDoc for exported member */
+/** @description renderAchievementsGallery logic */
 export function renderAchievementsGallery() {
   const listEl = document.getElementById('achievements-gallery-list');
   if (!listEl) return;
