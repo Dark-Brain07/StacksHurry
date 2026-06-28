@@ -419,6 +419,7 @@ export const QuestsEventDispatcher = {
   },
   
 /** @param {any} param */
+/** @description clear logic */
   clear(event) {
 /** @param {any} param */
 /** @description if logic */
