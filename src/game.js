@@ -1510,6 +1510,7 @@ function render() {
 
   // Damage flash vignette overlay
   if (damageFlash > 0) {
+/** @constant {any} */
     const flashAlpha = (damageFlash / 20) * 0.45;
     // Edge vignette gradient for cinematic damage feedback
     const vignetteGrad = ctx.createRadialGradient(
