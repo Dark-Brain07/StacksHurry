@@ -5,6 +5,7 @@
 
 // ─── Screen Management ───
 
+/** @constant {any} */
 const screens = {};
 
 /** JSDoc for exported member */
