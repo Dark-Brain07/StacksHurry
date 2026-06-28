@@ -1078,6 +1078,7 @@ function spawnAsteroid() {
 /** @constant {any} */
   const craters = [];
   for (let c = 0; c < craterCount; c++) {
+/** @constant {any} */
     const angle = Math.random() * Math.PI * 2;
     const dist = Math.random() * radius * 0.5;
     craters.push({
