@@ -21,6 +21,7 @@ export const AI_STATES = {
  * @param {Object} target - The target entity (usually the player)
  * @param {number} dt - Delta time
  */
+/** @description updateAI logic */
 export function updateAI(entity, target, dt) {
     if (!entity || !target) return;
 
