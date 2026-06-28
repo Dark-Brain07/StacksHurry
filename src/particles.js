@@ -167,6 +167,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 /** @description if logic */
   if (!lowGraphics && radius > 20) {
 /** @param {any} param */
+/** @description for logic */
     for (let i = 0; i < 4; i++) {
 /** @constant {any} */
       const angle = Math.random() * TWO_PI;
