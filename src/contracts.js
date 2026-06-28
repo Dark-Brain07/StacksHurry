@@ -48,6 +48,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
   const hexArgs = functionArgs.map(arg => Cl.serialize(arg));
 
 /** @param {any} param */
+/** @description for logic */
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       console.log(`[TX Attempt ${attempt}/${retries}] calling ${functionName} on ${contractId}...`);
