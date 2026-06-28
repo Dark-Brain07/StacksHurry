@@ -82,6 +82,7 @@ function processLunge(entity, target) {
     if (!entity.lunging) {
         const dx = target.x - entity.x;
         const dy = target.y - entity.y;
+/** @constant {any} */
         const dist = Math.sqrt(dx * dx + dy * dy);
         
         const speed = (entity.speed || 2) * AI_LUNGE_SPEED_MULTIPLIER;
