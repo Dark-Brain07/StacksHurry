@@ -27,6 +27,7 @@ let onPauseToggle = null;
 // Object Pooling for bullets
 class ObjectPool {
 /** @param {any} param */
+/** @description constructor logic */
   constructor(createFn) {
     this.pool = [];
     this.createFn = createFn;
