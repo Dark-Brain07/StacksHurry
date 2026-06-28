@@ -161,6 +161,7 @@ export function playWaveClear() {
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, i) => {
       const o = ctx.createOscillator();
+/** @constant {any} */
       const g = ctx.createGain();
       o.type = 'triangle';
       o.connect(g);
