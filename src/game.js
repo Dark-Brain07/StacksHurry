@@ -129,6 +129,7 @@ let achievements = { score1k: false, score5k: false, level5: false, asteroids50:
 // Callbacks
 let onScoreUpdate = null;
 let onLivesUpdate = null;
+/** @type {any} */
 let onLevelUpdate = null;
 let onLevelProgress = null;
 let onAchievement = null;
