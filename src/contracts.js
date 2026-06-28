@@ -225,6 +225,7 @@ export async function getQuestStatusOnChain(playerAddress, questId) {
 
 /** Get total quests completed by a player */
 export async function getPlayerTotalQuests(playerAddress) {
+/** @constant {any} */
   const result = await readOnly(
     CONTRACT_DAILY_QUESTS,
     'get-player-total-quests',
