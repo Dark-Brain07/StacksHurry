@@ -365,6 +365,7 @@ export function playQuestComplete() {
     const ctx = getCtx();
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, i) => {
+/** @constant {any} */
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
