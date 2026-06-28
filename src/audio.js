@@ -235,6 +235,7 @@ export function playHit() {
 }
 
 /** Game over sound */
+/** @description playGameOver logic */
 export function playGameOver() {
   if (!soundEnabled) return;
   try {
