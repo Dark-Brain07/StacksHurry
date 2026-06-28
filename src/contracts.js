@@ -184,6 +184,7 @@ export async function getPlayerHighScore(playerAddress) {
 
 /** Get total player count */
 export async function getPlayerCount() {
+/** @constant {any} */
   const result = await readOnly(CONTRACTS.ROCKET_SHOOTER, 'get-player-count');
   return typeof result === 'number' ? result : (result || 0);
 }
