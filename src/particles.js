@@ -241,6 +241,7 @@ export function spawnPowerupTrail(x, y, color = '#a855f7') {
  * @param {string} color - Color of the ring particles
  * @param {number} count - Number of particles in the ring
  */
+/** @description spawnImpactRing logic */
 export function spawnImpactRing(x, y, ringRadius = 40, color = '#00f0ff', count = 16) {
   const TWO_PI = Math.PI * 2;
 /** @constant {any} */
