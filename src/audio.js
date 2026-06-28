@@ -51,6 +51,7 @@ export function toggleSound(enabled) {
 }
 
 /** JSDoc for exported member */
+/** @description isSoundEnabled logic */
 export function isSoundEnabled() {
   return soundEnabled;
 }
