@@ -207,6 +207,7 @@ export function calculateShockwavePush(entity, shockwave, power = 8) {
   
 /** @description if logic */
   if (dist < shockwave.radius && dist > shockwave.radius - 40) {
+/** @constant {any} */
     const angle = Math.atan2(dy, dx);
     return {
       x: Math.cos(angle) * power,
