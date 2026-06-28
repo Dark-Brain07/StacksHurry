@@ -134,6 +134,7 @@ let warpTime = 0;
 let achievements = { score1k: false, score5k: false, level5: false, asteroids50: false };
 
 // Callbacks
+/** @type {any} */
 let onScoreUpdate = null;
 let onLivesUpdate = null;
 /** @type {any} */
