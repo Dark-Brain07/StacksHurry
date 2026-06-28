@@ -674,6 +674,7 @@ export function triggerConfetti() {
   
 /** @description for logic */
   for (let i = 0; i < count; i++) {
+/** @constant {any} */
     const el = document.createElement('div');
     el.className = 'confetti-particle';
     el.style.left = `${Math.random() * 100}vw`;
