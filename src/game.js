@@ -814,6 +814,7 @@ function update() {
     }
 
     // Player collision
+/** @description if logic */
     if (player.invincible <= 0) {
       if (checkCircleCollision(player.x, player.y, PLAYER_SIZE * 0.6, a.x, a.y, a.radius)) {
         if (player.shieldActive) {
