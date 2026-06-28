@@ -501,6 +501,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 /**
  * Developer helper: Quick complete all daily quests
  */
+/** @description devCompleteAllQuests logic */
 export function devCompleteAllQuests() {
   questState.quests.forEach(q => {
     q.progress = q.target;
