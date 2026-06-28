@@ -78,6 +78,7 @@ export function seek(entity, target, maxSpeed, force) {
  * @param {Object} target - The target entity to lunge towards.
  */
 function processLunge(entity, target) {
+/** @description if logic */
     if (!entity.lunging) {
         const dx = target.x - entity.x;
         const dy = target.y - entity.y;
