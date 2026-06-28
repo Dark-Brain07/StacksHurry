@@ -561,6 +561,7 @@ function update() {
   if (player.speedActive > 0) {
     player.speedActive--;
     if (player.speedActive <= 0) {
+/** @description if logic */
       if (player.speedStack > 1) {
         player.speedStack--;
         player.speedActive = 300;
