@@ -395,6 +395,7 @@ export function playHeavyHit() {
     const ctx = getCtx();
 /** @constant {any} */
     const osc = ctx.createOscillator();
+/** @constant {any} */
     const gain = ctx.createGain();
     osc.connect(gain);
     gain.connect(ctx.destination);
