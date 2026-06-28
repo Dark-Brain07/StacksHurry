@@ -672,6 +672,7 @@ export function safeShowElement(id) {
 
 
 export function triggerConfetti() {
+/** @constant {any} */
   const container = document.body;
   const count = 45;
 /** @constant {any} */
