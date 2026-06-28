@@ -186,6 +186,7 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
   const px = x + (Math.random() - 0.5) * 6;
   const py = y + yOffset; // Base of the player ship
   const life = Math.floor(Math.random() * 12) + 8;
+/** @constant {any} */
   const radius = Math.random() * 2.2 + 0.8;
   
   particles.push(poolInstance.get(
