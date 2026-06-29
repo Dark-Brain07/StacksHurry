@@ -119,6 +119,7 @@ let asteroidSpeed = 2;
 // Mouse / touch position
 let mouseX = 0;
 let mouseY = 0;
+/** @type {any} */
 let shooting = false;
 let shootCooldown = 0;
 let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
