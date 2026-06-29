@@ -13,6 +13,7 @@ import {
 // ─── Contract Addresses ───
 /** @constant {any} */
 const DEPLOYER = 'SP1YH5MXTJT86BZXMFA2T51JF0QVZ8XNYV33QH6MF';
+/** @constant {any} */
 const NETWORK = 'mainnet';
 
 /** JSDoc for exported member */
