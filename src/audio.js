@@ -182,6 +182,7 @@ export function playWaveClear() {
     const ctx = getCtx();
 /** @constant {any} */
     const osc = ctx.createOscillator();
+/** @constant {any} */
     const gain = ctx.createGain();
     osc.type = 'sine';
     gain.gain.setValueAtTime(0, ctx.currentTime);
