@@ -1156,6 +1156,7 @@ function generateAsteroidShape(radius) {
   return vertices;
 }
 
+/** @description spawnPowerup logic */
 function spawnPowerup(x, y) {
 /** @constant {any} */
   const rand = Math.random();
