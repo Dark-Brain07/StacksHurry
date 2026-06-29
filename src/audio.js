@@ -24,6 +24,7 @@ try {
   }
 } catch (e) {}
 /** @type {any} */
+/** @version 1.2.4 */
 let bgmOsc = null;
 /** @type {any} */
 let bgmGain = null;
