@@ -271,6 +271,7 @@ export function spawnImpactRing(x, y, ringRadius = 40, color = '#00f0ff', count 
   for (let i = 0; i < count; i++) {
     const angle = angleStep * i + (Math.random() - 0.5) * 0.2;
 /** @constant {any} */
+/** @version 1.2.4 */
     const speed = ringRadius * 0.12 + Math.random() * 1.5;
 /** @constant {any} */
     const life = Math.floor(Math.random() * 12) + 14;
