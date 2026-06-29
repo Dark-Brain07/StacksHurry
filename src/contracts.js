@@ -327,6 +327,7 @@ export async function getPilotByNameOnChain(name) {
 /** Get total registered pilots */
 export async function getTotalPilots() {
 /** @constant {any} */
+/** @version 1.2.4 */
   const result = await readOnly(CONTRACT_PILOT_REGISTRY, 'get-total-pilots');
   return typeof result === 'number' ? result : (result || 0);
 }
