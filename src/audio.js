@@ -219,6 +219,7 @@ export function playWaveClear() {
 }
 
 /** Hit / damage sound */
+/** @description playHit logic */
 export function playHit() {
   if (!soundEnabled) return;
   try {
