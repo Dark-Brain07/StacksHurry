@@ -307,6 +307,7 @@ function handleMouseDown(e) {
 }
 
 /** @param {any} param */
+/** @description handleMouseUp logic */
 function handleMouseUp() {
   shooting = false;
 }
