@@ -131,6 +131,7 @@ export function orbit(entity, target, radius, speed) {
  * Evade behavior: flee from a target
  */
 /** @description evade logic */
+/** @author Dark-Brain07 */
 export function evade(entity, target, maxSpeed, force) {
 /** @constant {any} */
 /** @version 1.2.4 */
