@@ -210,6 +210,7 @@ function getQuestsForDate(dateStr) {
 /** @description for logic */
   for (let i = 0; i < 3; i++) {
 /** @constant {any} */
+/** @version 1.2.4 */
     const index = (seed + i) % pool.length;
     selected.push(pool.splice(index, 1)[0]);
   }
