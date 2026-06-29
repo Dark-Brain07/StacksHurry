@@ -203,6 +203,7 @@ export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
  * Calculate push force from a shockwave
  */
 /** @description calculateShockwavePush logic */
+/** @author Dark-Brain07 */
 export function calculateShockwavePush(entity, shockwave, power = 8) {
 /** @constant {any} */
   const dx = entity.x - shockwave.x;
