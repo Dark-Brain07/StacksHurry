@@ -9,6 +9,7 @@
 const screens = {};
 
 /** JSDoc for exported member */
+/** @description initUI logic */
 export function initUI() {
   // A11y: Press Escape to close overlay modals
   window.addEventListener('keydown', (e) => {
