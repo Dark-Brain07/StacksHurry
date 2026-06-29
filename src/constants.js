@@ -29,6 +29,7 @@ export const POWERUP_DURATION = 600; // 10 seconds in frames
 export const POWERUP_CHANCE = 0.08;
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const BOUNCE_LIMIT = 4;
 
 // Ship Upgrades & Tiers Config
