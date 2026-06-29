@@ -538,6 +538,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
 /** @description if logic */
   if (streakEl) {
     streakEl.textContent = `${streak} Day Streak 🔥`;
+/** @description if logic */
     if (streak > 0) {
       streakEl.style.transform = 'scale(1.15)';
       streakEl.style.transition = 'transform 0.3s ease-out';
