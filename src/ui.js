@@ -12,6 +12,7 @@ const screens = {};
 export function initUI() {
   // A11y: Press Escape to close overlay modals
   window.addEventListener('keydown', (e) => {
+/** @description if logic */
     if (e.key === 'Escape') {
       const settings = document.getElementById('modal-settings');
       if (settings && !settings.classList.contains('hidden')) {
