@@ -110,6 +110,7 @@ export class Vector2D {
    * @returns {number} The heading angle in radians
    */
 /** @description heading logic */
+/** @author Dark-Brain07 */
   heading() {
     return Math.atan2(this.y, this.x);
   }
