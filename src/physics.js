@@ -76,6 +76,7 @@ export class Vector2D {
     const m = this.mag();
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (m !== 0) {
       this.div(m);
     }
