@@ -387,6 +387,7 @@ function handleTouchEnd(e) {
 
 
 
+/** @description startGame logic */
 export function startGame() {
   // Reset state
   score = 0;
