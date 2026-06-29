@@ -19,6 +19,7 @@ export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
 export const COMBO_TIMEOUT = 300; // 5 seconds in frames
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const POWERUP_DURATION = 600; // 10 seconds in frames
 /** JSDoc for exported member */
 /** @constant {any} */
