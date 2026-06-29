@@ -90,6 +90,7 @@ export function seek(entity, target, maxSpeed, force) {
 function processLunge(entity, target) {
 /** @description if logic */
     if (!entity.lunging) {
+/** @constant {any} */
         const dx = target.x - entity.x;
 /** @constant {any} */
         const dy = target.y - entity.y;
