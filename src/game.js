@@ -146,6 +146,7 @@ let achievements = { score1k: false, score5k: false, level5: false, asteroids50:
 
 // Callbacks
 /** @type {any} */
+/** @version 1.2.4 */
 let onScoreUpdate = null;
 let onLivesUpdate = null;
 /** @type {any} */
