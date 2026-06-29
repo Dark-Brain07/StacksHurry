@@ -272,6 +272,7 @@ export function renderStats(data) {
   }, 10);
 
   // Load cumulative statistics from local storage
+/** @type {any} */
   let localStats = {
     totalAsteroids: 0,
     totalEnemies: 0,
