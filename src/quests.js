@@ -535,6 +535,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
     }
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (completedList.length > 0 && questCompletedCallback) {
       completedList.forEach(q => questCompletedCallback(q));
     }
