@@ -100,6 +100,7 @@ export async function mintOpenNFT(recipientAddress) {
 /** Get total minted count */
 export async function getOpenMintCount() {
 /** @constant {any} */
+/** @version 1.2.4 */
   const result = await readOnly(CONTRACTS.OPEN_MINT_NFT, 'get-last-token-id');
   return result?.value || 0;
 }
