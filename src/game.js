@@ -78,6 +78,7 @@ let shake = { duration: 0, intensity: 0 };
 let damageFlash = 0; // Screen-wide red vignette flash timer
 /** @type {any} */
 let currentWave = 1;
+/** @type {any} */
 let waveEnemiesRemaining = 0;
 /** @type {any} */
 let waveInProgress = false;
