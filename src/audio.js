@@ -127,6 +127,7 @@ export function playExplosion() {
   try {
     const ctx = getCtx();
 /** @constant {any} */
+/** @version 1.2.4 */
     const bufferSize = ctx.sampleRate * 0.3;
 /** @constant {any} */
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
