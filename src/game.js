@@ -97,6 +97,7 @@ let enemiesDestroyedThisGame = 0;
 /** @description addShake logic */
 export function addShake(duration, intensity) {
 /** @constant {any} */
+/** @version 1.2.4 */
   const actualIntensity = intensity * shakeMultiplier;
 /** @param {any} param */
   if (shake.duration <= 0) {
