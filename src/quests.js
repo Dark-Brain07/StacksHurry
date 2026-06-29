@@ -192,6 +192,7 @@ let questState = {
 /** @description getQuestsForDate logic */
 function getQuestsForDate(dateStr) {
 /** @type {any} */
+/** @version 1.2.4 */
   let hash = 0;
 /** @param {any} param */
 /** @description for logic */
