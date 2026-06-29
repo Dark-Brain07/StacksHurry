@@ -393,6 +393,7 @@ export function claimQuestReward(questId) {
   questState.quests.forEach(q => {
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (q.id === questId && q.completed && !q.claimed) {
       q.claimed = true;
       claimedQuest = q;
