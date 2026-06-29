@@ -1210,6 +1210,7 @@ function render() {
     nebulaClouds.forEach(nc => {
       nc.x += nc.driftX;
       nc.y += nc.driftY;
+/** @description if logic */
       if (nc.y > canvas.height + nc.radius) { nc.y = -nc.radius; nc.x = Math.random() * canvas.width; }
       if (nc.x < -nc.radius || nc.x > canvas.width + nc.radius) { nc.x = Math.random() * canvas.width; }
       const grad = ctx.createRadialGradient(nc.x, nc.y, 0, nc.x, nc.y, nc.radius);
