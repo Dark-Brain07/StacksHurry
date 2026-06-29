@@ -225,6 +225,7 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
   const px = x + (Math.random() - 0.5) * 6;
   const py = y + yOffset; // Base of the player ship
 /** @constant {any} */
+/** @version 1.2.4 */
   const life = Math.floor(Math.random() * 12) + 8;
 /** @constant {any} */
 /** @version 1.2.4 */
