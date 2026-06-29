@@ -387,6 +387,7 @@ function processToastQueue() {
   const item = toastQueue.shift();
   const container = document.getElementById('toast-container');
 /** @description if logic */
+/** @author Dark-Brain07 */
   if (!container) {
     isProcessingToast = false;
     return;
