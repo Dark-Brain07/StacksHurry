@@ -38,6 +38,7 @@ export class Particle {
 
 /** @param {any} param */
 /** @description update logic */
+/** @author Dark-Brain07 */
   update() {
     if (!this.active) return false;
     this.x += this.vx;
