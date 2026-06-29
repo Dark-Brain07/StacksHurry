@@ -564,6 +564,7 @@ function update() {
 
   // Clamp to canvas
   // Elastic boundaries
+/** @constant {any} */
   const leftBound = PLAYER_SIZE;
   const rightBound = canvas.width - PLAYER_SIZE;
 /** @param {any} param */
