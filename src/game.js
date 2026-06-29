@@ -717,6 +717,7 @@ function update() {
 
     // Bounce physics
     if (b.bounceCount > 0) {
+/** @type {any} */
       let bounced = false;
       if (b.x < 5) {
         b.x = 5;
