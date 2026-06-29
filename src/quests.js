@@ -272,6 +272,7 @@ export function loadQuests() {
           
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
           if (dayDiff === 1 && allCompleted) {
             questState.streak++;
           } else {
