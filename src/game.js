@@ -1149,6 +1149,7 @@ function generateAsteroidShape(radius) {
   const vertices = [];
 /** @description for logic */
   for (let i = 0; i < points; i++) {
+/** @constant {any} */
     const angle = (i / points) * Math.PI * 2;
     const r = radius + (Math.random() - 0.5) * radius * 0.5;
     vertices.push({ x: Math.cos(angle) * r, y: Math.sin(angle) * r });
