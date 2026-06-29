@@ -54,6 +54,7 @@ export const INITIAL_SPAWN_RATE = 90;
 export const MIN_SPAWN_RATE = 20;
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const INITIAL_ASTEROID_SPEED = 2;
 /** JSDoc for exported member */
 /** @constant {any} */
