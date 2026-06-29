@@ -14,6 +14,7 @@ export const SHOOT_COOLDOWN = 10;
 // Game Progression Constants
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
 /** JSDoc for exported member */
 /** @constant {any} */
