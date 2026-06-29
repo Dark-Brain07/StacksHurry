@@ -17,6 +17,7 @@ const NETWORK = 'mainnet';
 
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const CONTRACTS = {
   OPEN_MINT_NFT:  `${DEPLOYER}.open-mint-nft`,
   CHARACTER_NFT:  `${DEPLOYER}.character-nft`,
