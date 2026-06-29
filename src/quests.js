@@ -272,6 +272,7 @@ export function loadQuests() {
 /** @constant {any} */
           const allCompleted = oldQuests.length > 0 && oldQuests.every(q => q.completed);
 /** @constant {any} */
+/** @version 1.2.4 */
           const dayDiff = getDayDifference(questState.lastUpdatedDate, today);
           
 /** @param {any} param */
