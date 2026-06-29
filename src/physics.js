@@ -70,6 +70,7 @@ export class Vector2D {
 
 /** @param {any} param */
 /** @description normalize logic */
+/** @author Dark-Brain07 */
   normalize() {
 /** @constant {any} */
     const m = this.mag();
