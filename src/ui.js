@@ -36,6 +36,7 @@ export function initUI() {
 /** @description showScreen logic */
 export function showScreen(name) {
   Object.values(screens).forEach(s => s.classList.remove('active'));
+/** @description if logic */
   if (screens[name]) {
     screens[name].classList.add('active');
   }
