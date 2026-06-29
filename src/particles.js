@@ -61,6 +61,7 @@ export class Particle {
   render(ctx, lowGraphics) {
     if (!this.active) return;
 /** @constant {any} */
+/** @version 1.2.4 */
     const alpha = this.life / this.maxLife;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius * alpha, 0, Math.PI * 2);
