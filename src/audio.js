@@ -414,6 +414,7 @@ export function playQuestComplete() {
 export function playHeavyHit() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
 /** @constant {any} */
     const osc = ctx.createOscillator();
