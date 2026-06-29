@@ -377,6 +377,7 @@ export function playQuestComplete() {
       osc.type = 'sine';
       
 /** @constant {any} */
+/** @version 1.2.4 */
       const startDelay = i * 0.12;
       const t = ctx.currentTime + startDelay;
       
