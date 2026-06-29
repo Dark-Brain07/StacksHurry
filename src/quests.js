@@ -265,6 +265,7 @@ export function loadQuests() {
 /** @param {any} param */
 /** @description if logic */
         if (questState.lastUpdatedDate !== today) {
+/** @constant {any} */
           const oldQuests = questState.quests || [];
 /** @constant {any} */
           const allCompleted = oldQuests.length > 0 && oldQuests.every(q => q.completed);
