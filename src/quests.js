@@ -573,6 +573,7 @@ export function devResetAllQuests() {
 
 
 /** @description formatQuestProgressText logic */
+/** @author Dark-Brain07 */
 export function formatQuestProgressText(prog, tgt) {
   return prog + '/' + tgt;
 }
