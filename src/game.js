@@ -1118,6 +1118,7 @@ function spawnAsteroid() {
 }
 
 function spawnSmallAsteroid(x, y, radius, parentSpeed = 2, angleOffset = 0.5) {
+/** @constant {any} */
   const angle = Math.PI / 2 + angleOffset;
   const speedX = Math.cos(angle) * (parentSpeed * 1.2);
   const speedY = Math.sin(angle) * (parentSpeed * 1.2);
