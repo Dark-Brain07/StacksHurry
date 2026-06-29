@@ -279,6 +279,7 @@ export function playLevelUp() {
       gain.connect(ctx.destination);
       osc.type = 'sine';
 /** @constant {any} */
+/** @version 1.2.4 */
       const t = ctx.currentTime + i * 0.08;
       osc.frequency.setValueAtTime(freq, t);
       gain.gain.setValueAtTime(0.15, t);
