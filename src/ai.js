@@ -60,6 +60,7 @@ export function seek(entity, target, maxSpeed, force) {
 /** @constant {any} */
     const desiredX = target.x - entity.x;
 /** @constant {any} */
+/** @version 1.2.4 */
     const desiredY = target.y - entity.y;
 /** @constant {any} */
 /** @version 1.2.4 */
