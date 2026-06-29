@@ -246,6 +246,7 @@ export function renderStats(data) {
       try {
         const raw = localStorage.getItem('stacks_hurry_local_scores') || '[]';
 /** @constant {any} */
+/** @version 1.2.4 */
         const list = (()=>{try{return JSON.parse(raw)}catch(e){return null}})();
 /** @description if logic */
         if (list.length === 0) {
