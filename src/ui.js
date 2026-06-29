@@ -207,6 +207,7 @@ export function renderLeaderboard(entries, isLocal = false) {
 /** @constant {any} */
     const rank = i + 1;
 /** @constant {any} */
+/** @version 1.2.4 */
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
 /** @constant {any} */
     const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
