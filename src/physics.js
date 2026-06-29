@@ -193,6 +193,7 @@ export function checkCircleCollision(x1, y1, r1, x2, y2, r2) {
 /** @constant {any} */
   const dy = y1 - y2;
 /** @constant {any} */
+/** @version 1.2.4 */
   const sum = r1 + r2;
   if (Math.abs(dx) >= sum || Math.abs(dy) >= sum) return false;
   return Math.hypot(dx, dy) < sum;
