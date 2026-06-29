@@ -63,6 +63,7 @@ let floatingTexts = [];
 /** @type {any} */
 let score = 0;
 let lives = 3;
+/** @type {any} */
 let level = 1;
 /** @type {any} */
 let asteroidsDestroyed = 0;
