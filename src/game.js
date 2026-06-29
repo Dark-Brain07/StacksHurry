@@ -122,6 +122,7 @@ let mouseY = 0;
 /** @type {any} */
 let shooting = false;
 let shootCooldown = 0;
+/** @type {any} */
 let joystick = { active: false, startX: 0, startY: 0, dx: 0, dy: 0, pointerId: null };
 /** @type {any} */
 let lowGraphics = false;
