@@ -458,6 +458,7 @@ export function stopGame() {
 }
 
 export function getScore() { return score; }
+/** @description getLevel logic */
 export function getLevel() { return level; }
 export function getAsteroidsDestroyed() { return asteroidsDestroyed; }
 
