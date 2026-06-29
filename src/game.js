@@ -1574,6 +1574,7 @@ function render() {
   }
 
   // Multiplier UI
+/** @description if logic */
   if (multiplierTimer > 0) {
     ctx.save();
     ctx.fillStyle = `rgba(251, 191, 36, ${Math.min(1, multiplierTimer / 30)})`; // Fades out at end
