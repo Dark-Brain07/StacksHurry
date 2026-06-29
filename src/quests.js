@@ -231,6 +231,7 @@ function getTodayString() {
 function getDayDifference(dateStr1, dateStr2) {
   if (!dateStr1 || !dateStr2) return 0;
   const d1 = new Date(dateStr1);
+/** @constant {any} */
   const d2 = new Date(dateStr2);
   
   // Strip hours/minutes to compare pure calendar days
