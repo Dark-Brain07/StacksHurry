@@ -163,6 +163,7 @@ export function playExplosion() {
 export function playShieldHit() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
     const osc = ctx.createOscillator();
 /** @constant {any} */
