@@ -197,6 +197,7 @@ export async function getPlayerCount() {
 /** Get games played for a player */
 export async function getGamesPlayed(playerAddress) {
 /** @constant {any} */
+/** @version 1.2.4 */
   const result = await readOnly(
     CONTRACTS.ROCKET_SHOOTER,
     'get-games-played',
