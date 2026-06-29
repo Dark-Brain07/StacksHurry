@@ -193,6 +193,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
 /** @description for logic */
     for (let i = 0; i < 4; i++) {
 /** @constant {any} */
+/** @version 1.2.4 */
       const angle = Math.random() * TWO_PI;
 /** @constant {any} */
       const speed = Math.random() * 2 + 0.5;
