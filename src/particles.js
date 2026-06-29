@@ -91,6 +91,7 @@ class ParticlePool {
 /** @param {any} param */
 /** @description get logic */
   get(x, y, vx, vy, life, color, radius) {
+/** @constant {any} */
     const p = this.pool.find(item => !item.active) || this.pool[0];
     p.init(x, y, vx, vy, life, color, radius);
     return p;
