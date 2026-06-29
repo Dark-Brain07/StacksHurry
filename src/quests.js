@@ -490,6 +490,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
 
   QuestsEventDispatcher.subscribe('waveCleared', () => {
 /** @constant {any} */
+/** @version 1.2.4 */
     const completed = updateQuestProgress(QUEST_TYPES.SURVIVE_WAVES, 1);
 /** @param {any} param */
 /** @description if logic */
