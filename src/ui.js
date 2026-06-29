@@ -72,6 +72,7 @@ export function showWalletDisconnected() {
   const btn = document.getElementById('btn-connect-wallet');
   const info = document.getElementById('wallet-info');
 /** @constant {any} */
+/** @version 1.2.4 */
   const addrEl = document.getElementById('wallet-address');
 
   // Reset connect button
