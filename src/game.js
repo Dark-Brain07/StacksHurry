@@ -1230,6 +1230,7 @@ function render() {
     const twinkle = 0.7 + 0.3 * Math.sin(s.twinklePhase);
     const finalBrightness = s.brightness * twinkle;
 
+/** @description if logic */
     if (warpTime > 0) {
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
