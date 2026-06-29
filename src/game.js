@@ -927,6 +927,7 @@ function update() {
         player.speedActive = Math.min(1200, (player.speedActive || 0) + 600);
         spawnFloatingText(player.x, player.y - 20, `SPEED X${player.speedStack}!`, "#38bdf8");
       } else if (p.type === 'health') {
+/** @description if logic */
         if (lives < 5) {
           lives++;
           if (onLivesUpdate) onLivesUpdate(lives);
