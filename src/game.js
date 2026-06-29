@@ -504,6 +504,7 @@ function update() {
   frameCount++;
 
   const oldX = player.x;
+/** @constant {any} */
   const oldY = player.y;
 
   // Smooth player follow
