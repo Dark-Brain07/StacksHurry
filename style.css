@@ -497,10 +497,14 @@ html, body {
 
 .hud-value {
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--cyan);
-  text-shadow: 0 0 10px rgba(0,240,255,0.5);
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #fff, var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.8), 0 0 30px rgba(0, 240, 255, 0.4);
+  letter-spacing: 1px;
 }
 
 .hud-game-title {
