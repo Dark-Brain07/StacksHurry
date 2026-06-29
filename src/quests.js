@@ -485,6 +485,7 @@ export function initQuestListeners(onQuestCompletedCallback, onQuestMilestoneCal
     const completed = updateQuestProgress(QUEST_TYPES.DESTROY_ENEMIES, 1);
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (completed && completed.length > 0 && questCompletedCallback) {
       completed.forEach(q => questCompletedCallback(q));
     }
