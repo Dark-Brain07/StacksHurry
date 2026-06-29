@@ -37,6 +37,7 @@ export function toggleSound(enabled) {
   try {
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(CACHE_KEY, enabled ? 'true' : 'false');
     }
