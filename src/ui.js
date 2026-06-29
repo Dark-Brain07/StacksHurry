@@ -106,6 +106,7 @@ export function updateHUDScore(score) {
 }
 
 /** JSDoc for exported member */
+/** @description updateHUDLives logic */
 export function updateHUDLives(lives) {
 /** @constant {any} */
   const el = document.getElementById('hud-lives');
