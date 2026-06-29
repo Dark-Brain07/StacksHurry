@@ -130,6 +130,7 @@ export function orbit(entity, target, radius, speed) {
 /** @description evade logic */
 export function evade(entity, target, maxSpeed, force) {
 /** @constant {any} */
+/** @version 1.2.4 */
     const desiredX = entity.x - target.x;
 /** @constant {any} */
     const desiredY = entity.y - target.y;
