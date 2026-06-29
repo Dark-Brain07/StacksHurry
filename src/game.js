@@ -63,6 +63,7 @@ let floatingTexts = [];
 // Stats
 /** @type {any} */
 let score = 0;
+/** @type {any} */
 let lives = 3;
 /** @type {any} */
 let level = 1;
