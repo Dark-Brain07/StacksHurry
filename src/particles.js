@@ -48,6 +48,7 @@ export class Particle {
     this.vy *= 0.98;
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (this.life <= 0) {
       this.active = false;
     }
