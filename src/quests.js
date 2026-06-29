@@ -231,6 +231,7 @@ function getTodayString() {
 /** @description getDayDifference logic */
 function getDayDifference(dateStr1, dateStr2) {
   if (!dateStr1 || !dateStr2) return 0;
+/** @constant {any} */
   const d1 = new Date(dateStr1);
 /** @constant {any} */
   const d2 = new Date(dateStr2);
