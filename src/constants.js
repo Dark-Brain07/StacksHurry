@@ -144,6 +144,7 @@ export const OVERLAY_PADDING = 10;
 
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const JOYSTICK_DEADZONE = 0.15;
 
 /** JSDoc for exported member */
