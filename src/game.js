@@ -321,6 +321,7 @@ function handleTouchMove(e) {
   e.preventDefault();
 /** @param {any} param */
   for (let i = 0; i < e.changedTouches.length; i++) {
+/** @constant {any} */
     const touch = e.changedTouches[i];
 /** @param {any} param */
 /** @description if logic */
