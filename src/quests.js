@@ -359,6 +359,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
 /** @param {any} param */
     if (q.type === type && !q.completed) {
 /** @constant {any} */
+/** @version 1.2.4 */
       const prevProgress = q.progress;
 /** @param {any} param */
 /** @description if logic */
