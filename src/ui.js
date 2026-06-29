@@ -474,6 +474,7 @@ export function hideAchievementsModal() {
 }
 
 /** JSDoc for exported member */
+/** @description showAchievement logic */
 export function showAchievement(title, message, icon = '🏆') {
   // Persist the achievement automatically when it's shown as a toast
 /** @constant {any} */
