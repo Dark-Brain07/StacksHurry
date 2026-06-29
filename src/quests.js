@@ -254,6 +254,7 @@ export function loadQuests() {
     const raw = localStorage.getItem('stacks_hurry_quests');
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (raw) {
       const parsed = JSON.parse(raw);
 /** @param {any} param */
