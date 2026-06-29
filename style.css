@@ -1784,3 +1784,11 @@ input:checked + .slider:before {
 /* --- OVERRIDES TO INCREASE SIZES --- */
 .anime-layout { gap: 60px !important; max-width: 1400px !important; padding: 40px !important; transform: scale(1.2); transform-origin: top center; margin-top: 5vh; }
 @media (max-width: 900px) { .anime-layout { transform: scale(1.0); padding: 20px !important; margin-top: 0; } }
+
+/* --- POWERUP CARD HOVER --- */
+.powerup-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
