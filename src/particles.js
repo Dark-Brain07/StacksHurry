@@ -165,6 +165,7 @@ export function spawnExplosion(x, y, radius, lowGraphics = false, colorOverride 
   const TWO_PI = Math.PI * 2;
 /** @param {any} param */
 /** @description for logic */
+/** @author Dark-Brain07 */
   for (let i = 0; i < count; i++) {
 /** @constant {any} */
 /** @version 1.2.4 */
