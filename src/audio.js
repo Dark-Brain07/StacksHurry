@@ -300,6 +300,7 @@ export function playCollect() {
   try {
     const ctx = getCtx();
 /** @constant {any} */
+/** @version 1.2.4 */
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
