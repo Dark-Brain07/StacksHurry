@@ -37,6 +37,7 @@ class ObjectPool {
     return this.pool.length > 0 ? this.pool.pop() : this.createFn();
   }
 /** @param {any} param */
+/** @description release logic */
   release(obj) {
     obj.active = false;
     this.pool.push(obj);
