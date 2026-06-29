@@ -34,6 +34,7 @@ export function initUI() {
 
 /** JSDoc for exported member */
 /** @description showScreen logic */
+/** @author Dark-Brain07 */
 export function showScreen(name) {
   Object.values(screens).forEach(s => s.classList.remove('active'));
 /** @description if logic */
