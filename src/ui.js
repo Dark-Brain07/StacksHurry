@@ -200,6 +200,7 @@ export function renderLeaderboard(entries, isLocal = false) {
     : `${entries.length} Player${entries.length > 1 ? 's' : ''}`;
 
   list.innerHTML = entries.map((entry, i) => {
+/** @constant {any} */
     const rank = i + 1;
 /** @constant {any} */
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
