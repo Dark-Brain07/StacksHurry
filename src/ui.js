@@ -598,6 +598,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
 
     // Build item container
 /** @constant {any} */
+/** @version 1.2.4 */
     const metaDiv = document.createElement('div');
     metaDiv.className = 'quest-meta';
     
