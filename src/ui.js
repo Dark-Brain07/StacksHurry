@@ -189,6 +189,7 @@ export function runCountdown(callback) {
 export function renderLeaderboard(entries, isLocal = false) {
 /** @constant {any} */
   const list = document.getElementById('leaderboard-list');
+/** @constant {any} */
   const countEl = document.getElementById('lb-player-count');
 
 /** @description if logic */
