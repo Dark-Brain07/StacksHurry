@@ -1735,6 +1735,7 @@ function drawPlayer() {
 
   // Power-up indicators (drawn relative to ship position)
   let indicatorY = y + 45;
+/** @description if logic */
   if (player.multiShotActive > 0) {
     drawIndicator(x, indicatorY, player.multiShotActive / 600, '#fb923c');
     indicatorY += 8;
