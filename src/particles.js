@@ -218,6 +218,7 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
 /** @constant {any} */
   const life = Math.floor(Math.random() * 12) + 8;
 /** @constant {any} */
+/** @version 1.2.4 */
   const radius = Math.random() * 2.2 + 0.8;
   
   particles.push(poolInstance.get(
