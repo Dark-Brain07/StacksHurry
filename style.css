@@ -941,13 +941,14 @@ html, body {
 
 .modal-content {
   position: relative;
-  background: var(--bg-secondary);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 240, 255, 0.2);
   border-radius: var(--radius-xl);
   padding: 36px;
   max-width: 400px;
   width: 90%;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.1);
   animation: modalIn 0.3s ease;
 }
 
