@@ -425,6 +425,7 @@ export const QuestsEventDispatcher = {
 /** @description unsubscribe logic */
   unsubscribe(event, callback) {
 /** @param {any} param */
+/** @description if logic */
     if (listeners[event]) {
       listeners[event] = listeners[event].filter(cb => cb !== callback);
     }
