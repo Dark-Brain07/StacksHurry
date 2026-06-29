@@ -1753,6 +1753,7 @@ function drawPlayer() {
   ctx.restore();
 
   // Power-up indicators (drawn relative to ship position)
+/** @type {any} */
   let indicatorY = y + 45;
 /** @description if logic */
   if (player.multiShotActive > 0) {
