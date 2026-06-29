@@ -215,6 +215,7 @@ export function renderLeaderboard(entries, isLocal = false) {
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
 /** @constant {any} */
     const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+/** @constant {any} */
     const addr = isLocal ? `Pilot #${rank} (${entry.date || 'Today'})` : (entry.address.slice(0, 8) + '...' + entry.address.slice(-4));
 
     return `
