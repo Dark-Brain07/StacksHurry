@@ -168,6 +168,7 @@ export function playShieldHit() {
     const ctx = getCtx();
     const osc = ctx.createOscillator();
 /** @constant {any} */
+/** @version 1.2.4 */
     const gain = ctx.createGain();
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(800, ctx.currentTime);
