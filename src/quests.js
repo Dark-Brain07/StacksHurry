@@ -381,6 +381,7 @@ export function updateQuestProgress(type, amount, isAbsolute = false) {
 
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
   if (changed) {
     saveQuests();
   }
