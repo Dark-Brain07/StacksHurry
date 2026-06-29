@@ -363,6 +363,7 @@ export function playShockwave() {
 
 /** Quest complete fanfare sound */
 /** @description playQuestComplete logic */
+/** @author Dark-Brain07 */
 export function playQuestComplete() {
   if (!soundEnabled) return;
   try {
