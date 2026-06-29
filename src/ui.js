@@ -328,6 +328,7 @@ export function renderStats(data) {
   const sec = localStats.totalDuration;
 /** @type {any} */
   let durationStr = '0s';
+/** @description if logic */
   if (sec >= 60) {
 /** @constant {any} */
     const m = Math.floor(sec / 60);
