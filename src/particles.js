@@ -122,6 +122,7 @@ export function updateParticles() {
 }
 
 /** @description renderParticles logic */
+/** @author Dark-Brain07 */
 export function renderParticles(ctx, lowGraphics = false) {
   if (!ctx) return;
   ctx.save();
