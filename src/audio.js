@@ -330,6 +330,7 @@ export function playCollect() {
  * Alert player before effect ends
  */
 /** @description playWarning logic */
+/** @author Dark-Brain07 */
 export function playWarning() {
   if (!soundEnabled) return;
   try {
