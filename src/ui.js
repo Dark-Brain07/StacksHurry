@@ -616,6 +616,7 @@ export function renderQuests(quests, streak, onClaimCallback) {
     item.appendChild(metaDiv);
 
     // Progress bar row
+/** @constant {any} */
     const barRow = document.createElement('div');
     barRow.className = 'quest-bar-row';
     
