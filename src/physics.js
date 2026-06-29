@@ -235,6 +235,7 @@ export function calculateKnockback(mass, velocity) {
  * Clamp value between min and max
  */
 /** @description clamp logic */
+/** @author Dark-Brain07 */
 export function clamp(val, min, max) {
   return Math.max(min, Math.min(max, val));
 }
