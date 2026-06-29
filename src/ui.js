@@ -163,6 +163,7 @@ export function runCountdown(callback) {
   let count = 3;
   countdownEl.textContent = count;
 
+/** @constant {any} */
   const interval = setInterval(() => {
     count--;
 /** @description if logic */
