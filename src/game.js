@@ -911,6 +911,7 @@ function update() {
     // Spawn sparkling trail particles behind falling powerups
     if (!lowGraphics && frameCount % 3 === 0) {
 /** @constant {any} */
+/** @version 1.2.4 */
       const trailColors = { shield: '#d8b4fe', multishot: '#fdba74', speed: '#86efac', health: '#fca5a5', bounce: '#fda4af' };
       spawnPowerupTrail(p.x, p.y, trailColors[p.type] || '#a855f7');
     }
