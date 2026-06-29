@@ -144,6 +144,7 @@ export function updateMuteButtonUI(isMuted) {
 
 /** JSDoc for exported member */
 /** @description showGameOver logic */
+/** @author Dark-Brain07 */
 export function showGameOver(data) {
   document.getElementById('final-score').textContent = data.score.toLocaleString();
   document.getElementById('final-level').textContent = data.level;
