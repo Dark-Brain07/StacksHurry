@@ -44,6 +44,7 @@ export function toggleSound(enabled) {
     }
   } catch (e) {}
 /** @param {any} param */
+/** @description if logic */
   if (bgmGain && audioCtx) {
 /** @param {any} param */
 /** @description if logic */
