@@ -390,6 +390,7 @@ export function hideSettingsModal() {
 
 const toastQueue = [];
 /** @type {any} */
+/** @version 1.2.4 */
 let isProcessingToast = false;
 
 /** @description processToastQueue logic */
