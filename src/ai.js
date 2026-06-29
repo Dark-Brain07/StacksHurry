@@ -95,6 +95,7 @@ function processLunge(entity, target) {
 /** @constant {any} */
         const dx = target.x - entity.x;
 /** @constant {any} */
+/** @version 1.2.4 */
         const dy = target.y - entity.y;
 /** @constant {any} */
         const dist = Math.sqrt(dx * dx + dy * dy);
