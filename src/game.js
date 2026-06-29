@@ -666,6 +666,7 @@ function update() {
   if (secondaryCooldown > 0) secondaryCooldown--;
 
   // Shockwave logic
+/** @description if logic */
   if (shockwave.active) {
     shockwave.radius += 10;
     if (shockwave.radius > SHOCKWAVE_RADIUS) shockwave.active = false;
