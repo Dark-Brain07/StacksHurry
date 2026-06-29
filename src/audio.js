@@ -48,6 +48,7 @@ export function toggleSound(enabled) {
   if (bgmGain && audioCtx) {
 /** @param {any} param */
 /** @description if logic */
+/** @author Dark-Brain07 */
     if (soundEnabled) {
       bgmGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 0.1);
     } else {
