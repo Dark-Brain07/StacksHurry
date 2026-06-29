@@ -1,5 +1,6 @@
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @version 1.2.4 */
 export const PLAYER_SIZE = 28;
 /** JSDoc for exported member */
 /** @constant {any} */
