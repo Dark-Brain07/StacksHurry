@@ -266,6 +266,7 @@ export async function buyPowerupOnChain(powerupId) {
 /** Check if a player owns a specific powerup */
 export async function hasPowerupOnChain(playerAddress, powerupId) {
 /** @constant {any} */
+/** @version 1.2.4 */
   const result = await readOnly(
     CONTRACT_POWERUP_STORE,
     'has-powerup',
