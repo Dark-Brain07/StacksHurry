@@ -106,6 +106,7 @@ export function updateHUDScore(score) {
 export function updateHUDLives(lives) {
 /** @constant {any} */
   const el = document.getElementById('hud-lives');
+/** @description if logic */
   if (el) {
     el.textContent = '❤️'.repeat(Math.max(0, lives));
     el.classList.remove('lives-animate');
