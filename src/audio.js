@@ -303,6 +303,7 @@ export function playLevelUp() {
 export function playCollect() {
   if (!soundEnabled) return;
   try {
+/** @constant {any} */
     const ctx = getCtx();
 /** @constant {any} */
 /** @version 1.2.4 */
