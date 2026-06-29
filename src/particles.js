@@ -239,6 +239,7 @@ export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14
  * @param {string} color - Trail color matching powerup type
  */
 /** @description spawnPowerupTrail logic */
+/** @author Dark-Brain07 */
 export function spawnPowerupTrail(x, y, color = '#a855f7') {
 /** @constant {any} */
   const px = x + (Math.random() - 0.5) * 14;
