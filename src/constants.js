@@ -168,6 +168,7 @@ export const AI_LUNGE_SPEED_MULTIPLIER = 4;
 /** @constant {any} */
 export const AI_ORBIT_RADIUS = 150;
 /** @constant {any} */
+/** @version 1.2.4 */
 export const AI_ORBIT_SPEED = 0.02;
 /** @constant {any} */
 export const DEFAULT_GAME_VOLUME = 0.5;
