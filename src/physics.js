@@ -114,6 +114,7 @@ export class Vector2D {
    * @returns {Vector2D} A new copy of this vector
    */
 /** @description copy logic */
+/** @author Dark-Brain07 */
   copy() {
     return new Vector2D(this.x, this.y);
   }
