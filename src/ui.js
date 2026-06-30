@@ -694,6 +694,17 @@ export function safeHideElement(id) {
 /**
  * Helper to safely show elements
  */
+/** JSDoc for exported member */
+/** @description shakeElement logic */
+export function shakeElement(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.remove('shake-animate');
+    void el.offsetWidth;
+    el.classList.add('shake-animate');
+  }
+}
+
 export function safeShowElement(id) {
 /** @constant {any} */
   const el = document.getElementById(id);
