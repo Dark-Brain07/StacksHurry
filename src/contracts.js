@@ -65,7 +65,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
         functionArgs: hexArgs,
         network: NETWORK,
       });
-      console.log(`[TX Success] ${functionName} transaction submitted:`, result);
+
       return result;
     } catch (error) {
       console.error(`[TX Error] Attempt ${attempt} failed for ${functionName}:`, error);
