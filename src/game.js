@@ -138,6 +138,7 @@ const keys = { w: false, a: false, s: false, d: false, Space: false };
 let keyboardActive = false;
 
 export function setSettings(settings) {
+  if (!settings) return;
   if (settings.lowGraphics !== undefined) lowGraphics = settings.lowGraphics;
   if (settings.autoFire !== undefined) autoFire = settings.autoFire;
   if (settings.shakeMultiplier !== undefined) shakeMultiplier = settings.shakeMultiplier;
