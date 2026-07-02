@@ -61,6 +61,7 @@ export const INITIAL_ASTEROID_SPEED = 2;
 /** @version 1.2.4 */
 export const SHOCKWAVE_COOLDOWN = 300;
 /** JSDoc for exported member */
+/** @constant {number} */
 export const SHOCKWAVE_RADIUS = 250;
 
 // Game Visual Styles
