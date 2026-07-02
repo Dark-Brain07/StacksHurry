@@ -24,7 +24,7 @@
 
 ;; --- Public Functions ---
 
-;; Complete a daily quest on-chain
+;; @desc Complete a daily quest on-chain
 (define-public (complete-quest (quest-id uint) (score uint))
   (let
     (
