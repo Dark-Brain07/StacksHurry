@@ -294,7 +294,7 @@ export function loadQuests() {
       }
     }
   } catch (e) {
-    console.error('Failed to load quest state:', e);
+    // error logging removed
   }
 
   // Initialize brand new state
