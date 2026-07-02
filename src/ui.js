@@ -257,7 +257,7 @@ export function renderStats(data) {
 /** @version 1.2.4 */
         const list = (()=>{try{return JSON.parse(raw)}catch(e){return null}})();
 /** @description if logic */
-        if (list.length === 0) {
+        if (!Array.isArray(list) || list.length === 0) {
           listEl.innerHTML = '<div style="text-align: center; color: var(--text-secondary); font-size: 13px;">No local scores yet. Start playing!</div>';
         } else {
           listEl.innerHTML = list.map((item, idx) => `
