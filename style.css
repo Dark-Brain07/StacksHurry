@@ -365,6 +365,7 @@ html, body {
   backdrop-filter: blur(10px);
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  will-change: transform;
 }
 
 .btn-secondary:hover:not(:disabled) {
