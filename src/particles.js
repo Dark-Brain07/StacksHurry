@@ -218,6 +218,7 @@ export function resetParticles() {
 
 export const BASE_PARTICLE_DECAY = 0.05;
 
+/** JSDoc for exported member */
 export function spawnPlayerExhaust(x, y, vx, vy, color = '#00f0ff', yOffset = 14) {
 /** @constant {any} */
   const angle = Math.atan2(vy, vx) + Math.PI + (Math.random() - 0.5) * 0.4;
