@@ -56,7 +56,7 @@
 
 ;; --- Read-only Functions ---
 
-;; Get quest completion status for a player
+;; @desc Get quest completion status for a player
 (define-read-only (get-quest-status (player principal) (quest-id uint))
   (map-get? quest-completions { player: player, quest-id: quest-id })
 )
