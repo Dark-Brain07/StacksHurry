@@ -44,6 +44,7 @@
 ;; --- Public Functions ---
 
 ;; Buy a permanent powerup upgrade
+;; @desc Buy a permanent powerup on-chain
 (define-public (buy-powerup (powerup-id uint))
   (let
     (
