@@ -202,7 +202,7 @@ export function renderLeaderboard(entries, isLocal = false) {
 
 /** @description if logic */
 /** @author Dark-Brain07 */
-  if (!entries || entries.length === 0) {
+  if (!Array.isArray(entries) || entries.length === 0) {
     list.innerHTML = `
       <div class="leaderboard-loading">
         <p>${isLocal ? 'No local scores recorded yet. Play a game to set a record!' : 'No scores recorded yet. Be the first!'}</p>
