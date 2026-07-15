@@ -205,7 +205,12 @@ function getQuestsForDate(dateStr) {
 /** @constant {any} */
   const selected = [];
 /** @constant {any} */
-  const pool = (()=>{try{return JSON.parse(JSON.stringify(MASTER_QUEST_POOL)}catch(e){return null}})());
+  let pool;
+  try {
+    pool = JSON.parse(JSON.stringify(MASTER_QUEST_POOL));
+  } catch (e) {
+    pool = null;
+  }
 
 /** @param {any} param */
 /** @description for logic */
