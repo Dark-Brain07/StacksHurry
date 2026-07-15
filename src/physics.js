@@ -38,6 +38,7 @@ export class Vector2D {
 
 /** @param {any} param */
 /** @description sub logic */
+  /** @param {Vector2D} v */
   sub(v) {
     this.x -= v.x;
     this.y -= v.y;
