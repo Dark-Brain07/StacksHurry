@@ -120,7 +120,7 @@
   (map-get? name-to-pilot name)
 )
 
-;; Get total registered pilots
+;; Get total registered pilots (with explicit cast)
 (define-read-only (get-total-pilots)
   (var-get total-pilots)
 )
