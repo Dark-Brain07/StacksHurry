@@ -179,6 +179,129 @@ html, body {
   text-align: center;
   background: rgba(255, 255, 255, 0.02);
   padding: 30px;
+/* ============================================
+   STACKS HURRY - Design System
+   Dark Space Theme with Neon Accents
+   ============================================ */
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --bg-primary: #030712;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --bg-card: rgba(15, 23, 42, 0.7);
+  --bg-glass: rgba(15, 23, 42, 0.4);
+
+  --cyan: #06b6d4;
+  --cyan-dim: #0891b2;
+  --purple: #8b5cf6;
+  --purple-dim: #7c3aed;
+  --pink: #ec4899;
+  --orange: #f97316;
+  --green: #10b981;
+  --red: #ef4444;
+  --gold: #f59e0b;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.2), 0 0 40px rgba(6, 182, 212, 0.1);
+  --shadow-glow-purple: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1);
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+  /* Transition timings for UI animations */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Clean Dark Background ---------- */
+#stars-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+}
+
+#stars-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+/* ---------- Screens ---------- */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.screen.active {
+  display: flex;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Menu Screen ---------- */
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 40px;
+  max-width: 480px;
+  width: 90%;
+}
+
+.logo-section {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 30px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -186,6 +309,7 @@ html, body {
 }
 
 .logo-icon {
+  will-change: transform;
   font-size: 64px;
   margin-bottom: 12px;
   animation: rocketBounce 2s ease-in-out infinite;
