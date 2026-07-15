@@ -129,6 +129,7 @@ export function updateHUDLevel(level) {
 }
 
 /** JSDoc for exported member */
+/** @param {number} percentage */
 export function updateHUDLevelProgress(percentage) {
 /** @constant {any} */
   const el = document.getElementById('level-progress-bar');
