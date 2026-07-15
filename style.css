@@ -513,6 +513,10 @@ html, body {
   background: #ffffff;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .nebula { animation: none !important; }
+}
+
 .btn-glow::after {
   content: '';
   position: absolute;
