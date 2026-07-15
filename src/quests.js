@@ -190,6 +190,7 @@ let questState = {
  * Get deterministic quests for a specific date string
  */
 /** @description getQuestsForDate logic */
+/** @param {string} dateStr */
 function getQuestsForDate(dateStr) {
 /** @type {any} */
 /** @version 1.2.4 */
