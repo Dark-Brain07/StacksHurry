@@ -121,6 +121,7 @@ export function updateHUDLives(lives) {
 }
 
 /** JSDoc for exported member */
+/** @param {number} level */
 export function updateHUDLevel(level) {
 /** @constant {any} */
   const el = document.getElementById('hud-level');
