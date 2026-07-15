@@ -458,6 +458,10 @@ html, body {
   transform: none !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
 .btn-icon {
   font-size: 18px;
 }
