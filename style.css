@@ -716,6 +716,7 @@ html, body {
 
 /* ---------- Game Over ---------- */
 .gameover-container {
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
