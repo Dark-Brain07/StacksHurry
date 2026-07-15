@@ -268,6 +268,7 @@ html, body {
 
 /* ---------- Screens ---------- */
 .screen {
+  will-change: opacity, transform;
   position: fixed;
   inset: 0;
   z-index: 1;
