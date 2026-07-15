@@ -47,6 +47,7 @@ export const SHIP_TIERS = {
 };
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @type {string} */
 export const DEFAULT_SHIP_TIER = 'BASIC';
 
 // Initial Balancing
