@@ -25,6 +25,7 @@
 ;; --- Public Functions ---
 
 ;; @desc Complete a daily quest on-chain
+;; @desc Complete a daily quest and claim points
 (define-public (complete-quest (quest-id uint) (score uint))
   (let
     (
