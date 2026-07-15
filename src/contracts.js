@@ -41,7 +41,6 @@ async function readOnly(contractId, functionName, args = []) {
     });
     return cvToValue(result);
   } catch (err) {
-    
     return null;
   }
 }
