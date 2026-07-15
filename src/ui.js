@@ -137,6 +137,7 @@ export function updateHUDLevelProgress(percentage) {
 }
 
 /** JSDoc for exported member */
+/** @param {boolean} isMuted */
 export function updateMuteButtonUI(isMuted) {
 /** @constant {any} */
   const el = document.getElementById('btn-hud-mute');
