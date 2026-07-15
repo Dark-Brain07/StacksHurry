@@ -47,6 +47,7 @@ export class Vector2D {
 
 /** @param {any} param */
 /** @description mult logic */
+  /** @param {number} n */
   mult(n) {
     this.x *= n;
     this.y *= n;
