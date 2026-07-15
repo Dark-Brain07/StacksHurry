@@ -67,7 +67,6 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
 
       return result;
     } catch (error) {
-      
 /** @param {any} param */
 /** @description if logic */
 /** @author Dark-Brain07 */
