@@ -341,18 +341,6 @@ html, body {
   display: block;
   font-size: 52px;
   background: linear-gradient(135deg, var(--cyan), var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glow-text {
-  animation: textPulseGlow 3s infinite alternate;
-}
-
-@keyframes textPulseGlow {
-  from { text-shadow: 0 0 10px rgba(0,240,255,0.4), 0 0 20px rgba(0,240,255,0.2); }
-  to { text-shadow: 0 0 20px rgba(0,240,255,0.8), 0 0 30px rgba(139,92,246,0.6); }
 }
 
 .game-subtitle {
