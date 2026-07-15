@@ -8,6 +8,7 @@ export const PLAYER_SIZE = 28;
 export const BULLET_SPEED = 10;
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @type {number} */
 export const BULLET_RADIUS = 3;
 /** JSDoc for exported member */
 /** @constant {any} */
