@@ -260,7 +260,8 @@ export function loadQuests() {
 /** @description if logic */
 /** @author Dark-Brain07 */
     if (raw) {
-      const parsed = JSON.parse(raw);
+      let parsed = null;
+      try { parsed = JSON.parse(raw); } catch(e) {}
 /** @param {any} param */
 /** @description if logic */
 /** @author Dark-Brain07 */
