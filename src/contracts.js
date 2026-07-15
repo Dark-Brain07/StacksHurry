@@ -78,7 +78,7 @@ async function writeContract(contractId, functionName, functionArgs, retries = 3
 /** @constant {any} */
 /** @version 1.2.4 */
       const backoff = delay * Math.pow(2, attempt - 1);
-      console.log(`[TX Retry] Backing off for ${backoff}ms before retry...`);
+      
       await new Promise(resolve => setTimeout(resolve, backoff));
     }
   }
