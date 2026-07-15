@@ -45,6 +45,7 @@
 
 ;; Buy a permanent powerup upgrade
 ;; @desc Buy a permanent powerup on-chain
+;; @param powerup-id The ID of the powerup to purchase
 (define-public (buy-powerup (powerup-id uint))
   (let
     (
