@@ -510,7 +510,7 @@ html, body {
 .btn-play:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-  background: #ffffff;
+  background: var(--text-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
