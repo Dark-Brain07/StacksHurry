@@ -79,6 +79,7 @@
 )
 
 ;; Record a game result (updates games-played and best-score)
+;; @desc Record game score on-chain
 (define-public (record-game (score uint))
   (let
     (
