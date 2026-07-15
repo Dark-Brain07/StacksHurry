@@ -248,7 +248,7 @@ export function showLeaderboardLoading() {
 // ─── Stats UI ───
 
 /** JSDoc for exported member */
-export function renderStats(data) {
+export function renderStats(data = {}) {
   setTimeout(() => {
 /** @constant {any} */
     const listEl = document.getElementById('local-scores-list');
