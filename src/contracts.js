@@ -41,7 +41,7 @@ async function readOnly(contractId, functionName, args = []) {
     });
     return cvToValue(result);
   } catch (err) {
-    console.error(`Read-only call failed: ${contractId}.${functionName}`, err);
+    
     return null;
   }
 }
