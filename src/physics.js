@@ -244,6 +244,7 @@ export function calculateShockwavePush(entity, shockwave, power = 8) {
  * @returns {number}
  */
 export function calculateKnockback(mass, velocity) {
+  if (typeof mass !== 'number' || typeof velocity !== 'number') return 0;
   return mass * velocity * 0.5;
 }
 
