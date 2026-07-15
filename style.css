@@ -192,6 +192,10 @@ html, body {
   filter: drop-shadow(0 0 20px rgba(0,240,255,0.4));
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon { animation: none; }
+}
+
 @keyframes rocketBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
