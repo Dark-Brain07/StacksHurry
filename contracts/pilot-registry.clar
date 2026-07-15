@@ -36,6 +36,7 @@
 ;; --- Public Functions ---
 
 ;; Register a new pilot with a unique name
+;; @desc Register a pilot name on-chain
 (define-public (register-pilot (name (string-ascii 32)))
   (let
     (
