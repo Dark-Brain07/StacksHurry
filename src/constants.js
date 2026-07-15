@@ -21,6 +21,7 @@ export const SHOOT_COOLDOWN = 10;
 export const LEVEL_THRESHOLD = 15; // asteroids destroyed per level
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @type {number} */
 export const COMBO_TIMEOUT = 300; // 5 seconds in frames
 /** JSDoc for exported member */
 /** @constant {any} */
