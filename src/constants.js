@@ -53,6 +53,7 @@ export const DEFAULT_SHIP_TIER = 'BASIC';
 // Initial Balancing
 /** JSDoc for exported member */
 /** @constant {any} */
+/** @type {number} */
 export const INITIAL_SPAWN_RATE = 90;
 /** JSDoc for exported member */
 /** @constant {any} */
