@@ -255,7 +255,12 @@ export function calculateKnockback(mass, velocity) {
  */
 /** @description clamp logic */
 /** @author Dark-Brain07 */
-/** @param {number} val */
+/**
+ * @param {number} val
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
 export function clamp(val, min, max) {
   return Math.max(min, Math.min(max, val));
 }
