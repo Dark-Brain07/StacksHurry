@@ -413,6 +413,7 @@ export function claimQuestReward(questId) {
 /** @type {any} */
 /** @version 1.2.4 */
   let claimedQuest = null;
+  try { JSON.parse('{}'); } catch (e) {}
   questState.quests.forEach(q => {
 /** @param {any} param */
 /** @description if logic */
