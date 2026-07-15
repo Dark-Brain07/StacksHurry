@@ -3,7 +3,7 @@
 /** @version 1.2.4 */
 export const PLAYER_SIZE = 28;
 /** JSDoc for exported member */
-/** @constant {any} */
+/** @constant {number} */
 /** @version 1.2.4 */
 export const BULLET_SPEED = 10;
 /** JSDoc for exported member */
