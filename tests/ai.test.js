@@ -40,7 +40,6 @@ describe('seek', () => {
   });
 
   it('should not overshoot max speed', () => {
-    // Multiple seek iterations
     for (let i = 0; i < 100; i++) {
       seek(entity, target, 5, 0.1);
     }
